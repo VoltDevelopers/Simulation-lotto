@@ -2,8 +2,8 @@
 Una simulazione del gioco del lotto. Consiste nell’estrazione di cinquine, scelte tra 1 e 90. I giocatori che noi osserveremo cominciano a giocare dopo un numero variabile, preferibilmente grande, di estrazioni.
 
 
-## How to use git (cmd)
-### IMPORTANTE : non inviare commit nel main
+## How to use git (cmd/terminal)
+### IMPORTANTE: tutti commit al main prima devono essere verificati
 1) open cmd/terminal.
 2) git clone https://github.com/VoltDevelopers/Simulation-lotto.git - creare una copia locale del repository remoto.
 3) git status - mostra le modifiche del repository locale rispetto al repository remoto.
@@ -11,3 +11,5 @@ Una simulazione del gioco del lotto. Consiste nell’estrazione di cinquine, sce
 5) git commit -m "MESSAGE" - crea il commit.
 6) git push - invia le modifiche al repository remoto.
 7) git pull - scarica gli aggiornamenti dal repository remoto al repository locale.
+
+### All commands: http://guides.beanstalkapp.com/version-control/common-git-commands.html
