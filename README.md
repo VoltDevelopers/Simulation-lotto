@@ -10,3 +10,4 @@ Una simulazione del gioco del lotto. Consiste nell’estrazione di cinquine, sce
 4) git add . - aggiunge tutte le modifiche al contenitore di invio al repository remoto.
 5) git commit -m "MESSAGE" - crea il commit.
 6) git push - invia le modifiche al repository remoto.
+7) git pull - scarica gli aggiornamenti dal repository remoto al repository locale.
