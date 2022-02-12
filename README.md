@@ -11,8 +11,9 @@ Una simulazione del gioco del lotto. Consiste nell’estrazione di cinquine, sce
 5) git status - mostra le modifiche del repository locale rispetto al repository remoto.
 6) git add . - aggiunge tutte le modifiche al contenitore di invio al repository remoto.
 7) git restore . - cancella tutte le modifiche al contenitore di invio al repository remoto.
-7) git commit -m "MESSAGE" - crea il commit.
-8) git push - invia le modifiche al repository remoto.
+8) git commit -m "MESSAGE" - crea il commit.
+9) git push - invia le modifiche al repository remoto.
 
+// ciao sono cecchini
 
 ### All commands: http://guides.beanstalkapp.com/version-control/common-git-commands.html
