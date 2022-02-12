@@ -13,4 +13,6 @@ Una simulazione del gioco del lotto. Consiste nell’estrazione di cinquine, sce
 7) git push - invia le modifiche al repository remoto.
 8) git pull - scarica gli aggiornamenti dal repository remoto al repository locale.
 
+test commit: andrea cocevar
+
 ### All commands: http://guides.beanstalkapp.com/version-control/common-git-commands.html
