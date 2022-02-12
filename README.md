@@ -14,5 +14,5 @@ Una simulazione del gioco del lotto. Consiste nell’estrazione di cinquine, sce
 7) git commit -m "MESSAGE" - crea il commit.
 8) git push - invia le modifiche al repository remoto.
 
-
+osdhfsdojfnsdfno
 ### All commands: http://guides.beanstalkapp.com/version-control/common-git-commands.html
