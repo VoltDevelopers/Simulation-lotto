@@ -11,7 +11,9 @@ Implementare l'applicazione per Android, simulatore di lotto.
 - Senior o Leader esaminerà il codice, apporterà le modifiche necessarie e lo invierà a **main**
 ### Tecnico
  - Ambiente di sviluppo: AndroidStudio (Bumblebee | 2021.1.1)
- - Versione Java: 17
+ - Versione Java: 1.8
+ - Android API 25: 7.1.1 (Nougat) 
+ - SDK: 32 (API 32)
 ## How to use git (cmd/terminal)
 0) **git clone 'https/ssh-link'** --> creare una copia locale del repository remoto.
 1) **git pull** --> aggiorna le modifiche dal repository remoto al repository locale.
