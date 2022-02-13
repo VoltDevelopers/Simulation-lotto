@@ -29,4 +29,4 @@ Noramle - il solito gioco del lotto.
 7) **git push** --> invia le modifiche al repository remoto.
 ### All git commands: http://guides.beanstalkapp.com/version-control/common-git-commands.html
 
-![alt text](./Lotto.svg "Описание будет тут")
+![alt text](./Lotto.svg "Template")
