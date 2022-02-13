@@ -18,7 +18,7 @@ Implementare l'applicazione per Android, simulatore di lotto.
 2) **git checkout TestVersion-lotto** --> spostarsi nel test branch.
 3) **git status** --> mostra le modifiche del repository locale rispetto al repository remoto.
 4) **git add .** --> aggiunge tutte le modifiche al contenitore di invio al repository remoto.
-4.1) **git restore .** --> cancella tutte le modifiche al contenitore di invio al repository remoto.
-5) **git commit -m "msg"** --> crea il commit.
-6) **git push** --> invia le modifiche al repository remoto.
-## All git commands: http://guides.beanstalkapp.com/version-control/common-git-commands.html
+5) **git restore .** --> cancella tutte le modifiche al contenitore di invio al repository remoto.
+6) **git commit -m "msg"** --> crea il commit.
+7) **git push** --> invia le modifiche al repository remoto.
+### All git commands: http://guides.beanstalkapp.com/version-control/common-git-commands.html
