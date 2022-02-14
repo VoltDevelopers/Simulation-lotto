@@ -11,4 +11,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
+    // Metodo che modifica var
+    public void modVar(){
+        int var = 0;
+    }
 }
