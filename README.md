@@ -28,3 +28,5 @@ Noramle - il solito gioco del lotto.
 6) **git commit -m "msg"** --> crea il commit.
 7) **git push** --> invia le modifiche al repository remoto.
 ### All git commands: http://guides.beanstalkapp.com/version-control/common-git-commands.html
+
+![alt text](./Lotto.svg "Template")
