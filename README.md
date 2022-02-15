@@ -7,7 +7,7 @@ Noramle - il solito gioco del lotto.
  - Il branch *main* è una versione stabile del progetto, tutte le modifiche vengono prima apportate al branch di test, dopo convalidate e aggiunte alla versione stabile.
  - L'invio di un commit da parte dello sviluppatore deve contenere una parte di codice completo.
  - Commit deve contenere un messaggio del seguente tipo: *-m "Cosa è stato fatto / v.Versione / @Nick"*
-  - Ogni **Martedì** e **Venerdì** alle **16:00** si fa una riunione su Discord che discute il lavoro svolto, problemi e nuovi obiettivi.
+  - Ogni **Martedì** e **Venerdì** alle **18:00** si fa una riunione su Discord che discute il lavoro svolto, problemi e nuovi obiettivi.
 ### Come lavorare con il repository
 - Scarica il repository (*git clone 'https / ssh-link'*)
 - Vai al branch **TestVersion-lotto** (*git checkout TestVersion-lotto*)
