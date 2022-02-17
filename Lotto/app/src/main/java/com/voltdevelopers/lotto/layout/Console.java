@@ -6,4 +6,6 @@ public class Console {
     public void printStr(String str) {
         System.out.println(str);
     }
+
+    // Test
 }
