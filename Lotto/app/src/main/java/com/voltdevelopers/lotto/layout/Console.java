@@ -7,7 +7,5 @@ public class Console {
         System.out.println(str);
     }
 
-    public void printExp(String exp) {
-        System.out.println("EXCEPTION: " + exp);
-    }
+    public void printExp(String exp) { System.out.println("EXCEPTION: " + exp); }
 }
