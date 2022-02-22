@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Database {
 
     private static Database instance = null;
-    private Profile[] players;
+    private Profile[] players; //i 5 giocatori, ordinati come nel pptx con le istruzioni
     private int[] gameCounter;
     private ArrayList<Integer[]> rounds;
     private int[] pullsPerNumber; //n di estrazioni per valore (n di estrazioni di 1 si trova nella cella 0, di 2 nella 1, etc etc)
@@ -14,7 +14,7 @@ public class Database {
 
     private Database() {
 
-        players = new Profile[5]; //giocatori
+        initPlayers();
         gameCounter = new int[2]; //il primo è per le partite "storiche", il secondo è per quelle in cui partecipano i giocatori
         gameCounter[0] = 0;
         gameCounter[1] = 0;
@@ -41,6 +41,41 @@ public class Database {
         //TODO add log edit
     }
 
+    private void initPlayers(){
+
+        //TODO initialize players and set player names via constructor if needed
+        //TODO add log edit
+
+    }
+
+    public int getPlayerWinnings(int playerN){
+
+        return players[playerN].getWinnings();
+        //TODO add log edit
+
+    }
+
+    public int getPlayerSpendings(int playerN){
+
+        return players[playerN].getSpendings();
+        //TODO add log edit
+
+    }
+
+    public int getPlayerNet(int playerN){
+
+        return players[playerN].getNet();
+        //TODO add log edit
+
+    }
+
+    public int getPlayerWins(int playerN){
+
+        return players[playerN].getWins();
+        //TODO add log edit
+
+    }
+
     public void addPull(int[] input) {
 
         rounds.add(new Integer[5]);
@@ -50,6 +85,12 @@ public class Database {
             //TODO modifico la cronologia dei valori estratti
             //TODO add log edit
         }
+
+    }
+
+    public void addPlayerBet(int playerN, int[] input){
+
+        players[playerN].addPull(input);
 
     }
 
