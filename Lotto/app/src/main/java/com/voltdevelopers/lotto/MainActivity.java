@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.voltdevelopers.lotto.src.Main;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
