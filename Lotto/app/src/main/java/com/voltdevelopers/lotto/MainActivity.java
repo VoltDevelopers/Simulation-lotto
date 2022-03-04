@@ -3,7 +3,9 @@ package com.voltdevelopers.lotto;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -29,11 +31,17 @@ public class MainActivity extends AppCompatActivity {
         patternGame.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, PatternGameActivity.class);
             startActivity(intent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                Log.i("INFO", "Started Activity" + intent.getIdentifier());
+            }
         });
 
         stat.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, StatActivity.class);
             startActivity(intent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                Log.i("INFO", "Started Activity" + intent.getIdentifier());
+            }
         });
 
     }
