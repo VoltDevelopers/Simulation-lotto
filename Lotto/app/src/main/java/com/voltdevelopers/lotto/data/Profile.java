@@ -4,70 +4,127 @@ import java.util.ArrayList;
 
 public class Profile {
 
-    private String name = null;
-    private int winnings, spendings, wins;
-    private ArrayList<Integer[]> bets;
+    private String name;
+    private int moneyWon, moneySpent;
+    private int nWins;
+    private ArrayList <ArrayList<Integer>> playerBetList;
+    private ArrayList <Integer> playerBet;
 
-    public Profile() {
+    public Profile(){
 
-        winnings = 0;
-        spendings = 0;
-        wins = 0;
-        bets = new ArrayList<Integer[]>();
+        moneyWon = 0;
+        moneySpent = 0;
+        nWins = 0;
+        playerBetList = new ArrayList<ArrayList<Integer>>();
 
     }
 
-    public Profile(String name) {
+    public Profile(String name){
 
-        winnings = 0;
-        spendings = 0;
+        this();
         this.name = name;
 
     }
 
-    public void addPull(int[] input) {
+    public void addPlayerBet(ArrayList <Integer> input){
 
-        bets.add(new Integer[Settings.get().getnOfPulls()]);
-        for (int i : bets.get(bets.size() - 1)) { //copio i valori ricevuti e ne aumento il numero di estrazioni
-            bets.get(bets.size() - 1)[i] = input[i];
+        playerBet = new ArrayList<>(Settings.getIstance().getNumbersXBet());
+
+        for(int i = 0; i < playerBet.size(); i++){
+
+            this.playerBet.add(input.get(i));
+
         }
+
+        verifyWin();
+
+        playerBetList.add(playerBet);
+
+    }
+
+    private void verifyWin(){
 
         //TODO determine if won, if so add win
 
     }
 
-    public int getWinnings() {
-        return winnings;
-    }
+    public String getName() {
 
-    public void addToWinnings(int winnings) {
-        this.winnings += winnings;
-    }
+        if(name != null)
+            return name;
+        return "name not set";
 
-    public int getSpendings() {
-        return spendings;
-    }
-
-    public void addToSpendings(int spendings) {
-        this.spendings += spendings;
-    }
-
-    public int getNet() {
-        return winnings - spendings;
-    }
-
-    public int getWins() {
-        return wins;
     }
 
     public void setName(String name) {
+
         this.name = name;
+
     }
 
-    public String getName() {
-        if(name != null)
-        return name;
-        return "name not set";
+    public int getMoneyWon() {
+
+        return moneyWon;
+
     }
 
+    public void addMoneyWon(int moneyWon) {
+
+        this.moneyWon += moneyWon;
+
+    }
+
+    public int getMoneySpent() {
+
+        return moneySpent;
+
+    }
+
+    public void addMoneySpent(int moneySpent) {
+
+        this.moneySpent += moneySpent;
+
+    }
+
+    public int getnWins() {
+
+        return nWins;
+
+    }
+
+    public void setnWins(int nWins) {
+
+        this.nWins = nWins;
+
+    }
+
+    public ArrayList<ArrayList<Integer>> getPlayerBetList() {
+
+        return playerBetList;
+
+    }
+
+    public void setPlayerBetList(ArrayList<ArrayList<Integer>> playerBetList) {
+
+        this.playerBetList = playerBetList;
+
+    }
+
+    public ArrayList<Integer> getPlayerBet() {
+
+        return playerBet;
+
+    }
+
+    public void setPlayerBet(ArrayList<Integer> playerBet) {
+
+        this.playerBet = playerBet;
+
+    }
+
+    public int getNet() {
+
+        return moneyWon - moneySpent;
+
+    }
 }

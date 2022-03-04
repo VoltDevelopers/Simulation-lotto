@@ -2,27 +2,27 @@ package com.voltdevelopers.lotto.data;
 
 public class Settings {
 
-    private static Settings instance = null;
-    private int nOfPulls;
+    private static Settings istance = null;
+    private int numbersXBet;
 
-    private Settings(){
+    private Settings (){ }
+
+    public static Settings getIstance(){
+
+        return istance == null ? istance = new Settings() : istance;
 
     }
 
-    public static Settings get(){
+    public int getNumbersXBet() {
 
-        if(instance != null)
-            return instance;
-        instance = new Settings();
-        return instance;
+        return numbersXBet;
+
     }
 
-    public int getnOfPulls() {
-        return nOfPulls;
-    }
+    public void setNumbersXBet(int numbersXBet) {
 
-    public void setnOfPulls(int nOfPulls) {
-        this.nOfPulls = nOfPulls;
-    }
+        this.numbersXBet = numbersXBet;
 
+    }
 }
+
