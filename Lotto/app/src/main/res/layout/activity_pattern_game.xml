@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".activitys.PatternGameActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TEST 1"
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/stat1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
         />
 
 </RelativeLayout>
