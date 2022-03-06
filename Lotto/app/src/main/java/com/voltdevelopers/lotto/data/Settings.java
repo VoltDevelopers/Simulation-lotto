@@ -2,14 +2,14 @@ package com.voltdevelopers.lotto.data;
 
 public class Settings {
 
-    private static Settings istance = null;
+    private static Settings instance = null;
     private int numbersXBet;
 
     private Settings (){ }
 
-    public static Settings getIstance(){
+    public static Settings getInstance(){
 
-        return istance == null ? istance = new Settings() : istance;
+        return instance == null ? instance = new Settings() : instance;
 
     }
 

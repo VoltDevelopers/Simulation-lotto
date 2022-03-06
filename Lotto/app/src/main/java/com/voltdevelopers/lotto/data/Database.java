@@ -14,6 +14,7 @@ public class Database {
     private ArrayList <Profile> players;
     private ArrayList <ArrayList <Integer>> allQuintets;
     private ArrayList <Integer> pullsPerNumber;
+
     private ArrayList <Integer> pullsChronology;
 
     //private String log;
@@ -123,7 +124,7 @@ public class Database {
 
                 if(pullsPerNumber.get(j) == i) {
 
-                    if (mostFrequentsNumbers.size() != Settings.getIstance().getNumbersXBet()) {
+                    if (mostFrequentsNumbers.size() != Settings.getInstance().getNumbersXBet()) {
 
                         mostFrequentsNumbers.add(pullsPerNumber.get(j));
 
@@ -131,7 +132,7 @@ public class Database {
                 }
             }
 
-        }while(mostFrequentsNumbers.size() != Settings.getIstance().getNumbersXBet());
+        }while(mostFrequentsNumbers.size() != Settings.getInstance().getNumbersXBet());
 
         return mostFrequentsNumbers;
 
@@ -144,7 +145,7 @@ public class Database {
         ArrayList<Integer> latestNumbers = new ArrayList<>();
         int counter = 89;
 
-        for (int i = 0; i < Settings.getIstance().getNumbersXBet(); i++){
+        for (int i = 0; i < Settings.getInstance().getNumbersXBet(); i++){
 
             latestNumbers.add(pullsChronology.get(counter));
             counter--;
@@ -160,7 +161,7 @@ public class Database {
 
         ArrayList<Integer> oldestNumbers = new ArrayList<>();
 
-        for (int i = 0; i < Settings.getIstance().getNumbersXBet(); i++){
+        for (int i = 0; i < Settings.getInstance().getNumbersXBet(); i++){
 
             oldestNumbers.add(pullsChronology.get(i));
 
@@ -246,6 +247,30 @@ public class Database {
         //TODO add log edit
 
     }*/
+
+    public ArrayList<Profile> getPlayers() {
+
+        return players;
+
+    }
+
+    public ArrayList<ArrayList<Integer>> getAllQuintets() {
+
+        return allQuintets;
+
+    }
+
+    public ArrayList<Integer> getPullsPerNumber() {
+
+        return pullsPerNumber;
+
+    }
+
+    public ArrayList<Integer> getPullsChronology() {
+
+        return pullsChronology;
+
+    }
 
     public static Database getInstance() {
 

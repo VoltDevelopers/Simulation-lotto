@@ -28,7 +28,7 @@ public class Profile {
 
     public void addPlayerBet(ArrayList <Integer> input){
 
-        playerBet = new ArrayList<>(Settings.getIstance().getNumbersXBet());
+        playerBet = new ArrayList<>(Settings.getInstance().getNumbersXBet());
 
         for(int i = 0; i < playerBet.size(); i++){
 
