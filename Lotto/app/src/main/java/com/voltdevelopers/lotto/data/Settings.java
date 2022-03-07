@@ -23,6 +23,10 @@ public class Settings {
 
         this.numbersXBet = numbersXBet;
 
+<<<<<<< HEAD
     }
 }
 
+=======
+}
+>>>>>>> d3c6866ec3b727afad4d2d56c245d5d0e006ae29
