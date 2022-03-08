@@ -7,10 +7,10 @@ public class Console {
 
     private final String TAG = this.getClass().getSimpleName();
     private static Console instance = null;
-    Scanner input;
+    Scanner inputSc;
 
     private Console() {
-        input = new Scanner(System.in);
+        inputSc = new Scanner(System.in);
         // add file for logs
     }
 
@@ -32,13 +32,13 @@ public class Console {
     }
 
     public String getStr(){
-        String input = new Scanner(System.in).next();
+        String input = inputSc.next();
         printStr(input);
         return input;
     }
 
     public int getInt(){
-        int input = new Scanner(System.in).nextInt();
+        int input = inputSc.nextInt();
         printStr(String.valueOf(input));
         return input;
     }
