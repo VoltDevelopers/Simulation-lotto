@@ -19,7 +19,7 @@ public class FourthPlayer extends Player {
     private void generateFinalBet(){
         int val = 0;
         for(int i = 0; i < numsPerTurn; i++){
-            //TODO: val = generateRandNum();
+            val = ((int) Math.abs(Math.random()) % 90) + 1;
             if(isAlreadyInBet(val)){ //se il numero già presente in quelli da giocare
                 i--; //ripeti l'estrazione
             }
