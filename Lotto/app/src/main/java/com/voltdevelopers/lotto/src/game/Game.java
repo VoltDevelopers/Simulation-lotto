@@ -18,7 +18,7 @@ public class Game {
         }
     }
 
-    private void preGameLoop(int games){
+    private void preGameLoop(int games) {
         for (int i = 0; i < games; i++) {
 
         }
