@@ -12,7 +12,7 @@ public class ThirdPlayer extends Player {
         int[] bet = new int[numsPerTurn];
         int val = 0;
         for(int i = 0; i < numsPerTurn; i++){
-            //TODO: val = generateRandNum();
+            val = (int) Math.abs(Math.random()) % 90;
             if(isAlreadyInBet(bet, val)){ //se il numero già presente in quelli da giocare
                 i--; //ripeti l'estrazione
             }
