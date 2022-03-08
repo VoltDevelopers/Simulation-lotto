@@ -10,7 +10,11 @@ public class Game {
 
     public void gameLoop(){
         for (int i = 0; i < gnum; i++) {
+            // Crea 5 numeri random estratti
+            // controlla chi ha vinto e chi a perso
+            // manda i dati
 
+            // *Chiede db di visualizare i dati*
         }
     }
 
@@ -21,10 +25,6 @@ public class Game {
     }
 
     public void sendAllData(){
-
-    }
-
-    public void getAllData(){
 
     }
 }
