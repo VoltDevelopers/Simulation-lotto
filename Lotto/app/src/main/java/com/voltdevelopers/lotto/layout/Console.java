@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class Console {
 
+    private final String TAG = this.getClass().getSimpleName();
     private static Console instance = null;
     Scanner input;
 
@@ -19,8 +20,6 @@ public class Console {
         instance = new Console();
         return instance;
     }
-
-    private final String TAG = this.getClass().getSimpleName();
 
     public void printStr(String str) {
         System.out.println(str);
