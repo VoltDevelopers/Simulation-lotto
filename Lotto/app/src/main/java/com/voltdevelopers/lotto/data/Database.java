@@ -9,7 +9,7 @@ public class Database {
     private int[] gameCounter; //conteggio partite, diviso in due celle per separare storici e non
     private ArrayList<Integer[]> rounds;
     private int[] pullsPerNumber; //n di estrazioni per valore (n di estrazioni di 1 si trova nella cella 0, di 2 nella 1, etc etc)
-    private int[] pullChronology; //ordine estrazioni (ultimo estratto sta in arr[89])
+    private ArrayList<Integer> pullChronology; //ordine estrazioni (ultimo estratto sta all'indice massimo)
     private String log;             //log usato per la console
 
     private Database() {
@@ -23,7 +23,7 @@ public class Database {
 
         pullsPerNumber = new int[Settings.N_NUMBERS];
         for (int i : pullsPerNumber) pullsPerNumber[i] = 0; //inizializzo array
-        pullChronology = new int[Settings.N_NUMBERS];
+        pullChronology = new ArrayList<Integer>();
 
         log = "";
 
@@ -38,7 +38,6 @@ public class Database {
         instance = new Database();
         return instance;
 
-        //TODO add log edit
     }
 
     private void initPlayers(){
@@ -87,9 +86,18 @@ public class Database {
         for (int i : rounds.get(rounds.size() - 1)) { //copio i valori ricevuti e ne aumento il numero di estrazioni
             rounds.get(rounds.size() - 1)[i] = input[i];
             pullsPerNumber[input[i] - 1]++;
-            //TODO modifico la cronologia dei valori estratti
+            modChronology(input[i]);
             //TODO add log edit
         }
+
+    }
+
+    private void modChronology(int n){
+
+        if(pullChronology.contains(n))
+            pullChronology.remove(pullChronology.lastIndexOf(n));
+
+        pullChronology.add(n);
 
     }
 
@@ -114,26 +122,65 @@ public class Database {
         //TODO add log edit
     }
 
-    /*public int getMostFrequent(int nRequested){
+    public int[] getNMostFrequent(int nRequested){
 
-        //TODO return most pulled
+        int[] output = new int[nRequested];
+        for (int i : output){
+
+            int max = 0;
+            for (int j : pullsPerNumber){
+                if(pullsPerNumber[j] >= max && !intArrayContains(output, j+1)) {
+                    max = pullsPerNumber[j];
+                    output[i] = j+1;
+                }
+            }
+        }
+
         //TODO add log edit
 
-    }*/
+        return output;
+    }
 
-    /*public int[] getLatestN(int nRequested){
+    private boolean intArrayContains(int[] arr, int n){
 
-        //TODO return latest n pulled form pullChronology
+        for (int i : arr) {
+            if (arr[i] == n)
+                return true;
+        }
+
+        return false;
+    }
+
+    public int[] getLatestN(int nRequested){
+
+        int[] output = new int[nRequested];
+        int chronoSize = pullChronology.size();
+        for (int i : output){
+
+            output[i] = pullChronology.get(chronoSize);
+            chronoSize--;
+
+        }
         //TODO add log edit
+        return output;
 
-    }*/
+    }
 
-    /*public int[] getOldestN(int nRequested){
+    public int[] getOldestN(int nRequested){
 
-        //TODO return oldest n pulled form pullChronology
+        int[] output = new int[nRequested];
+        for (int i : output){
+
+            output[i] = pullChronology.get(i);
+
+        }
+
         //TODO add log edit
+        return output;
 
-    }*/
+    }
+
+    //-----------------------log managment----------------------------------------------------------
 
     private void addToString(String in) { //aggiunge un azione al log
 
