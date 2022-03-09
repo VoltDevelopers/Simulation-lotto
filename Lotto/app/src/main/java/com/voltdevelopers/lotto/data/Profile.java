@@ -66,7 +66,7 @@ public class Profile {
 
     public String getName() {
         if(name != null)
-        return name;
+            return name;
         return "name not set";
     }
 
