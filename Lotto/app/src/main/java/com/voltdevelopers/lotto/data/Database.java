@@ -21,9 +21,9 @@ public class Database {
 
         rounds = new ArrayList<Integer[]>();
 
-        pullsPerNumber = new int[90];
+        pullsPerNumber = new int[Settings.N_NUMBERS];
         for (int i : pullsPerNumber) pullsPerNumber[i] = 0; //inizializzo array
-        pullChronology = new int[90];
+        pullChronology = new int[Settings.N_NUMBERS];
 
         log = "";
 
@@ -78,7 +78,7 @@ public class Database {
 
     public void addPull(int[] input) {
 
-        rounds.add(new Integer[5]);
+        rounds.add(new Integer[Settings.NUMBERS_X_EXTRACTION]);
         for (int i : rounds.get(rounds.size() - 1)) { //copio i valori ricevuti e ne aumento il numero di estrazioni
             rounds.get(rounds.size() - 1)[i] = input[i];
             pullsPerNumber[input[i] - 1]++;
