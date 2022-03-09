@@ -14,21 +14,18 @@ public class Database {
 
     private Database() {
 
-        initPlayers();
+//        initPlayers();
         gameCounter = new int[2]; //il primo è per le partite "storiche", il secondo è per quelle in cui partecipano i giocatori
         gameCounter[0] = 0;
         gameCounter[1] = 0;
 
-        rounds = new ArrayList<Integer[]>();
+        rounds = new ArrayList<>();
 
         pullsPerNumber = new int[90];
         for (int i : pullsPerNumber) pullsPerNumber[i] = 0; //inizializzo array
         pullChronology = new int[90];
 
         log = "";
-
-        //TODO add log edit
-
     }
 
     public static Database get() {
@@ -41,35 +38,35 @@ public class Database {
         //TODO add log edit
     }
 
-    private void initPlayers(){
+//    private void initPlayers(){
+//
+//        //TODO initialize players and set player names via constructor if needed
+//        //TODO add log edit
+//
+//    }
 
-        //TODO initialize players and set player names via constructor if needed
-        //TODO add log edit
-
-    }
-
-    public int getPlayerWinnings(int playerN){
+    public int getPlayerWinnings(int playerN) {
 
         return players[playerN].getWinnings();
         //TODO add log edit
 
     }
 
-    public int getPlayerSpendings(int playerN){
+    public int getPlayerSpendings(int playerN) {
 
         return players[playerN].getSpendings();
         //TODO add log edit
 
     }
 
-    public int getPlayerNet(int playerN){
+    public int getPlayerNet(int playerN) {
 
         return players[playerN].getNet();
         //TODO add log edit
 
     }
 
-    public int getPlayerWins(int playerN){
+    public int getPlayerWins(int playerN) {
 
         return players[playerN].getWins();
         //TODO add log edit
@@ -88,7 +85,7 @@ public class Database {
 
     }
 
-    public void addPlayerBet(int playerN, int[] input){
+    public void addPlayerBet(int playerN, int[] input) {
 
         players[playerN].addPull(input);
 
