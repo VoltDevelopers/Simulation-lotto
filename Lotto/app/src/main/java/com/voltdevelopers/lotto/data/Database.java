@@ -37,10 +37,19 @@ public class Database {
         return instance;
     }
 
+    /*
+        Vuole come input un array dello genere:
+        [3,6,83,2,55]  --> dove 3,6,83 sono i numeri estratti
+    */
     public void addExits(int[] exits) {
         allExits.add(exits);
     }
 
+    /*
+        Vuole come input un array dello genere:
+        [0] [3,6,83,2,55]  --> dove 0 e il id del pattern
+        [1] [3,6,83,2,55]  --> dove 3,6,83 sono i numeri estratti
+    */
     public void addPatternExits(int[][] exits) {
         for (int i = 0; i < 5; i++) {
             int[] arr = new int[numExitsInRound];
@@ -49,16 +58,44 @@ public class Database {
         }
     }
 
+    public void addPatternBet() {
+        for (int i = 0; i < 5; i++) {
+            allPatterns.get(i).money -= 1;
+        }
+    }
+
+    /*
+        id [0-4]
+        money - dipende dalla modalita del gioco: 18 o 11,23
+    */
+    public void addPatternWin(int id, double money) {
+        allPatterns.get(id).money = money;
+    }
+
     public ArrayList getExits() {
         return allExits;
     }
 
+    // TODO: 09/03/22 - Ошибка, возврат не того значения
     public ArrayList getPatternExits() {
         return allPatterns;
     }
 
-    // TODO: 09/03/22 - Make money
+    public ArrayList getPatternMoney() {
+        ArrayList<Double> array = new ArrayList<>();
+        for (int i = 0; i < allPatterns.size(); i++) {
+            array.add(allPatterns.get(i).money);
+        }
+        return array;
+    }
 
+    public ArrayList getPatterns() {
+        return allPatterns;
+    }
+
+    /*
+        Ritorna tutta l'informazione in String
+    */
     @NonNull
     @Override
     public String toString() {
@@ -75,9 +112,9 @@ public class Database {
     }
 
     private static class PlayerStruct {
-        public String playerName;
-        public final ArrayList<int[]> allExits;
-        public double money;
+        protected String playerName;
+        protected final ArrayList<int[]> allExits;
+        protected double money;
 
         public PlayerStruct(String name) {
             playerName = name;
