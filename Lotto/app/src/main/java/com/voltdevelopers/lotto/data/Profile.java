@@ -4,60 +4,70 @@ import java.util.ArrayList;
 
 public class Profile {
 
-    private String name = null;
-    private int winnings, spendings, wins;
-    private ArrayList<Integer[]> bets;
+    private String name;
+    private int moneyWon, moneySpent;
+    private int nWins;
+    private ArrayList <int[]> betList;
 
     public Profile() {
 
-        winnings = 0;
-        spendings = 0;
-        wins = 0;
-        bets = new ArrayList<Integer[]>();
+        moneyWon = 0;
+        moneySpent = 0;
+        nWins = 0;
+        betList = new ArrayList<int[]>();
 
     }
 
     public Profile(String name) {
 
-        winnings = 0;
-        spendings = 0;
+        this();
         this.name = name;
 
     }
 
     public void addPull(int[] input) {
 
-        bets.add(new Integer[Settings.get().getnOfPulls()]);
-        for (int i : bets.get(bets.size() - 1)) { //copio i valori ricevuti e ne aumento il numero di estrazioni
-            bets.get(bets.size() - 1)[i] = input[i];
+        betList.add(new int[Settings.get().getnOfPulls()]);
+        for (int i : betList.get(betList.size() - 1)) { //copio i valori ricevuti e ne aumento il numero di estrazioni
+            betList.get(betList.size() - 1)[i] = input[i];
         }
 
-        //TODO determine if won, if so add win
+    }
+
+    public int[] getLastBet(){
+
+        return betList.get(betList.size()-1);
 
     }
 
-    public int getWinnings() {
-        return winnings;
+    public int[] getSelectedBet(int n){
+
+        return betList.get(n);
+
     }
 
-    public void addToWinnings(int winnings) {
-        this.winnings += winnings;
+    public int getMoneyWon() {
+        return moneyWon;
     }
 
-    public int getSpendings() {
-        return spendings;
+    public void addToMoneyWon(int moneyWon) {
+        this.moneyWon += moneyWon;
     }
 
-    public void addToSpendings(int spendings) {
-        this.spendings += spendings;
+    public int getMoneySpent() {
+        return moneySpent;
+    }
+
+    public void addToMoneySpent(int moneySpent) {
+        this.moneySpent += moneySpent;
     }
 
     public int getNet() {
-        return winnings - spendings;
+        return moneyWon - moneySpent;
     }
 
-    public int getWins() {
-        return wins;
+    public int getNWins() {
+        return nWins;
     }
 
     public void setName(String name) {

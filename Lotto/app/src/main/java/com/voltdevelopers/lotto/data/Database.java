@@ -6,7 +6,7 @@ public class Database {
 
     private static Database instance = null;
     private Profile[] players; //i 5 giocatori, ordinati come nel pptx con le istruzioni
-    private int[] gameCounter;
+    private int[] gameCounter; //conteggio partite, diviso in due celle per separare storici e non
     private ArrayList<Integer[]> rounds;
     private int[] pullsPerNumber; //n di estrazioni per valore (n di estrazioni di 1 si trova nella cella 0, di 2 nella 1, etc etc)
     private int[] pullChronology; //ordine estrazioni (ultimo estratto sta in arr[89])
@@ -43,21 +43,26 @@ public class Database {
 
     private void initPlayers(){
 
-        //TODO initialize players and set player names via constructor if needed
+        players = new Profile[Settings.N_PLAYERS];
+        for(int i = 0; i < Settings.N_PLAYERS; i++){
+
+            players[i] = new Profile(Settings.PLAYER_NAMES[i]);
+
+        }
         //TODO add log edit
 
     }
 
-    public int getPlayerWinnings(int playerN){
+    public int getPlayerMoneyWon(int playerN){
 
-        return players[playerN].getWinnings();
+        return players[playerN].getMoneyWon();
         //TODO add log edit
 
     }
 
-    public int getPlayerSpendings(int playerN){
+    public int getPlayerMoneySpent(int playerN){
 
-        return players[playerN].getSpendings();
+        return players[playerN].getMoneySpent();
         //TODO add log edit
 
     }
@@ -71,7 +76,7 @@ public class Database {
 
     public int getPlayerWins(int playerN){
 
-        return players[playerN].getWins();
+        return players[playerN].getMoneyWon();
         //TODO add log edit
 
     }

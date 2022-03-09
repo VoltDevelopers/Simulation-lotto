@@ -5,7 +5,8 @@ public class Settings {
     private static Settings instance = null;
     public static final int N_NUMBERS = 90;
     public static final int N_PLAYERS = 5;
-    public static final int N_NUMBERS_X_EXTRACTION = 5;
+    public static final int NUMBERS_X_EXTRACTION = 5;
+    public static final String[] PLAYER_NAMES = {"Il Copione", "Il Ritardatario", "L' Azzardoso", "Il Testardo", "L' Ingenuo"};
     private int nOfPulls;
 
 
