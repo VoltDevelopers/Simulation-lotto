@@ -97,7 +97,7 @@ public class Database {
 
     public void addPlayerBet(int playerN, int[] input){
 
-        players[playerN].addPull(input);
+        players[playerN].addBet(input);
 
     }
 
@@ -163,7 +163,7 @@ public class Database {
 
     private class Analisys{
 
-        protected Analisys(){};
+        Analisys(){};
 
         public int[] getLatestN(int nRequested){
 
@@ -239,7 +239,7 @@ public class Database {
 class Profile {
 
     private String name;
-    private int moneyWon, moneySpent;
+    private double moneyWon, moneySpent;
     private int nWins;
     private ArrayList <int[]> betList;
 
@@ -259,7 +259,7 @@ class Profile {
 
     }
 
-    public void addPull(int[] input) {
+    public void addBet(int[] input) {
 
         betList.add(new int[Settings.get().getnOfPulls()]);
         for (int i : betList.get(betList.size() - 1)) { //copio i valori ricevuti e ne aumento il numero di estrazioni
@@ -280,27 +280,27 @@ class Profile {
 
     }
 
-    public int getMoneyWon() {
+    public double getMoneyWon() {
         return moneyWon;
     }
 
-    public void addToMoneyWon(int moneyWon) {
+    public void addToMoneyWon(double moneyWon) {
         this.moneyWon += moneyWon;
     }
 
-    public int getMoneySpent() {
+    public double getMoneySpent() {
         return moneySpent;
     }
 
-    public void addToMoneySpent(int moneySpent) {
+    public void addToMoneySpent(double moneySpent) {
         this.moneySpent += moneySpent;
     }
 
-    public int getNet() {
+    public double getNet() {
         return moneyWon - moneySpent;
     }
 
-    public int getNWins() {
+    public double getNWins() {
         return nWins;
     }
 
