@@ -1,6 +1,7 @@
 package com.voltdevelopers.lotto.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Database {
 
@@ -105,13 +106,34 @@ public class Database {
 
     //-----------------------log managment----------------------------------------------------------
 
-    /*
-        Ritorna tutta l'informazione in String
-    */
     @Override
     public String toString() {
-        //TODO
-        return null;
+        return "Database{" +
+                "numOfPulls=" + numOfPulls +
+                ", moneyToPay=" + moneyToPay +
+                ", players=" + allPlayersToString() +
+                ", gameCounter=" + gameCounter +
+                ", rounds=" + rounds.toString() +
+                ", pullsPerNumber=" + Arrays.toString(pullsPerNumber) +
+                ", pullChronology=" + pullChronology +
+                ", analisys=" + analisys +
+                '}';
+    }
+
+    private String allPlayersToString(){
+
+        String out = "";
+        for(int i = 0; i < players.length; i++)
+            out += playerToString(i);
+
+        return out;
+
+    }
+
+    public String playerToString(int n){
+
+        return players[n].toString();
+
     }
 
     private class Analisys {
@@ -241,5 +263,16 @@ class Profile {
         if (name != null)
             return name;
         return "name not set";
+    }
+
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "name='" + name + '\'' +
+                ", moneyWon=" + moneyWon +
+                ", moneySpent=" + moneySpent +
+                ", nWins=" + nWins +
+                //", betList=" + betList +
+                '}';
     }
 }
