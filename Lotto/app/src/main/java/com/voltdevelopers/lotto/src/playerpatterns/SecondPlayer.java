@@ -1,4 +1,4 @@
-package com.voltdevelopers.lotto.src.players;
+package com.voltdevelopers.lotto.src.playerpatterns;
 
 public class SecondPlayer extends Player {
     public SecondPlayer(int numsPerTurn) {
@@ -7,11 +7,11 @@ public class SecondPlayer extends Player {
     }
 
     @Override
-    public int[] createBet() {
+    public void createBet() {
         int[] bet = new int[numsPerTurn];
         for(int i = 0; i < numsPerTurn; i++){
             //TODO: bet[i] = getPullChronology()[pullChronology.length - 1 - i];
         }
-        return bet;
+        //Database.get().addPlayerBet(5, bet);
     }
 }
