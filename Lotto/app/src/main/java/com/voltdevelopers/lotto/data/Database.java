@@ -99,7 +99,7 @@ public class Database {
 
     }
 
-    public int getPulls() {
+    public int getPullCount() {
         return gameCounter;
         //TODO add log edit
     }
