@@ -7,7 +7,7 @@ public class Database {
     private static Database instance = null;
     private Profile[] players; //i 5 giocatori, ordinati come nel pptx con le istruzioni
     private int[] gameCounter; //conteggio partite, diviso in due celle per separare storici e non
-    private ArrayList<Integer[]> rounds;
+    private ArrayList<int[]> rounds;
     private int[] pullsPerNumber; //n di estrazioni per valore (n di estrazioni di 1 si trova nella cella 0, di 2 nella 1, etc etc)
     private ArrayList<Integer> pullChronology; //ordine estrazioni (ultimo estratto sta all'indice massimo)
     private String log;             //log usato per la console
@@ -23,7 +23,7 @@ public class Database {
         gameCounter[0] = 0;
         gameCounter[1] = 0;
 
-        rounds = new ArrayList<Integer[]>();
+        rounds = new ArrayList<>();
 
         pullsPerNumber = new int[Settings.N_NUMBERS];
         for (int i : pullsPerNumber) pullsPerNumber[i] = 0; //inizializzo array
@@ -86,9 +86,8 @@ public class Database {
 
     public void addPull(int[] input) {
 
-        rounds.add(new Integer[Settings.NUMBERS_X_EXTRACTION]);
-        for (int i : rounds.get(rounds.size() - 1)) { //copio i valori ricevuti e ne aumento il numero di estrazioni
-            rounds.get(rounds.size() - 1)[i] = input[i];
+        rounds.add(input);
+        for (int i : input) { //copio i valori ricevuti e ne aumento il numero di estrazioni
             pullsPerNumber[input[i] - 1]++;
             modChronology(input[i]);
             //TODO add log edit
