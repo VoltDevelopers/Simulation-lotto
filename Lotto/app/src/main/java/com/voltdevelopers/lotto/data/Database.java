@@ -6,7 +6,7 @@ public class Database {
 
     private static Database instance = null;
     private Profile[] players; //i 5 giocatori, ordinati come nel pptx con le istruzioni
-    private int[] gameCounter; //conteggio partite, diviso in due celle per separare storici e non
+    private int gameCounter;
     private ArrayList<int[]> rounds;
     private int[] pullsPerNumber; //n di estrazioni per valore (n di estrazioni di 1 si trova nella cella 0, di 2 nella 1, etc etc)
     private ArrayList<Integer> pullChronology; //ordine estrazioni (ultimo estratto sta all'indice massimo)
@@ -19,9 +19,7 @@ public class Database {
         analisys = new Analisys();
 
         initPlayers();
-        gameCounter = new int[2]; //il primo è per le partite "storiche", il secondo è per quelle in cui partecipano i giocatori
-        gameCounter[0] = 0;
-        gameCounter[1] = 0;
+        gameCounter = 0;
 
         rounds = new ArrayList<>();
 
@@ -101,18 +99,8 @@ public class Database {
 
     }
 
-    public int getTotalPulls() {
-        return gameCounter[0] + gameCounter[1];
-        //TODO add log edit
-    }
-
-    public int getHistoricPulls() {
-        return gameCounter[0];
-        //TODO add log edit
-    }
-
-    public int getPlayedPulls() {
-        return gameCounter[1];
+    public int getPulls() {
+        return gameCounter;
         //TODO add log edit
     }
 
