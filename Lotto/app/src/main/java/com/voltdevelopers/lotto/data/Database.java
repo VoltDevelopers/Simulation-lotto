@@ -89,18 +89,9 @@ public class Database {
         rounds.add(input);
         for (int i : input) { //copio i valori ricevuti e ne aumento il numero di estrazioni
             pullsPerNumber[input[i] - 1]++;
-            modChronology(input[i]);
+            analisys.modChronology(input[i]);
             //TODO add log edit
         }
-
-    }
-
-    private void modChronology(int n){
-
-        if(pullChronology.contains(n))
-            pullChronology.remove(pullChronology.lastIndexOf(n));
-
-        pullChronology.add(n);
 
     }
 
@@ -186,6 +177,15 @@ public class Database {
             }
             //TODO add log edit
             return output;
+
+        }
+
+        private void modChronology(int n){
+
+            if(pullChronology.contains(n))
+                pullChronology.remove(pullChronology.lastIndexOf(n));
+
+            pullChronology.add(n);
 
         }
 
