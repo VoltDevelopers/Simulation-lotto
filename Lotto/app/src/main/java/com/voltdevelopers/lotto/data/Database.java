@@ -12,7 +12,11 @@ public class Database {
     private ArrayList<Integer> pullChronology; //ordine estrazioni (ultimo estratto sta all'indice massimo)
     private String log;             //log usato per la console
 
+    private Analisys analisys;
+
     private Database() {
+
+        analisys = new Analisys();
 
         initPlayers();
         gameCounter = new int[2]; //il primo è per le partite "storiche", il secondo è per quelle in cui partecipano i giocatori
@@ -122,62 +126,21 @@ public class Database {
         //TODO add log edit
     }
 
+
+
+    //----------------------analisys methods--------------------------------------------------------
+
     public int[] getNMostFrequent(int nRequested){
-
-        int[] output = new int[nRequested];
-        for (int i : output){
-
-            int max = 0;
-            for (int j : pullsPerNumber){
-                if(pullsPerNumber[j] >= max && !intArrayContains(output, j+1)) {
-                    max = pullsPerNumber[j];
-                    output[i] = j+1;
-                }
-            }
-        }
-
-        //TODO add log edit
-
-        return output;
+        return analisys.getNMostFrequent(nRequested);
     }
 
-    private boolean intArrayContains(int[] arr, int n){
-
-        for (int i : arr) {
-            if (arr[i] == n)
-                return true;
-        }
-
-        return false;
+    public int[] getLatestN(int nRequested) {
+        return analisys.getLatestN(nRequested);
     }
 
-    public int[] getLatestN(int nRequested){
-
-        int[] output = new int[nRequested];
-        int chronoSize = pullChronology.size();
-        for (int i : output){
-
-            output[i] = pullChronology.get(chronoSize);
-            chronoSize--;
-
-        }
-        //TODO add log edit
-        return output;
-
-    }
 
     public int[] getOldestN(int nRequested){
-
-        int[] output = new int[nRequested];
-        for (int i : output){
-
-            output[i] = pullChronology.get(i);
-
-        }
-
-        //TODO add log edit
-        return output;
-
+        return analisys.getOldestN(nRequested);
     }
 
     //-----------------------log managment----------------------------------------------------------
@@ -206,6 +169,150 @@ public class Database {
         return out;
         //TODO add log edit
 
+    }
+
+    private class Analisys{
+
+        protected Analisys(){};
+
+        public int[] getLatestN(int nRequested){
+
+            int[] output = new int[nRequested];
+            int chronoSize = pullChronology.size();
+            for (int i : output){
+
+                output[i] = pullChronology.get(chronoSize);
+                chronoSize--;
+
+            }
+            //TODO add log edit
+            return output;
+
+        }
+
+        public int[] getOldestN(int nRequested){
+
+            int[] output = new int[nRequested];
+            for (int i : output){
+
+                output[i] = pullChronology.get(i);
+
+            }
+
+            //TODO add log edit
+            return output;
+
+        }
+
+        public int[] getNMostFrequent(int nRequested){
+
+            int[] output = new int[nRequested];
+            for (int i : output){
+
+                int max = 0;
+                for (int j : pullsPerNumber){
+                    if(pullsPerNumber[j] >= max && !intArrayContains(output, j+1)) {
+                        max = pullsPerNumber[j];
+                        output[i] = j+1;
+                    }
+                }
+            }
+
+            //TODO add log edit
+
+            return output;
+        }
+
+        private boolean intArrayContains(int[] arr, int n){
+
+            for (int i : arr) {
+                if (arr[i] == n)
+                    return true;
+            }
+
+            return false;
+        }
+
+    }
+
+}
+
+class Profile {
+
+    private String name;
+    private int moneyWon, moneySpent;
+    private int nWins;
+    private ArrayList <int[]> betList;
+
+    public Profile() {
+
+        moneyWon = 0;
+        moneySpent = 0;
+        nWins = 0;
+        betList = new ArrayList<int[]>();
+
+    }
+
+    public Profile(String name) {
+
+        this();
+        this.name = name;
+
+    }
+
+    public void addPull(int[] input) {
+
+        betList.add(new int[Settings.get().getnOfPulls()]);
+        for (int i : betList.get(betList.size() - 1)) { //copio i valori ricevuti e ne aumento il numero di estrazioni
+            betList.get(betList.size() - 1)[i] = input[i];
+        }
+
+    }
+
+    public int[] getLastBet(){
+
+        return betList.get(betList.size()-1);
+
+    }
+
+    public int[] getSelectedBet(int n){
+
+        return betList.get(n);
+
+    }
+
+    public int getMoneyWon() {
+        return moneyWon;
+    }
+
+    public void addToMoneyWon(int moneyWon) {
+        this.moneyWon += moneyWon;
+    }
+
+    public int getMoneySpent() {
+        return moneySpent;
+    }
+
+    public void addToMoneySpent(int moneySpent) {
+        this.moneySpent += moneySpent;
+    }
+
+    public int getNet() {
+        return moneyWon - moneySpent;
+    }
+
+    public int getNWins() {
+        return nWins;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        if(name != null)
+            return name;
+        return "name not set";
     }
 
 }
