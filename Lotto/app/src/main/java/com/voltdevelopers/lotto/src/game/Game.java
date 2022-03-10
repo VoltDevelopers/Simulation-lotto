@@ -22,7 +22,7 @@ public class Game {
     }
 
     public void gameLoop(){
-        int draw[] = new int[5];
+        int draw[];
         int results[] = new int[5];
         for (int i = 0; i < gnum; i++) {
             draw = gen.numSeries(5); //creazione cinquina estratta
@@ -38,7 +38,7 @@ public class Game {
 
     private void preGameLoop(int games) {
         for (int i = 0; i < games; i++) {
-
+            Database.get().addPull(gen.numSeries(5)); //estrae cinquine per riempire i dati dei valori estratti
         }
     }
 
