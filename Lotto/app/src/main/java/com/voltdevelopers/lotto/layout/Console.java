@@ -42,5 +42,4 @@ public class Console {
         printStr(String.valueOf(input));
         return input;
     }
-
 }
