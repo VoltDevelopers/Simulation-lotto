@@ -75,6 +75,14 @@ public class Database {
         players[playerN].addBet(input);
     }
 
+    public int[] getPlayerBet(int playerN, int n) {
+        return players[playerN].getBet(n);
+    }
+
+    public int[] getPlayerLastBet(int playerN) {
+        return players[playerN].getLastBet();
+    }
+
     public int getPullCount() {
         return gameCounter;
     }
@@ -178,6 +186,10 @@ class Profile {
         for (int i : betList.get(betList.size() - 1)) {
             betList.get(betList.size() - 1)[i] = input[i];
         }
+    }
+
+    public int[] getBet(int n) {
+        return betList.get(n);
     }
 
     public int[] getLastBet() {
