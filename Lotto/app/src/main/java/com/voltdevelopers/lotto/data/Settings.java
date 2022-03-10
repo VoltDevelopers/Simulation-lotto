@@ -30,7 +30,7 @@ public class Settings {
         this.nOfPulls = nOfPulls;
     }
 
-    public static double getMoneyPerWin() { return moneyPerWin; }
+    public double getMoneyPerWin() { return moneyPerWin; }
 
-    public static void setMoneyPerWin(double moneyPerWin) { this.moneyPerWin = moneyPerWin; }
+    public void setMoneyPerWin(double moneyPerWin) { this.moneyPerWin = moneyPerWin; }
 }
