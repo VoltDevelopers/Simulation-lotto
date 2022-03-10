@@ -28,3 +28,5 @@ Noramle - il solito gioco del lotto.
 6) **git commit -m "msg"** --> crea il commit.
 7) **git push** --> invia le modifiche al repository remoto.
 ### All git commands: http://guides.beanstalkapp.com/version-control/common-git-commands.html
+### UML classi (backend documentation)  https://app.creately.com/diagram/gVNZn6yRGQz/edit
+### Frontend docs https://miro.com/welcomeonboard/SUFGTmpvZ1FZMzBMNlIxU25uclliakdTT0pJeVphelE1cmt6RUR3cHhkUWdGSVFsZGNMRVZXeU91UXdTQXE3aHwzMDc0NDU3MzU5MTU3NTAyNDYz?invite_link_id=957489500654
