@@ -56,21 +56,21 @@ public class Database {
 
     }
 
-    public int getPlayerMoneyWon(int playerN){
+    public double getPlayerMoneyWon(int playerN){
 
         return players[playerN].getMoneyWon();
         //TODO add log edit
 
     }
 
-    public int getPlayerMoneySpent(int playerN){
+    public double getPlayerMoneySpent(int playerN){
 
         return players[playerN].getMoneySpent();
         //TODO add log edit
 
     }
 
-    public int getPlayerNet(int playerN){
+    public double getPlayerNet(int playerN){
 
         return players[playerN].getNet();
         //TODO add log edit
@@ -79,7 +79,7 @@ public class Database {
 
     public int getPlayerWins(int playerN){
 
-        return players[playerN].getMoneyWon();
+        return players[playerN].getNWins();
         //TODO add log edit
 
     }
@@ -300,7 +300,7 @@ class Profile {
         return moneyWon - moneySpent;
     }
 
-    public double getNWins() {
+    public int getNWins() {
         return nWins;
     }
 
