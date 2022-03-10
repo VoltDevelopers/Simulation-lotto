@@ -104,7 +104,16 @@ public class Database {
     }
 
     //-----------------------log managment----------------------------------------------------------
-    // TODO: 10/03/22 Add as toString 
+
+    /*
+        Ritorna tutta l'informazione in String
+    */
+    @Override
+    public String toString() {
+        //TODO
+        return null;
+    }
+
     private class Analisys {
 
         public int[] getLatestN(int nRequested) {

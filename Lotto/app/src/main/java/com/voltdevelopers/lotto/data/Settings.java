@@ -7,16 +7,16 @@ public class Settings {
     public static final int N_PLAYERS = 5;
     public static final int NUMBERS_X_EXTRACTION = 5;
     public static final String[] PLAYER_NAMES = {"Il Copione", "Il Ritardatario", "L' Azzardoso", "Il Testardo", "L' Ingenuo"};
-    private int nOfPulls;
+    private static int nOfPulls;
+    private static double moneyPerWin;
 
 
-    private Settings(){
-
+    private Settings() {
     }
 
-    public static Settings get(){
+    public static Settings get() {
 
-        if(instance != null)
+        if (instance != null)
             return instance;
         instance = new Settings();
         return instance;
@@ -26,8 +26,11 @@ public class Settings {
         return nOfPulls;
     }
 
-    public void setnOfPulls(int nOfPulls) {
+    public void setNOfPulls(int nOfPulls) {
         this.nOfPulls = nOfPulls;
     }
 
+    public static double getMoneyPerWin() { return moneyPerWin; }
+
+    public static void setMoneyPerWin(double moneyPerWin) { this.moneyPerWin = moneyPerWin; }
 }
