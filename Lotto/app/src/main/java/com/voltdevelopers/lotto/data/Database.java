@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class Database {
 
+    public final int numOfPulls; //Il numero di estrazioni
+    public final double moneyToPay;
     private static Database instance = null;
     private Profile[] players; //i 5 giocatori, ordinati come nel pptx con le istruzioni
     private final int gameCounter;
@@ -13,8 +15,9 @@ public class Database {
 
     private Analisys analisys;
 
-    private Database() {
-
+    private Database(int numOfPulls, double moneyToPay) {
+        this.numOfPulls = numOfPulls;
+        this.moneyToPay = moneyToPay;
         analisys = new Analisys();
 
         initPlayers();
@@ -27,11 +30,11 @@ public class Database {
         pullChronology = new ArrayList<>();
     }
 
-    public static Database get() {
+    public static Database getInstance(int numOfPulls, double moneyToPay) {
 
         if (instance != null)
             return instance;
-        instance = new Database();
+        instance = new Database(numOfPulls, moneyToPay);
         return instance;
 
     }
