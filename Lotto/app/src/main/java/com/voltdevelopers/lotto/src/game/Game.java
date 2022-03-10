@@ -11,7 +11,9 @@ import com.voltdevelopers.lotto.src.playerpatterns.ThirdPlayer;
 public class Game {
 
     private int gnum; // Numero partite
+    // TODO: 10/03/22 Get TURN_NUMS from db
     private final int TURN_NUMS = 5;
+    // TODO: 10/03/22 Get PLAYERS from db
     private final int PLAYERS = 5;
     private NumberGenerator gen; //ho creato una classe a parte perché dovevo randomizzare in più classi diverse
     private Player[] playerPatterns;
