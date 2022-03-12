@@ -7,6 +7,7 @@
     tools:context=".activitys.StatActivity">
 
     <TextView
+        android:id="@+id/db"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TEST 2"

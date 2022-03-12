@@ -27,7 +27,7 @@ public class Database {
         rounds = new ArrayList<>();
 
         pullsPerNumber = new int[Settings.N_NUMBERS];
-        for (int i : pullsPerNumber) pullsPerNumber[i] = 0; //inizializzo array
+//        for (int i : pullsPerNumber) pullsPerNumber[i] = 0; //inizializzo array
         pullChronology = new ArrayList<>();
     }
 
@@ -65,7 +65,7 @@ public class Database {
 
     public void addPull(int[] input) {
         rounds.add(input);
-        for (int i : input) { //copio i valori ricevuti e ne aumento il numero di estrazioni
+        for (int i = 0; i < input.length; i++) {
             pullsPerNumber[input[i] - 1]++;
             analisys.modChronology(input[i]);
         }

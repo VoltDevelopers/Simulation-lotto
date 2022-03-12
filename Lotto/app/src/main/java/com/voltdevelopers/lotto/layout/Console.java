@@ -22,7 +22,6 @@ public class Console {
     }
 
     public void printStr(String str) {
-        System.out.println(str);
         Log.i(TAG, str);
     }
 

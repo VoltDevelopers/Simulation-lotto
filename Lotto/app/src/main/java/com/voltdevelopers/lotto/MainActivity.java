@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.voltdevelopers.lotto.activitys.PatternGameActivity;
 import com.voltdevelopers.lotto.activitys.StatActivity;
+import com.voltdevelopers.lotto.src.game.Game;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,13 +21,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findRes();
 
-//        standardGame.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//            }
-//        });
+        findRes();
+        standardGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
 
         patternGame.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, PatternGameActivity.class);
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Game game = new Game(10);
+        game.gameLoop();
     }
 
     private void findRes() {
