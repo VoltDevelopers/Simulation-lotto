@@ -11,7 +11,7 @@ import com.voltdevelopers.lotto.data.Database;
 public class StatActivity extends AppCompatActivity {
 
     Database db;
-
+  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

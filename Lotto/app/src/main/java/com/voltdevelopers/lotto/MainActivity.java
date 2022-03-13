@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("INFO", "Started Activity" + intent.getIdentifier());
             }
         });
-
+        
         Game game = new Game(10);
         game.gameLoop();
     }
