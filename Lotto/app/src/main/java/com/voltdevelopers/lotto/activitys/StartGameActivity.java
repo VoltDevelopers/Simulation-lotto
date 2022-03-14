@@ -13,7 +13,7 @@ import com.voltdevelopers.lotto.R;
 
 import java.util.ArrayList;
 
-public class PatternGameActivity extends AppCompatActivity {
+public class StartGameActivity extends AppCompatActivity {
 
     private static final String TAG = "PatternGameActivity";
     private LineChart myChart;

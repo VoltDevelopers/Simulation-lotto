@@ -4,51 +4,46 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.voltdevelopers.lotto.activitys.PatternGameActivity;
-import com.voltdevelopers.lotto.activitys.StatActivity;
-import com.voltdevelopers.lotto.src.game.Game;
+import com.voltdevelopers.lotto.activitys.StartGameActivity;
+import com.voltdevelopers.lotto.activitys.RulesActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button standardGame, patternGame, stat;
+    Button start, rules;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        findRes();
-//        standardGame.setOnClickListener(view -> {
-//        });
+        findRes();
 
-//        patternGame.setOnClickListener(view -> {
-//            Intent intent = new Intent(MainActivity.this, PatternGameActivity.class);
-//            startActivity(intent);
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-//                Log.i("INFO", "Started Activity" + intent.getIdentifier());
-//            }
-//        });
+        start.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, StartGameActivity.class);
+            startActivity(intent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                Log.i("INFO", "Started Activity" + intent.getIdentifier());
+            }
+        });
 
-//        stat.setOnClickListener(view -> {
-//            Intent intent = new Intent(MainActivity.this, StatActivity.class);
-//            startActivity(intent);
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-//                Log.i("INFO", "Started Activity" + intent.getIdentifier());
-//            }
-//        });
+        rules.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, RulesActivity.class);
+            startActivity(intent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                Log.i("INFO", "Started Activity" + intent.getIdentifier());
+            }
+        });
 
 //        Game game = new Game(10);
 //        game.gameLoop();
     }
 
     private void findRes() {
-//        standardGame = findViewById(R.id.btn1);
-//        patternGame = findViewById(R.id.btn2);
-//        stat = findViewById(R.id.btn3);
+        start = findViewById(R.id.buttonStart);
+        rules = findViewById(R.id.buttonRules);
     }
 }

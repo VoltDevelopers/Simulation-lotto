@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
+    android:backgroundTint="#000000"
     tools:context=".MainActivity">
+
+    <!--  START  HEADER    -->
 
     <View
         android:id="@+id/view2"
@@ -123,8 +126,8 @@
         android:id="@+id/textView"
         android:layout_width="140dp"
         android:layout_height="61dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/courier_new"
         android:lineSpacingExtra="2sp"
         android:text="Gioco del lotto"
@@ -146,4 +149,77 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_logo" />
+
+<!--  END  HEADER    -->
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="228dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="508dp"
+        android:layout_marginEnd="156dp"
+        android:fontFamily="@font/courier_new"
+        android:text="O leggere la teoria ;)"
+        android:textAlignment="viewStart"
+        android:textColor="#00FF38"
+        android:textFontWeight="700"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="228dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="364dp"
+        android:layout_marginEnd="152dp"
+        android:fontFamily="@font/courier_new"
+        android:text="Avviare la simulazione..."
+        android:textAlignment="viewStart"
+        android:textColor="#00FF38"
+        android:textFontWeight="700"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="318dp"
+        android:layout_height="108dp"
+        android:layout_marginTop="220dp"
+        android:layout_marginEnd="44dp"
+        android:fontFamily="@font/courier_new"
+        android:text="Se consideriamo il gioco del lotto da un punto di vista matematico e calcoli la probabilità di vincita di tutte le strategie è assolutamente la stessa e noi lo dimostreremo chiaramente."
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textFontWeight="700"
+        android:textSize="14dp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonStart"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="136dp"
+        android:backgroundTint="#C4C4C4"
+        android:text="Start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <Button
+        android:id="@+id/buttonRules"
+        android:layout_width="140dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="136dp"
+        android:backgroundTint="#C4C4C4"
+        android:text="Rules"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

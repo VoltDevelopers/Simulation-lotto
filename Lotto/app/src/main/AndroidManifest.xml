@@ -18,8 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:label="PatternGameActivity" android:name=".activitys.PatternGameActivity" android:exported="true"/>
-        <activity android:label="StatActivity" android:name=".activitys.StatActivity" android:exported="true"/>
+        <activity android:label="PatternGameActivity" android:name=".activitys.StartGameActivity" android:exported="true"/>
+        <activity android:label="StatActivity" android:name=".activitys.RulesActivity" android:exported="true"/>
     </application>
 
 </manifest>
