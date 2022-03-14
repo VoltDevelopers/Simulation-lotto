@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Lotto</string>
+
+    <string name="lotto_misconcetti">Lotto | Misconcetti</string>
+    <string name="std_game">Standard Game</string>
+    <string name="pattern_game">Pattern Game</string>
+    <string name="stats">Stats</string>
 </resources>

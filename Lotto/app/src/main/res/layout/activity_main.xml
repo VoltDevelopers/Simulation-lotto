@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Lotto | Misconcetti"
+            android:text="@string/lotto_misconcetti"
             android:textSize="30sp" />
 
     </LinearLayout>
@@ -42,7 +42,7 @@
             android:id="@+id/Games"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Balance: 0$"
+            android:text="Games"
             android:textSize="20sp" />
     </LinearLayout>
 
@@ -59,7 +59,7 @@
             android:layout_gravity="center"
 
             android:layout_margin="10dp"
-            android:text="Standart Game" />
+            android:text="@string/std_game" />
 
         <Button
             android:id="@+id/btn2"
@@ -68,7 +68,7 @@
             android:layout_gravity="center"
 
             android:layout_margin="10dp"
-            android:text="Pattern Game"
+            android:text="@string/pattern_game"
 
             />
 
@@ -79,7 +79,7 @@
             android:layout_gravity="center"
 
             android:layout_margin="10dp"
-            android:text="Stat" />
+            android:text="@string/stats" />
 
     </LinearLayout>
 

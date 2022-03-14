@@ -2,7 +2,6 @@ package com.voltdevelopers.lotto.src.game;
 
 import com.voltdevelopers.lotto.data.Database;
 import com.voltdevelopers.lotto.layout.Console;
-import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.playerpatterns.FifthPlayer;
 import com.voltdevelopers.lotto.src.playerpatterns.FirstPlayer;
 import com.voltdevelopers.lotto.src.playerpatterns.FourthPlayer;
@@ -19,7 +18,7 @@ public class Game {
     Database db;
     Player[] playerPatterns;
     StdRandom random;
-    Console consle;
+    Console console;
 
     NumberGenerator gen;
 
@@ -27,14 +26,14 @@ public class Game {
         this.turnsGame = turnsGame;
         db = Database.getInstance(pull, 18d);
         random = new StdRandom();
-        consle = Console.getInstance();
+        console = Console.getInstance();
         playerPatterns = new Player[5];
         initPlayers();
     }
 
     public void gameLoop() {
         int[] draw = new int[0];
-//        int results[] = new int[5];
+        int results[] = new int[5];
 
         for (int i = 0; i < turnsGame; i++) {
 //            try {
@@ -43,10 +42,10 @@ public class Game {
 //                e.printStackTrace();
 //            }
             db.addPull(draw);
-            consle.printStr("Added to db");
+            console.printStr("Added to db");
 
-//            playersPlay(); //chiamata ai singoli giocatori che creano una giocata secondo i loro criteri, e la inviano al db
-//            results = buildResultsArray(draw); //crea un array, dove per ogni indice ci sono i numeri vinti nel singolo round per il singolo giocatore
+            playersPlay(); //chiamata ai singoli giocatori che creano una giocata secondo i loro criteri, e la inviano al db
+            results = buildResultsArray(draw); //crea un array, dove per ogni indice ci sono i numeri vinti nel singolo round per il singolo giocatore
             //TODO manda i dati delle vincite al database
 
              //aggiorno i valori estratti con l'estrazione
@@ -73,7 +72,8 @@ public class Game {
     private int[] buildResultsArray(int[] draw) {
         int results[] = new int[5];
         for (int i = 0; i < playerPatterns.length; i++) {
-            //TODO checkPlayerResult(draw, Database.get().MI SERVONO I BETS JOEL O NO COMBINO)
+            results[i] = checkPlayerResult(draw, Database.getInstance(5, 18).getPlayerLastBet(1));
+
         }
         return results;
     }

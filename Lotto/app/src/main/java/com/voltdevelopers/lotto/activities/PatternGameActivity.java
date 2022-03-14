@@ -1,4 +1,4 @@
-package com.voltdevelopers.lotto.activitys;
+package com.voltdevelopers.lotto.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

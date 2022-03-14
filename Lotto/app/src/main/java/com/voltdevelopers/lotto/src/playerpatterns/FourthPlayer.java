@@ -1,5 +1,6 @@
 package com.voltdevelopers.lotto.src.playerpatterns;
 
+import com.voltdevelopers.lotto.data.Database;
 import com.voltdevelopers.lotto.src.game.NumberGenerator;
 
 public class FourthPlayer extends Player {
@@ -17,6 +18,6 @@ public class FourthPlayer extends Player {
 
     @Override
     public void createBet() {
-        //Database.get().addPlayerBet(5, bet);
+        Database.getInstance(5, 18).addPlayerBet(playerN, bet);
     }
 }

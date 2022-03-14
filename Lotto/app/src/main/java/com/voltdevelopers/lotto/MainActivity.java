@@ -9,8 +9,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.voltdevelopers.lotto.activitys.PatternGameActivity;
-import com.voltdevelopers.lotto.activitys.StatActivity;
+import com.voltdevelopers.lotto.activities.PatternGameActivity;
+import com.voltdevelopers.lotto.activities.StatActivity;
 import com.voltdevelopers.lotto.src.game.Game;
 
 public class MainActivity extends AppCompatActivity {

@@ -3,6 +3,7 @@ package com.voltdevelopers.lotto.src.playerpatterns;
 public abstract class Player {
     protected String name;
     protected int numsPerTurn;
+    protected int playerN;
 
     public Player(int numsPerTurn){
         this.numsPerTurn = 5;
