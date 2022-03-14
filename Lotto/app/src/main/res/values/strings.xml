@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Lotto</string>
+    <string name="htmlText"><p>Se consideriamo il gioco del lotto da un punto di vista <span style="color:#FF0000">matematico</span> e <span style="color:#00ff00;">calcoli</span> la probabilità di vincita di tutte le strategie è assolutamente la stessa e noi lo dimostreremo chiaramente.</p></string>
 </resources>

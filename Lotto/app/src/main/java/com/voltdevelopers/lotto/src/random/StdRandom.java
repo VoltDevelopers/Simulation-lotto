@@ -2,6 +2,7 @@ package com.voltdevelopers.lotto.src.random;
 
 import com.voltdevelopers.lotto.src.exception.InputException;
 
+// Можно заменить на строку с данными метио или атомных вычиследний чтобы добиться максимального рандома
 public class StdRandom {
 
     public static int[] getRandomArray(int num, int maxRandom) throws InputException {

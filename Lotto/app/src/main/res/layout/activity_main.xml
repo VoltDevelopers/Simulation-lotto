@@ -137,6 +137,7 @@
         android:textFontWeight="700"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:typeface="normal"
         app:layout_constraintStart_toEndOf="@+id/view"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -185,13 +186,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textViewHTML"
         android:layout_width="318dp"
         android:layout_height="108dp"
         android:layout_marginTop="220dp"
         android:layout_marginEnd="44dp"
         android:fontFamily="@font/courier_new"
-        android:text="Se consideriamo il gioco del lotto da un punto di vista matematico e calcoli la probabilità di vincita di tutte le strategie è assolutamente la stessa e noi lo dimostreremo chiaramente."
+        android:text="@string/htmlText"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textFontWeight="700"
