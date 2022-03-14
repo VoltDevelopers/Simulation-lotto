@@ -22,36 +22,33 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findRes();
-        standardGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
+//        findRes();
+//        standardGame.setOnClickListener(view -> {
+//        });
 
-        patternGame.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, PatternGameActivity.class);
-            startActivity(intent);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                Log.i("INFO", "Started Activity" + intent.getIdentifier());
-            }
-        });
+//        patternGame.setOnClickListener(view -> {
+//            Intent intent = new Intent(MainActivity.this, PatternGameActivity.class);
+//            startActivity(intent);
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//                Log.i("INFO", "Started Activity" + intent.getIdentifier());
+//            }
+//        });
 
-        stat.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, StatActivity.class);
-            startActivity(intent);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                Log.i("INFO", "Started Activity" + intent.getIdentifier());
-            }
-        });
+//        stat.setOnClickListener(view -> {
+//            Intent intent = new Intent(MainActivity.this, StatActivity.class);
+//            startActivity(intent);
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+//                Log.i("INFO", "Started Activity" + intent.getIdentifier());
+//            }
+//        });
 
-        Game game = new Game(10);
-        game.gameLoop();
+//        Game game = new Game(10);
+//        game.gameLoop();
     }
 
     private void findRes() {
-        standardGame = findViewById(R.id.btn1);
-        patternGame = findViewById(R.id.btn2);
-        stat = findViewById(R.id.btn3);
+//        standardGame = findViewById(R.id.btn1);
+//        patternGame = findViewById(R.id.btn2);
+//        stat = findViewById(R.id.btn3);
     }
 }
