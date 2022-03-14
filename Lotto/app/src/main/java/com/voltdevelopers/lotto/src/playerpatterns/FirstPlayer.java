@@ -12,10 +12,8 @@ public class FirstPlayer extends Player {
 
     @Override
     public void createBet() {
-        int[] bet = new int[numsPerTurn];
-        for(int i = 0; i < numsPerTurn; i++){
-            //TODO: bet[i] = getLastestN(5);
-        }
+        int[] bet;
+        bet = Database.getInstance(5, 18).getLatestN(5);
         Database.getInstance(5, 18).addPlayerBet(playerN, bet);
     }
 }

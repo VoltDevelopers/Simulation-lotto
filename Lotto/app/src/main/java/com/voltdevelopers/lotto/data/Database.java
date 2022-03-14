@@ -14,12 +14,12 @@ public class Database {
     private final int[] pullsPerNumber; //n di estrazioni per valore (n di estrazioni di 1 si trova nella cella 0, di 2 nella 1, etc etc)
     private final ArrayList<Integer> pullChronology; //ordine estrazioni (ultimo estratto sta all'indice massimo)
 
-    private Analisys analisys;
+    private Analysis analysis;
 
     private Database(int numOfPulls, double moneyToPay) {
         this.numOfPulls = numOfPulls;
         this.moneyToPay = moneyToPay;
-        analisys = new Analisys();
+        analysis = new Analysis();
 
         initPlayers();
         gameCounter = 0;
@@ -67,7 +67,7 @@ public class Database {
         rounds.add(input);
         for (int i = 0; i < input.length; i++) {
             pullsPerNumber[input[i] - 1]++;
-            analisys.modChronology(input[i]);
+            analysis.modChronology(input[i]);
         }
 
     }
@@ -89,19 +89,19 @@ public class Database {
     }
 
 
-    //----------------------analisys methods--------------------------------------------------------
+    //----------------------analysis methods--------------------------------------------------------
 
     public int[] getNMostFrequent(int nRequested) {
-        return analisys.getNMostFrequent(nRequested);
+        return analysis.getNMostFrequent(nRequested);
     }
 
     public int[] getLatestN(int nRequested) {
-        return analisys.getLatestN(nRequested);
+        return analysis.getLatestN(nRequested);
     }
 
 
     public int[] getOldestN(int nRequested) {
-        return analisys.getOldestN(nRequested);
+        return analysis.getOldestN(nRequested);
     }
 
     //-----------------------log managment----------------------------------------------------------
@@ -116,7 +116,7 @@ public class Database {
                 ", rounds=" + rounds.toString() +
                 ", pullsPerNumber=" + Arrays.toString(pullsPerNumber) +
                 ", pullChronology=" + pullChronology +
-                ", analisys=" + analisys +
+                ", analysis=" + analysis +
                 '}';
     }
 
@@ -136,7 +136,7 @@ public class Database {
 
     }
 
-    private class Analisys {
+    private class Analysis {
 
         public int[] getLatestN(int nRequested) {
             int[] output = new int[nRequested];
