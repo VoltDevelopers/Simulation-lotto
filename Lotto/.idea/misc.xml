@@ -3,9 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.1035" />
-        <entry key="app/src/main/res/layout-v28/activity_main.xml" value="0.3098958333333333" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3276336669921875" />
+        <entry key="..\:/Users/andco/Documents/Programming/Simulation-lotto/Lotto/app/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="..\:/Users/andco/Documents/Programming/Simulation-lotto/Lotto/app/src/main/res/layout/activity_pattern_game.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/andco/Documents/Programming/Simulation-lotto/Lotto/app/src/main/res/layout/activity_stat.xml" value="0.18541666666666667" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/activity_pattern_game.xml" value="0.25692342122395834" />
       </map>
     </option>
