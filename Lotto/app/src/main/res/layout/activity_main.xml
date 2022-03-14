@@ -150,7 +150,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_logo" />
 
-<!--  END  HEADER    -->
+    <!--  END  HEADER    -->
 
     <TextView
         android:id="@+id/textView6"

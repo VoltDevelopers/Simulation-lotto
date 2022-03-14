@@ -15,7 +15,7 @@ public class RulesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stat);
+        setContentView(R.layout.activity_rules);
 
         db = Database.getInstance(5, 18d);
 
