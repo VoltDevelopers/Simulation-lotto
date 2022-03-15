@@ -26,8 +26,13 @@ public class Game {
 
     public Game(int turnsGame) throws InputException {
         this.turnsGame = turnsGame;
+        db = Database.getInstance(pull, 18d);
         preGameLoop(10);
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> f362620d1e6be3c9c29d66830e9fbb70f6d7950d
         random = new StdRandom();
         console = Console.getInstance();
         playerPatterns = new Player[5];
