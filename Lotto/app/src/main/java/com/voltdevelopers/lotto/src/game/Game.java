@@ -51,6 +51,7 @@ public class Game {
             playersPlay(); //chiamata ai singoli giocatori che creano una giocata secondo i loro criteri, e la inviano al db
             results = buildResultsArray(draw); //crea un array, dove per ogni indice ci sono i numeri vinti nel singolo round per il singolo giocatore
             //TODO manda i dati delle vincite al database
+            Database.getInstance(pull, 18d).sendDataToGraph(results); // per l' aggiornamento del grafico
 
              //aggiorno i valori estratti con l'estrazione
             // *Chiede db di visualizare i dati*
