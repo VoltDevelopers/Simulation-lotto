@@ -14,7 +14,7 @@
         android:id="@+id/view2"
         android:layout_width="48dp"
         android:layout_height="1dp"
-        android:layout_marginStart="210dp"
+        android:layout_marginStart="204dp"
         android:layout_marginTop="76dp"
         android:background="#FFFFFF"
         android:rotation="-40"
@@ -27,8 +27,8 @@
         android:id="@+id/textView2"
         android:layout_width="228dp"
         android:layout_height="40dp"
-        android:layout_marginTop="112dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="108dp"
         android:fontFamily="@font/courier_new"
         android:text="Misconcetti e la loro confutazione"
         android:textAlignment="viewEnd"
@@ -36,7 +36,7 @@
         android:textFontWeight="700"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view4"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
@@ -84,8 +84,6 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="92dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.029"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -93,11 +91,9 @@
         android:id="@+id/view8"
         android:layout_width="60dp"
         android:layout_height="1dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="246dp"
         android:layout_marginTop="60dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.709"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -105,11 +101,9 @@
         android:id="@+id/view5"
         android:layout_width="80dp"
         android:layout_height="2dp"
-        android:layout_marginStart="93dp"
+        android:layout_marginStart="101dp"
         android:layout_marginTop="141dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.029"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -117,9 +111,10 @@
         android:id="@+id/view7"
         android:layout_width="197dp"
         android:layout_height="2dp"
+        android:layout_marginStart="214dp"
         android:layout_marginTop="160dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -145,9 +140,9 @@
         android:id="@+id/imageFilterView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="295dp"
         android:layout_marginTop="35dp"
-        android:layout_marginEnd="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_logo" />
 
@@ -157,8 +152,8 @@
         android:id="@+id/textView6"
         android:layout_width="228dp"
         android:layout_height="40dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="508dp"
-        android:layout_marginEnd="156dp"
         android:fontFamily="@font/courier_new"
         android:text="O leggere la teoria ;)"
         android:textAlignment="viewStart"
@@ -166,15 +161,15 @@
         android:textFontWeight="700"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="228dp"
         android:layout_height="40dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="364dp"
-        android:layout_marginEnd="152dp"
         android:fontFamily="@font/courier_new"
         android:text="Avviare la simulazione..."
         android:textAlignment="viewStart"
@@ -182,15 +177,15 @@
         android:textFontWeight="700"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewHTML"
         android:layout_width="318dp"
         android:layout_height="108dp"
+        android:layout_marginStart="34dp"
         android:layout_marginTop="220dp"
-        android:layout_marginEnd="44dp"
         android:fontFamily="@font/courier_new"
         android:text="@string/htmlText"
         android:textAlignment="center"
@@ -198,29 +193,29 @@
         android:textFontWeight="700"
         android:textSize="14dp"
         android:textStyle="normal"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttonStart"
         android:layout_width="140dp"
         android:layout_height="50dp"
+        android:layout_marginStart="120dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="136dp"
         android:backgroundTint="#C4C4C4"
         android:text="Start"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <Button
         android:id="@+id/buttonRules"
         android:layout_width="140dp"
         android:layout_height="50dp"
+        android:layout_marginStart="120dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="136dp"
         android:backgroundTint="#C4C4C4"
         android:text="Rules"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
