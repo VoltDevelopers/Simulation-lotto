@@ -9,6 +9,7 @@ public class NumberGenerator {
         int val = 0;
         for(int i = 0; i < numsPerTurn; i++){
             val = ((int) Math.abs(Math.random()) % 90) + 1;
+            series[i] = val;
             if(isAlreadyDrawn(series, val)){ //se il numero già presente in quelli da giocare
                 i--; //ripeti l'estrazione
             }

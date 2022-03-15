@@ -2,6 +2,8 @@ package com.voltdevelopers.lotto.src.random;
 
 import com.voltdevelopers.lotto.src.exception.InputException;
 
+import java.util.Arrays;
+
 public class StdRandom {
 
     public static int[] getRandomArray(int num, int maxRandom) throws InputException {
@@ -10,7 +12,8 @@ public class StdRandom {
         }
         int[] array = new int[num];
         for (int i = 0; i < num; i++) {
-            array[i] = (int) (Math.random() * maxRandom + 1);
+            array[i] = (int) ( 1 + Math.random() * maxRandom);
+            System.out.println(Arrays.toString(array));
             if (isAlreadyDrawn(array, array[i])) {
                 i--;
             }
