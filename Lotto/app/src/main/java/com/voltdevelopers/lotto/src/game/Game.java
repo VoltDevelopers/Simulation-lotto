@@ -17,8 +17,7 @@ public class Game {
 
     private final int turnsGame;
     private final int pull = 5;
-
-    Database db;
+    
     Player[] playerPatterns;
     StdRandom random;
     Console console;
@@ -28,8 +27,7 @@ public class Game {
     public Game(int turnsGame) throws InputException {
         this.turnsGame = turnsGame;
         preGameLoop(10);
-
-        db = Database.getInstance(pull, 18d);
+        
         random = new StdRandom();
         console = Console.getInstance();
         playerPatterns = new Player[5];
@@ -47,7 +45,7 @@ public class Game {
 //            } catch (InputException e) {
 //                e.printStackTrace();
 //            }
-            db.addPull(draw);
+            Database.getInstance(pull, 18d).addPull(draw);
             console.printStr("Added to db");
 
             playersPlay(); //chiamata ai singoli giocatori che creano una giocata secondo i loro criteri, e la inviano al db
@@ -61,7 +59,7 @@ public class Game {
 
     private void preGameLoop(int games) throws InputException {
         for (int i = 0; i < games; i++) {
-            db.addPull(StdRandom.getRandomArray(5, 90)); //estrae cinquine per riempire i dati dei valori estratti
+            Database.getInstance(pull, 18d).addPull(StdRandom.getRandomArray(5, 90)); //estrae cinquine per riempire i dati dei valori estratti
             Log.i("LOOP", "Added new game to pregameloop");
         }
     }
