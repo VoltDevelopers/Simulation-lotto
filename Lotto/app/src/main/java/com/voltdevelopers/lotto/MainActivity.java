@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.voltdevelopers.lotto.activities.PatternGameActivity;
 import com.voltdevelopers.lotto.activities.StatActivity;
+import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.game.Game;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,9 +45,13 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("INFO", "Started Activity" + intent.getIdentifier());
             }
         });
-        
-        Game game = new Game(10);
-        game.gameLoop();
+
+        try {
+            Game game = new Game(10);
+        } catch (InputException e) {
+            e.printStackTrace();
+        }
+//        game.gameLoop();
     }
 
     private void findRes() {

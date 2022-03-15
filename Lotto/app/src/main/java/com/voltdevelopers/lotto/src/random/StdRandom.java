@@ -13,10 +13,10 @@ public class StdRandom {
         int[] array = new int[num];
         for (int i = 0; i < num; i++) {
             array[i] = (int) ( 1 + Math.random() * maxRandom);
-            System.out.println(Arrays.toString(array));
-            if (isAlreadyDrawn(array, array[i])) {
-                i--;
-            }
+            System.out.println("RANDOM ---> "+Arrays.toString(array));
+//            if (isAlreadyDrawn(array, array[i])) {
+//                i--;
+//            }
         }
         return array;
     }

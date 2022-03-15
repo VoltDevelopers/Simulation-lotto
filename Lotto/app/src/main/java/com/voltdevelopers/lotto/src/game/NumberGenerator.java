@@ -6,13 +6,13 @@ public class NumberGenerator {
 
     public int[] numSeries(int numsPerTurn){
         int[] series = new int[numsPerTurn];
-        int val = 0;
+        int val;
         for(int i = 0; i < numsPerTurn; i++){
-            val = ((int) Math.abs(Math.random()) % 90) + 1;
+            val = ((int) Math.abs(Math.random()) % 90);
             series[i] = val;
-            if(isAlreadyDrawn(series, val)){ //se il numero già presente in quelli da giocare
-                i--; //ripeti l'estrazione
-            }
+//            if(isAlreadyDrawn(series, val)){ //se il numero già presente in quelli da giocare
+//                i--; //ripeti l'estrazione
+//            }
         }
         return series;
     }

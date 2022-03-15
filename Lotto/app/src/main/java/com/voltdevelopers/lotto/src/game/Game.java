@@ -1,7 +1,10 @@
 package com.voltdevelopers.lotto.src.game;
 
+import android.util.Log;
+
 import com.voltdevelopers.lotto.data.Database;
 import com.voltdevelopers.lotto.layout.Console;
+import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.playerpatterns.FifthPlayer;
 import com.voltdevelopers.lotto.src.playerpatterns.FirstPlayer;
 import com.voltdevelopers.lotto.src.playerpatterns.FourthPlayer;
@@ -22,14 +25,15 @@ public class Game {
 
     NumberGenerator gen;
 
-    public Game(int turnsGame) {
+    public Game(int turnsGame) throws InputException {
         this.turnsGame = turnsGame;
+        preGameLoop(10);
+
         db = Database.getInstance(pull, 18d);
         random = new StdRandom();
         console = Console.getInstance();
         playerPatterns = new Player[5];
         initPlayers();
-        preGameLoop(1000);
         //preGameLoop(1000); TODO: pls fix addPull dat shit aint workin @DatabaseTeam
     }
 
@@ -55,9 +59,10 @@ public class Game {
         }
     }
 
-    private void preGameLoop(int games) {
+    private void preGameLoop(int games) throws InputException {
         for (int i = 0; i < games; i++) {
-            db.addPull(gen.numSeries(5)); //estrae cinquine per riempire i dati dei valori estratti
+            db.addPull(StdRandom.getRandomArray(5, 90)); //estrae cinquine per riempire i dati dei valori estratti
+            Log.i("LOOP", "Added new game to pregameloop");
         }
     }
 
