@@ -8,7 +8,7 @@
     android:backgroundTint="#000000"
     tools:context=".activitys.RulesActivity">
 
-
+<!--    Start Header-->
     <View
         android:id="@+id/view2"
         android:layout_width="48dp"
