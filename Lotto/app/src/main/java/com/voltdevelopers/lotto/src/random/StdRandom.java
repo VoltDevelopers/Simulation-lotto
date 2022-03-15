@@ -11,13 +11,16 @@ public class StdRandom {
             throw new InputException("The number is less than 1");
         }
         int[] array = new int[num];
+        int val = 0;
         for (int i = 0; i < num; i++) {
-            array[i] = (int) ( 1 + Math.random() * maxRandom);
-            System.out.println("RANDOM ---> "+Arrays.toString(array));
-//            if (isAlreadyDrawn(array, array[i])) {
-//                i--;
-//            }
+            val = (int) ( 1 + Math.random() * maxRandom);
+            if (isAlreadyDrawn(array, val)) {
+                i--;
+            }else{
+                array[i] = val;
+            }
         }
+        System.out.println("RANDOM ---> "+Arrays.toString(array));
         return array;
     }
 

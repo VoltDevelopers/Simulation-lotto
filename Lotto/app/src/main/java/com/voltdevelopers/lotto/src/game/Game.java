@@ -34,7 +34,6 @@ public class Game {
         console = Console.getInstance();
         playerPatterns = new Player[5];
         initPlayers();
-        //preGameLoop(1000); TODO: pls fix addPull dat shit aint workin @DatabaseTeam
     }
 
     public void gameLoop() {
