@@ -166,10 +166,10 @@ public class Database {
             output += "]\n";
         }
 
-        return "extractions" +
-                "{\n"
-                + output +
-                '}';
+        return
+                "\n{\n"
+                        + output +
+                        '}';
 
     }
 
@@ -183,10 +183,10 @@ public class Database {
 
         }
 
-        return "pullsPerNumber" +
-                "{\n"
-                + output +
-                '}';
+        return
+                "\n{\n"
+                        + output +
+                        '}';
 
     }
 
@@ -194,10 +194,10 @@ public class Database {
 
         String output = pullChronology.toString() + "\n";
 
-        return "extractionOrder" +
-                "{\n"
-                + output +
-                '}';
+        return
+                "\n{\n"
+                        + output +
+                        '}';
 
 
     }
@@ -376,10 +376,10 @@ class Profile {
             output += "]\n";
         }
 
-        return "bets" +
-                "{\n"
-                + output +
-                '}';
+        return
+                "\n{\n"
+                        + output +
+                        '}';
 
 
     }
