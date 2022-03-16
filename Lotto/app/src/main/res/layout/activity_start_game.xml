@@ -145,13 +145,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_logo" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="143dp"
+        android:layout_marginTop="579dp"
+        android:text="Get File"
+        app:layout_constraintStart_toEndOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/view7" />
+
     <!--  END  HEADER    -->
-
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/stat1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
