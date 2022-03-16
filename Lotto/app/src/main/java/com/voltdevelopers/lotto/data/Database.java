@@ -3,7 +3,6 @@ package com.voltdevelopers.lotto.data;
 import com.voltdevelopers.lotto.layout.Console;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Database {
 
