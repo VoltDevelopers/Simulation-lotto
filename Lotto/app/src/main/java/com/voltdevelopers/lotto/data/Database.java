@@ -35,7 +35,13 @@ public class Database {
         pullChronology = new ArrayList<>();
     }
 
-    public static Database getInstance(int numOfPulls, double moneyToPay) {
+    public static Database getInstance() {
+
+        return getInstance(Settings.get().getnOfPulls(), Settings.get().getMoneyPerWin());
+
+    }
+
+    public static Database getInstance(int numOfPulls, double moneyToPay) {//rimane per non causare problemi
 
         if (instance != null)
             return instance;
