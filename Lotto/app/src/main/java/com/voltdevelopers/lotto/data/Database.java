@@ -9,7 +9,7 @@ public class Database {
     public final double moneyToPay;
     private static Database instance = null;
     private Profile[] players; //i 5 giocatori, ordinati come nel pptx con le istruzioni
-    private final int gameCounter;
+    private int gameCounter;
     private final ArrayList<int[]> rounds;
     private final int[] pullsPerNumber; //n di estrazioni per valore (n di estrazioni di 1 si trova nella cella 0, di 2 nella 1, etc etc)
     private final ArrayList<Integer> pullChronology; //ordine estrazioni (ultimo estratto sta all'indice massimo)
@@ -69,6 +69,7 @@ public class Database {
             pullsPerNumber[input[i] - 1]++;
             analysis.modChronology(input[i]);
         }
+        gameCounter++;
 
     }
 
@@ -107,30 +108,85 @@ public class Database {
     //-----------------------log managment----------------------------------------------------------
 
     @Override
-    public String toString() {
-        return "Database{" +
-                "numOfPulls=" + numOfPulls +
-                ", moneyToPay=" + moneyToPay +
-                ", players=" + allPlayersToString() +
-                ", gameCounter=" + gameCounter +
-                ", rounds=" + rounds.toString() +
-                ", pullsPerNumber=" + Arrays.toString(pullsPerNumber) +
-                ", pullChronology=" + pullChronology +
-                ", analysis=" + analysis +
-                '}';
+    public String toString() {//defaut per chi non conosce
+
+        return toString("");
+
     }
 
-    private String allPlayersToString(){
+    public String toString(String tabulation) {//metodo proprio, tab serve per i rientri
+        return "Database{" +
+                ",\n" + tabulation + "moneyPerWin=" + moneyToPay +
+                ",\n" + tabulation + "betsPerRound=" + numOfPulls +
+                ",\n" + tabulation + "gameCounter=" + gameCounter +
+                ",\n" + tabulation + "pullChronology=" + pullChronologyToString(tabulation + "     ") +//\t non va, idk
+                ",\n" + tabulation + "pullsPerNumber=" + pullsPerNumberToString(tabulation + "     ") +
+                ",\n" + tabulation + "rounds=" + roundsToString(tabulation + "     ") +
+                //",\n" + tabulation + "players=" + allPlayersToString(tabulation + "     ") +
+                ",\n" + tabulation + '}';
+    }
+
+    private String roundsToString(String tabulation) {
+
+        String output = "";
+
+        for (int[] arr : rounds) {
+            output += tabulation + "[ ";
+            for (int n : arr) {
+
+                output += n + " ";
+
+            }
+            output += "]\n";
+        }
+
+        return "extractions" +
+                "{\n"
+                + output +
+                '}';
+
+    }
+
+    private String pullsPerNumberToString(String tabulation) {
+
+        String output = "";
+
+        for (int i= 0; i < pullsPerNumber.length; i++) {
+
+            output += tabulation + "[" + (i+1) + " -> " + pullsPerNumber[i] + "]\n";
+
+        }
+
+        return "pullsPerNumber" +
+                "{\n"
+                + output +
+                '}';
+
+    }
+
+    private String pullChronologyToString(String tabulation) {
+
+        String output = pullChronology.toString() + "\n";
+
+        return "extractionOrder" +
+                "{\n"
+                + output +
+                '}';
+
+
+    }
+
+    private String allPlayersToString(String tabulation) {
 
         String out = "";
-        for(int i = 0; i < players.length; i++)
-            out += playerToString(i);
+        for (int i = 0; i < players.length; i++)
+            out += playerToString(i, tabulation);
 
         return out;
 
     }
 
-    public String playerToString(int n){
+    public String playerToString(int n, String tabulation) {
 
         return players[n].toString();
 
@@ -265,8 +321,7 @@ class Profile {
         return "name not set";
     }
 
-    @Override
-    public String toString() {
+    public String toString(String tabulation) {
         return "Profile{" +
                 "name='" + name + '\'' +
                 ", moneyWon=" + moneyWon +
