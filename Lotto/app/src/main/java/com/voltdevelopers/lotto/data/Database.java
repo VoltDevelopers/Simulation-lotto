@@ -130,6 +130,10 @@ public class Database {
         return analysis.getOldestN(nRequested);
     }
 
+    public void assignWins() {
+        analysis.assignWins();
+    }
+
     //-----------------------log managment----------------------------------------------------------
 
     @Override
@@ -277,6 +281,13 @@ public class Database {
             }
             console.printStr("The array " + arr.toString() + " does not contains " + n + "\n");
             return false;
+        }
+
+        public void assignWins() {
+
+            //TODO the code
+            console.printStr("Assigned wins and money earned to all players" + "\n"); //<-- versione temp di joel che non sa cosa deve fare, TODO farlo giusto secondo necessità
+
         }
     }
 }
