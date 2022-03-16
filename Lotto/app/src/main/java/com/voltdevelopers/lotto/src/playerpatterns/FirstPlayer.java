@@ -6,14 +6,12 @@ public class FirstPlayer extends Player {
 
     public FirstPlayer(int numsPerTurn) {
         super(numsPerTurn);
-        this.name = "Il Copione";
         this.playerN = 1;
+        this.bet = new int[numsPerTurn];
     }
 
     @Override
     public void createBet() {
-        int[] bet;
-        bet = Database.getInstance(5, 18).getLatestN(5);
-        Database.getInstance(5, 18).addPlayerBet(playerN, bet);
+        bet = Database.getInstance(5, 18d).getLatestN(5);
     }
 }

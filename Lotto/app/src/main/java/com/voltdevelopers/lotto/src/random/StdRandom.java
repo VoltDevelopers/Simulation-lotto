@@ -20,7 +20,7 @@ public class StdRandom {
                 array[i] = val;
             }
         }
-        System.out.println("RANDOM ---> "+Arrays.toString(array));
+        System.out.println("RANDOM ---> " + Arrays.toString(array));
         return array;
     }
 

@@ -23,45 +23,55 @@ public class Game {
     StdRandom random;
     Console console;
 
-    NumberGenerator gen;
-
     public Game(int turnsGame) throws InputException {
         this.turnsGame = turnsGame;
-        Database.getInstance(pull, 18d);
-        preGameLoop(1000);
-        random = new StdRandom();
+
+        db = Database.getInstance(pull, 18d);
         console = Console.getInstance();
+        random = new StdRandom();
         playerPatterns = new Player[5];
+
+        preGameLoop(10);
         initPlayers();
+    }
+
+    private void initPlayers() {
+        playerPatterns[0] = new FirstPlayer(pull);
+        playerPatterns[1] = new SecondPlayer(pull);
+        playerPatterns[2] = new ThirdPlayer(pull);
+        playerPatterns[3] = new FourthPlayer(pull);
+        playerPatterns[4] = new FifthPlayer(pull);
     }
 
     public void gameLoop() {
         int[] draw;
-        int results[];
 
         for (int i = 0; i < turnsGame; i++) {
-
             draw = generateDraw();
+            db.addPull(draw);
 
-            Database.getInstance(pull, 18d).addPull(draw);
-            console.printStr("Added to db");
-
-            playersPlay(); //chiamata ai singoli giocatori che creano una giocata secondo i loro criteri, e la inviano al db
-
-            sendAllData(buildResultsArray(draw)); //crea un array, dove per ogni indice ci sono i numeri vinti nel singolo round per il singolo giocatore, e lo invia al db
-            // *Chiede db di visualizare i dati*
+            playersPlay();
+            sendPatternsData();
         }
     }
 
-    private void preGameLoop(int games) throws InputException {
+    private void preGameLoop(int games) {
         for (int i = 0; i < games; i++) {
-            Database.getInstance(pull, 18d).addPull(StdRandom.getRandomArray(5, 90)); //estrae cinquine per riempire i dati dei valori estratti
+            db.addPull(generateDraw());
             Log.i("LOOP", "Added new game to pregameloop");
         }
     }
 
-    public void sendAllData(int[] results) {
-        Database.getInstance(pull, 18d).sendDataToGraph(results); // per l' aggiornamento del grafico
+    private void playersPlay() {
+        for (int i = 0; i < playerPatterns.length; i++) {
+            playerPatterns[i].createBet();
+        }
+    }
+
+    private void sendPatternsData() {
+        for (int i = 0; i < playerPatterns.length; i++) {
+            db.addPlayerBet(playerPatterns[i].getPlayerN(), playerPatterns[i].getBet());
+        }
     }
 
     private int[] generateDraw(){
@@ -71,38 +81,5 @@ public class Game {
             e.printStackTrace();
         }
         return null;
-    }
-
-    private void playersPlay() {
-        for (int i = 0; i < playerPatterns.length; i++) {
-            playerPatterns[i].createBet();
-        }
-    }
-
-    private int[] buildResultsArray(int[] draw) {
-        int results[] = new int[5];
-        for (int i = 0; i < playerPatterns.length; i++) {
-            results[i] = checkPlayerResult(draw, Database.getInstance(5, 18).getPlayerLastBet(1));
-
-        }
-        return results;
-    }
-
-    private int checkPlayerResult(int[] draw, int[] bet) { //ritorna un int che indica quanti numeri ha vinto il giocatore in questione
-        int w = 0;
-        for (int i = 0; i < pull; i++) {
-            if (bet[i] == draw[i]) {
-                w++;
-            }
-        }
-        return w;
-    }
-
-    private void initPlayers() {
-        playerPatterns[0] = new FirstPlayer(pull);
-        playerPatterns[1] = new SecondPlayer(pull);
-        playerPatterns[2] = new ThirdPlayer(pull);
-        playerPatterns[3] = new FourthPlayer(pull);
-        playerPatterns[4] = new FifthPlayer(pull);
     }
 }
