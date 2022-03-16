@@ -28,7 +28,7 @@ public class Game {
     public Game(int turnsGame) throws InputException {
         this.turnsGame = turnsGame;
         Database.getInstance(pull, 18d);
-        preGameLoop(10);
+        preGameLoop(1000);
         random = new StdRandom();
         console = Console.getInstance();
         playerPatterns = new Player[5];
@@ -37,14 +37,14 @@ public class Game {
 
     public void gameLoop() {
         int[] draw = new int[0];
-        int results[] = new int[5];
+        int results[];
 
         for (int i = 0; i < turnsGame; i++) {
-//            try {
-//                draw = StdRandom.getRandomArray(5, 90);
-//            } catch (InputException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                draw = StdRandom.getRandomArray(5, 90);
+            } catch (InputException e) {
+                e.printStackTrace();
+            }
             Database.getInstance(pull, 18d).addPull(draw);
             console.printStr("Added to db");
 
