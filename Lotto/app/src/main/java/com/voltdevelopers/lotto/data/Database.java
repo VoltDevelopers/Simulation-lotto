@@ -148,7 +148,7 @@ public class Database {
                 ",\n" + tabulation + "pullChronology=" + pullChronologyToString(tabulation + "     ") +//\t non va, idk
                 ",\n" + tabulation + "pullsPerNumber=" + pullsPerNumberToString(tabulation + "     ") +
                 ",\n" + tabulation + "rounds=" + roundsToString(tabulation + "     ") +
-                ",\n" + tabulation + "players=" + allPlayersToString(tabulation + "     ") +
+                ",\n" + tabulation + "players=\n" + allPlayersToString(tabulation + "     ") +
                 ",\n" + tabulation + '}';
     }
 
@@ -206,9 +206,12 @@ public class Database {
 
         String out = "";
         for (int i = 0; i < players.length; i++)
-            out += playerToString(i, tabulation);
+            out += tabulation + playerToString(i, tabulation);
 
-        return out;
+        return
+                "{\n"
+                        + out +
+                        '}';
 
     }
 
@@ -298,8 +301,8 @@ class Profile {
     }
 
     public void addBet(int[] input) {
-        betList.add(new int[Settings.get().getnOfPulls()]);
-        for (int i : betList.get(betList.size() - 1)) {
+        betList.add(new int[input.length]);
+        for (int i = 0; i < betList.get(betList.size() - 1).length; i++) {
             betList.get(betList.size() - 1)[i] = input[i];
         }
     }
@@ -352,13 +355,13 @@ class Profile {
 
     public String toString(String tabulation) {
         return "Profile{" +
-                ",\n" + tabulation + "name='" + name + '\n' +
+                ",\n" + tabulation + "name='" + name +
                 ",\n" + tabulation + "nWins=" + nWins +
                 ",\n" + tabulation + "moneyWon=" + moneyWon +
                 ",\n" + tabulation + "moneySpent=" + moneySpent +
                 ",\n" + tabulation + "net=" + (moneyWon - moneySpent) +
                 ",\n" + tabulation + "betList=" + betListToString(tabulation + "     ") +
-                '}';
+                "}\n";
     }
 
     private String betListToString(String tabulation) {
@@ -377,9 +380,9 @@ class Profile {
         }
 
         return
-                "\n{\n"
+                "{\n"
                         + output +
-                        '}';
+                        tabulation + "}\n";
 
 
     }
