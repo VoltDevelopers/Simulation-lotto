@@ -139,7 +139,7 @@ public class Database {
     @Override
     public String toString() {//defaut per chi non conosce
 
-        return toString("");
+        return toString("Null");
 
     }
 

@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private void findRes() {
         start = findViewById(R.id.buttonStart);
         rules = findViewById(R.id.buttonRules);
-        stat = findViewById(R.id.button2);
+        stat = findViewById(R.id.buttonStat);
         textViewHTML= findViewById(R.id.textViewHTML);
     }
 

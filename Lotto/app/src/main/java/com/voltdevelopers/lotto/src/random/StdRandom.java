@@ -2,12 +2,9 @@ package com.voltdevelopers.lotto.src.random;
 
 import com.voltdevelopers.lotto.src.exception.InputException;
 
-<<<<<<< HEAD
 // Можно заменить на строку с данными метио или атомных вычиследний чтобы добиться максимального рандома
-=======
 import java.util.Arrays;
 
->>>>>>> TestVersion-lotto
 public class StdRandom {
 
     public static int[] getRandomArray(int num, int maxRandom) throws InputException {
