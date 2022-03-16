@@ -36,24 +36,19 @@ public class Game {
     }
 
     public void gameLoop() {
-        int[] draw = new int[0];
+        int[] draw;
         int results[];
 
         for (int i = 0; i < turnsGame; i++) {
-            try {
-                draw = StdRandom.getRandomArray(5, 90);
-            } catch (InputException e) {
-                e.printStackTrace();
-            }
+
+            draw = generateDraw();
+
             Database.getInstance(pull, 18d).addPull(draw);
             console.printStr("Added to db");
 
             playersPlay(); //chiamata ai singoli giocatori che creano una giocata secondo i loro criteri, e la inviano al db
-            results = buildResultsArray(draw); //crea un array, dove per ogni indice ci sono i numeri vinti nel singolo round per il singolo giocatore
-            //TODO manda i dati delle vincite al database
-            Database.getInstance(pull, 18d).sendDataToGraph(results); // per l' aggiornamento del grafico
 
-             //aggiorno i valori estratti con l'estrazione
+            sendAllData(buildResultsArray(draw)); //crea un array, dove per ogni indice ci sono i numeri vinti nel singolo round per il singolo giocatore, e lo invia al db
             // *Chiede db di visualizare i dati*
         }
     }
@@ -65,8 +60,17 @@ public class Game {
         }
     }
 
-    public void sendAllData() {
+    public void sendAllData(int[] results) {
+        Database.getInstance(pull, 18d).sendDataToGraph(results); // per l' aggiornamento del grafico
+    }
 
+    private int[] generateDraw(){
+        try {
+            return StdRandom.getRandomArray(5, 90);
+        } catch (InputException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void playersPlay() {
