@@ -6,10 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".activities.StatActivity">
 
-    <TextView
-        android:id="@+id/db"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scroll"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content">
+        <HorizontalScrollView
+            android:id="@+id/hscroll"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <TextView
+                android:id="@+id/db"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24px"
+                android:isScrollContainer="true"/>
+        </HorizontalScrollView>
+    </ScrollView>
 
 </RelativeLayout>
