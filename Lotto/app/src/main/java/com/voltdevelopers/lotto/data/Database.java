@@ -1,5 +1,7 @@
 package com.voltdevelopers.lotto.data;
 
+import com.voltdevelopers.lotto.layout.Console;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,6 +17,8 @@ public class Database {
     private final ArrayList<Integer> pullChronology; //ordine estrazioni (ultimo estratto sta all'indice massimo)
 
     private Analysis analysis;
+
+    private OnGraphData onGraphData;
 
     private Database(int numOfPulls, double moneyToPay) {
         this.numOfPulls = numOfPulls;
@@ -89,6 +93,21 @@ public class Database {
         return gameCounter;
     }
 
+    //----------------------interface for adding data to the graph----------------------------------
+
+    public void setOnGraphData(OnGraphData onGraphData){ this.onGraphData = onGraphData; }
+
+    public interface OnGraphData{
+
+        public void addData(int gameCounter, int[] results); // gameCounter asse x, winningsOfAllPlayers asse y
+
+    }
+
+    public void sendDataToGraph(int[] results){
+
+        onGraphData.addData(gameCounter,results);
+
+    }
 
     //----------------------analysis methods--------------------------------------------------------
 
@@ -99,7 +118,6 @@ public class Database {
     public int[] getLatestN(int nRequested) {
         return analysis.getLatestN(nRequested);
     }
-
 
     public int[] getOldestN(int nRequested) {
         return analysis.getOldestN(nRequested);
@@ -194,14 +212,17 @@ public class Database {
 
     private class Analysis {
 
+        private Console console = Console.getInstance();
+
         public int[] getLatestN(int nRequested) {
             int[] output = new int[nRequested];
-            int chronoSize = pullChronology.size();
+            int chronoSize = pullChronology.size() - 1;
             for (int i : output) {
                 output[i] = pullChronology.get(chronoSize);
                 chronoSize--;
             }
-            //TODO add log
+
+            console.printStr("Took an array of length " + nRequested + " containing the last numbers -> " + output.toString() + "\n");
             return output;
         }
 
@@ -210,7 +231,7 @@ public class Database {
                 pullChronology.remove(pullChronology.lastIndexOf(n));
 
             pullChronology.add(n);
-            //TODO add log
+            console.printStr("Modified pullChronology " + pullChronology.toString() + "\n");
         }
 
         public int[] getOldestN(int nRequested) {
@@ -219,7 +240,7 @@ public class Database {
                 output[i] = pullChronology.get(i);
             }
 
-            //TODO add log
+            console.printStr("Took an array of length " + nRequested + " containing the oldest numbers -> " + output.toString() + "\n");
             return output;
         }
 
@@ -234,17 +255,17 @@ public class Database {
                     }
                 }
             }
-            //TODO add log
+            console.printStr("Took an array of length " + nRequested + " containing the most frequent numbers -> " + output.toString() + "\n");
             return output;
         }
 
         private boolean intArrayContains(int[] arr, int n) {
             for (int i : arr) {
                 if (arr[i] == n)
-                    //TODO add log
+                    console.printStr("The array " + arr.toString() +  " contains " + n + "\n");
                     return true;
             }
-            //TODO add log
+            console.printStr("The array " + arr.toString() +  " does not contains " + n + "\n");
             return false;
         }
     }

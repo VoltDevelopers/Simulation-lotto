@@ -28,7 +28,7 @@ public class Game {
     public Game(int turnsGame) throws InputException {
         this.turnsGame = turnsGame;
         Database.getInstance(pull, 18d);
-        preGameLoop(10);
+        preGameLoop(1000);
         random = new StdRandom();
         console = Console.getInstance();
         playerPatterns = new Player[5];
@@ -36,23 +36,19 @@ public class Game {
     }
 
     public void gameLoop() {
-        int[] draw = new int[0];
-        int results[] = new int[5];
+        int[] draw;
+        int results[];
 
         for (int i = 0; i < turnsGame; i++) {
-//            try {
-//                draw = StdRandom.getRandomArray(5, 90);
-//            } catch (InputException e) {
-//                e.printStackTrace();
-//            }
+
+            draw = generateDraw();
+
             Database.getInstance(pull, 18d).addPull(draw);
             console.printStr("Added to db");
 
             playersPlay(); //chiamata ai singoli giocatori che creano una giocata secondo i loro criteri, e la inviano al db
-            results = buildResultsArray(draw); //crea un array, dove per ogni indice ci sono i numeri vinti nel singolo round per il singolo giocatore
-            //TODO manda i dati delle vincite al database
 
-             //aggiorno i valori estratti con l'estrazione
+            sendAllData(buildResultsArray(draw)); //crea un array, dove per ogni indice ci sono i numeri vinti nel singolo round per il singolo giocatore, e lo invia al db
             // *Chiede db di visualizare i dati*
         }
     }
@@ -64,8 +60,17 @@ public class Game {
         }
     }
 
-    public void sendAllData() {
+    public void sendAllData(int[] results) {
+        Database.getInstance(pull, 18d).sendDataToGraph(results); // per l' aggiornamento del grafico
+    }
 
+    private int[] generateDraw(){
+        try {
+            return StdRandom.getRandomArray(5, 90);
+        } catch (InputException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void playersPlay() {

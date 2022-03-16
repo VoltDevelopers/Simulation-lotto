@@ -48,10 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             Game game = new Game(10);
+            game.gameLoop();
         } catch (InputException e) {
             e.printStackTrace();
         }
-//        game.gameLoop();
+
     }
 
     private void findRes() {
