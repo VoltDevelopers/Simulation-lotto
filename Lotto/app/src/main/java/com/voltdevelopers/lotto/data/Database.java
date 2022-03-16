@@ -95,17 +95,19 @@ public class Database {
 
     //----------------------interface for adding data to the graph----------------------------------
 
-    public void setOnGraphData(OnGraphData onGraphData){ this.onGraphData = onGraphData; }
+    public void setOnGraphData(OnGraphData onGraphData) {
+        this.onGraphData = onGraphData;
+    }
 
-    public interface OnGraphData{
+    public interface OnGraphData {
 
         public void addData(int gameCounter, int[] results); // gameCounter asse x, winningsOfAllPlayers asse y
 
     }
 
-    public void sendDataToGraph(int[] results){
+    public void sendDataToGraph(int[] results) {
 
-        onGraphData.addData(gameCounter,results);
+        onGraphData.addData(gameCounter, results);
 
     }
 
@@ -140,7 +142,7 @@ public class Database {
                 ",\n" + tabulation + "pullChronology=" + pullChronologyToString(tabulation + "     ") +//\t non va, idk
                 ",\n" + tabulation + "pullsPerNumber=" + pullsPerNumberToString(tabulation + "     ") +
                 ",\n" + tabulation + "rounds=" + roundsToString(tabulation + "     ") +
-                //",\n" + tabulation + "players=" + allPlayersToString(tabulation + "     ") +
+                ",\n" + tabulation + "players=" + allPlayersToString(tabulation + "     ") +
                 ",\n" + tabulation + '}';
     }
 
@@ -169,9 +171,9 @@ public class Database {
 
         String output = "";
 
-        for (int i= 0; i < pullsPerNumber.length; i++) {
+        for (int i = 0; i < pullsPerNumber.length; i++) {
 
-            output += tabulation + "[" + (i+1) + " -> " + pullsPerNumber[i] + "]\n";
+            output += tabulation + "[" + (i + 1) + " -> " + pullsPerNumber[i] + "]\n";
 
         }
 
@@ -206,7 +208,7 @@ public class Database {
 
     public String playerToString(int n, String tabulation) {
 
-        return players[n].toString();
+        return players[n].toString(tabulation);
 
     }
 
@@ -262,10 +264,10 @@ public class Database {
         private boolean intArrayContains(int[] arr, int n) {
             for (int i : arr) {
                 if (arr[i] == n)
-                    console.printStr("The array " + arr.toString() +  " contains " + n + "\n");
-                    return true;
+                    console.printStr("The array " + arr.toString() + " contains " + n + "\n");
+                return true;
             }
-            console.printStr("The array " + arr.toString() +  " does not contains " + n + "\n");
+            console.printStr("The array " + arr.toString() + " does not contains " + n + "\n");
             return false;
         }
     }
@@ -344,11 +346,35 @@ class Profile {
 
     public String toString(String tabulation) {
         return "Profile{" +
-                "name='" + name + '\'' +
-                ", moneyWon=" + moneyWon +
-                ", moneySpent=" + moneySpent +
-                ", nWins=" + nWins +
-                //", betList=" + betList +
+                ",\n" + tabulation + "name='" + name + '\n' +
+                ",\n" + tabulation + "nWins=" + nWins +
+                ",\n" + tabulation + "moneyWon=" + moneyWon +
+                ",\n" + tabulation + "moneySpent=" + moneySpent +
+                ",\n" + tabulation + "net=" + (moneyWon - moneySpent) +
+                ",\n" + tabulation + "betList=" + betListToString(tabulation + "     ") +
                 '}';
+    }
+
+    private String betListToString(String tabulation) {
+
+
+        String output = "";
+
+        for (int[] arr : betList) {
+            output += tabulation + "[ ";
+            for (int n : arr) {
+
+                output += n + " ";
+
+            }
+            output += "]\n";
+        }
+
+        return "bets" +
+                "{\n"
+                + output +
+                '}';
+
+
     }
 }
