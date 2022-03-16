@@ -1,7 +1,8 @@
 package com.voltdevelopers.lotto.data;
 
+import com.voltdevelopers.lotto.layout.Console;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Database {
 
@@ -9,17 +10,19 @@ public class Database {
     public final double moneyToPay;
     private static Database instance = null;
     private Profile[] players; //i 5 giocatori, ordinati come nel pptx con le istruzioni
-    private final int gameCounter;
+    private int gameCounter;
     private final ArrayList<int[]> rounds;
     private final int[] pullsPerNumber; //n di estrazioni per valore (n di estrazioni di 1 si trova nella cella 0, di 2 nella 1, etc etc)
     private final ArrayList<Integer> pullChronology; //ordine estrazioni (ultimo estratto sta all'indice massimo)
 
-    private Analisys analisys;
+    private Analysis analysis;
+
+    private OnGraphData onGraphData;
 
     private Database(int numOfPulls, double moneyToPay) {
         this.numOfPulls = numOfPulls;
         this.moneyToPay = moneyToPay;
-        analisys = new Analisys();
+        analysis = new Analysis();
 
         initPlayers();
         gameCounter = 0;
@@ -31,7 +34,13 @@ public class Database {
         pullChronology = new ArrayList<>();
     }
 
-    public static Database getInstance(int numOfPulls, double moneyToPay) {
+    public static Database getInstance() {
+
+        return getInstance(Settings.get().getnOfPulls(), Settings.get().getMoneyPerWin());
+
+    }
+
+    public static Database getInstance(int numOfPulls, double moneyToPay) {//rimane per non causare problemi
 
         if (instance != null)
             return instance;
@@ -67,8 +76,9 @@ public class Database {
         rounds.add(input);
         for (int i = 0; i < input.length; i++) {
             pullsPerNumber[input[i] - 1]++;
-            analisys.modChronology(input[i]);
+            analysis.modChronology(input[i]);
         }
+        gameCounter++;
 
     }
 
@@ -88,64 +98,138 @@ public class Database {
         return gameCounter;
     }
 
+    //----------------------interface for adding data to the graph----------------------------------
 
-    //----------------------analisys methods--------------------------------------------------------
+    public void setOnGraphData(OnGraphData onGraphData) {
+        this.onGraphData = onGraphData;
+    }
+
+    public interface OnGraphData {
+
+        public void addData(int gameCounter, int[] results); // gameCounter asse x, winningsOfAllPlayers asse y
+
+    }
+
+    public void sendDataToGraph(int[] results) {
+
+        onGraphData.addData(gameCounter, results);
+
+    }
+
+    //----------------------analysis methods--------------------------------------------------------
 
     public int[] getNMostFrequent(int nRequested) {
-        return analisys.getNMostFrequent(nRequested);
+        return analysis.getNMostFrequent(nRequested);
     }
 
     public int[] getLatestN(int nRequested) {
-        return analisys.getLatestN(nRequested);
+        return analysis.getLatestN(nRequested);
     }
 
-
     public int[] getOldestN(int nRequested) {
-        return analisys.getOldestN(nRequested);
+        return analysis.getOldestN(nRequested);
     }
 
     //-----------------------log managment----------------------------------------------------------
 
     @Override
-    public String toString() {
-        return "Database{" +
-                "numOfPulls=" + numOfPulls +
-                ", moneyToPay=" + moneyToPay +
-                ", players=" + allPlayersToString() +
-                ", gameCounter=" + gameCounter +
-                ", rounds=" + rounds.toString() +
-                ", pullsPerNumber=" + Arrays.toString(pullsPerNumber) +
-                ", pullChronology=" + pullChronology +
-                ", analisys=" + analisys +
-                '}';
+    public String toString() {//defaut per chi non conosce
+
+        return toString("");
+
     }
 
-    private String allPlayersToString(){
+    public String toString(String tabulation) {//metodo proprio, tab serve per i rientri
+        return "Database{" +
+                ",\n" + tabulation + "moneyPerWin=" + moneyToPay +
+                ",\n" + tabulation + "betsPerRound=" + numOfPulls +
+                ",\n" + tabulation + "gameCounter=" + gameCounter +
+                ",\n" + tabulation + "pullChronology=" + pullChronologyToString(tabulation + "     ") +//\t non va, idk
+                ",\n" + tabulation + "pullsPerNumber=" + pullsPerNumberToString(tabulation + "     ") +
+                ",\n" + tabulation + "rounds=" + roundsToString(tabulation + "     ") +
+                ",\n" + tabulation + "players=" + allPlayersToString(tabulation + "     ") +
+                ",\n" + tabulation + '}';
+    }
+
+    private String roundsToString(String tabulation) {
+
+        String output = "";
+
+        for (int[] arr : rounds) {
+            output += tabulation + "[ ";
+            for (int n : arr) {
+
+                output += n + " ";
+
+            }
+            output += "]\n";
+        }
+
+        return
+                "\n{\n"
+                        + output +
+                        '}';
+
+    }
+
+    private String pullsPerNumberToString(String tabulation) {
+
+        String output = "";
+
+        for (int i = 0; i < pullsPerNumber.length; i++) {
+
+            output += tabulation + "[" + (i + 1) + " -> " + pullsPerNumber[i] + "]\n";
+
+        }
+
+        return
+                "\n{\n"
+                        + output +
+                        '}';
+
+    }
+
+    private String pullChronologyToString(String tabulation) {
+
+        String output = pullChronology.toString() + "\n";
+
+        return
+                "\n{\n"
+                        + output +
+                        '}';
+
+
+    }
+
+    private String allPlayersToString(String tabulation) {
 
         String out = "";
-        for(int i = 0; i < players.length; i++)
-            out += playerToString(i);
+        for (int i = 0; i < players.length; i++)
+            out += playerToString(i, tabulation);
 
         return out;
 
     }
 
-    public String playerToString(int n){
+    public String playerToString(int n, String tabulation) {
 
-        return players[n].toString();
+        return players[n].toString(tabulation);
 
     }
 
-    private class Analisys {
+    private class Analysis {
+
+        private Console console = Console.getInstance();
 
         public int[] getLatestN(int nRequested) {
             int[] output = new int[nRequested];
-            int chronoSize = pullChronology.size();
+            int chronoSize = pullChronology.size() - 1;
             for (int i : output) {
                 output[i] = pullChronology.get(chronoSize);
                 chronoSize--;
             }
-            //TODO add log
+
+            console.printStr("Took an array of length " + nRequested + " containing the last numbers -> " + output.toString() + "\n");
             return output;
         }
 
@@ -154,7 +238,7 @@ public class Database {
                 pullChronology.remove(pullChronology.lastIndexOf(n));
 
             pullChronology.add(n);
-            //TODO add log
+            console.printStr("Modified pullChronology " + pullChronology.toString() + "\n");
         }
 
         public int[] getOldestN(int nRequested) {
@@ -163,7 +247,7 @@ public class Database {
                 output[i] = pullChronology.get(i);
             }
 
-            //TODO add log
+            console.printStr("Took an array of length " + nRequested + " containing the oldest numbers -> " + output.toString() + "\n");
             return output;
         }
 
@@ -178,17 +262,17 @@ public class Database {
                     }
                 }
             }
-            //TODO add log
+            console.printStr("Took an array of length " + nRequested + " containing the most frequent numbers -> " + output.toString() + "\n");
             return output;
         }
 
         private boolean intArrayContains(int[] arr, int n) {
             for (int i : arr) {
                 if (arr[i] == n)
-                    //TODO add log
-                    return true;
+                    console.printStr("The array " + arr.toString() + " contains " + n + "\n");
+                return true;
             }
-            //TODO add log
+            console.printStr("The array " + arr.toString() + " does not contains " + n + "\n");
             return false;
         }
     }
@@ -265,14 +349,37 @@ class Profile {
         return "name not set";
     }
 
-    @Override
-    public String toString() {
+    public String toString(String tabulation) {
         return "Profile{" +
-                "name='" + name + '\'' +
-                ", moneyWon=" + moneyWon +
-                ", moneySpent=" + moneySpent +
-                ", nWins=" + nWins +
-                //", betList=" + betList +
+                ",\n" + tabulation + "name='" + name + '\n' +
+                ",\n" + tabulation + "nWins=" + nWins +
+                ",\n" + tabulation + "moneyWon=" + moneyWon +
+                ",\n" + tabulation + "moneySpent=" + moneySpent +
+                ",\n" + tabulation + "net=" + (moneyWon - moneySpent) +
+                ",\n" + tabulation + "betList=" + betListToString(tabulation + "     ") +
                 '}';
+    }
+
+    private String betListToString(String tabulation) {
+
+
+        String output = "";
+
+        for (int[] arr : betList) {
+            output += tabulation + "[ ";
+            for (int n : arr) {
+
+                output += n + " ";
+
+            }
+            output += "]\n";
+        }
+
+        return
+                "\n{\n"
+                        + output +
+                        '}';
+
+
     }
 }

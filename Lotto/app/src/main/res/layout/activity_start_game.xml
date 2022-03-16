@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#000000"
     android:backgroundTint="#000000"
-    tools:context=".activitys.StartGameActivity">
+    tools:context=".activities.StartGameActivity">
 
     <!--    Start Header-->
     <View
@@ -144,6 +144,15 @@
         app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_logo" />
+
+    <com.github.mikephil.charting.charts.LineChart
+
+        android:id="@+id/graph"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        />
+
 
     <Button
         android:id="@+id/button"

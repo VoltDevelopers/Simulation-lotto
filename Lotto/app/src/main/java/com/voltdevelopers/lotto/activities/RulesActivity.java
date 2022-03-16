@@ -1,4 +1,4 @@
-package com.voltdevelopers.lotto.activitys;
+package com.voltdevelopers.lotto.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,7 +11,7 @@ import com.voltdevelopers.lotto.data.Database;
 public class RulesActivity extends AppCompatActivity {
 
     Database db;
-
+  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

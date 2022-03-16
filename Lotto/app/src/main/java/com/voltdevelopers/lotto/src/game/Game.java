@@ -1,5 +1,7 @@
 package com.voltdevelopers.lotto.src.game;
 
+import android.util.Log;
+
 import com.voltdevelopers.lotto.data.Database;
 import com.voltdevelopers.lotto.layout.Console;
 import com.voltdevelopers.lotto.src.exception.InputException;
@@ -19,73 +21,18 @@ public class Game {
     Database db;
     Player[] playerPatterns;
     StdRandom random;
-    Console consle;
+    Console console;
 
-    NumberGenerator gen;
-
-    public Game(int turnsGame) {
+    public Game(int turnsGame) throws InputException {
         this.turnsGame = turnsGame;
+
         db = Database.getInstance(pull, 18d);
+        console = Console.getInstance();
         random = new StdRandom();
-        consle = Console.getInstance();
         playerPatterns = new Player[5];
+
+        preGameLoop(10);
         initPlayers();
-    }
-
-    public void gameLoop() {
-        int[] draw = new int[0];
-//        int results[] = new int[5];
-
-        for (int i = 0; i < turnsGame; i++) {
-//            try {
-//                draw = StdRandom.getRandomArray(5, 90);
-//            } catch (InputException e) {
-//                e.printStackTrace();
-//            }
-            db.addPull(draw);
-            consle.printStr("Added to db");
-
-//            playersPlay(); //chiamata ai singoli giocatori che creano una giocata secondo i loro criteri, e la inviano al db
-//            results = buildResultsArray(draw); //crea un array, dove per ogni indice ci sono i numeri vinti nel singolo round per il singolo giocatore
-            //TODO manda i dati delle vincite al database
-
-             //aggiorno i valori estratti con l'estrazione
-            // *Chiede db di visualizare i dati*
-        }
-    }
-
-    private void preGameLoop(int games) {
-        for (int i = 0; i < games; i++) {
-            db.addPull(gen.numSeries(5)); //estrae cinquine per riempire i dati dei valori estratti
-        }
-    }
-
-    public void sendAllData() {
-
-    }
-
-    private void playersPlay() {
-        for (int i = 0; i < playerPatterns.length; i++) {
-            playerPatterns[i].createBet();
-        }
-    }
-
-    private int[] buildResultsArray(int[] draw) {
-        int results[] = new int[5];
-        for (int i = 0; i < playerPatterns.length; i++) {
-            //TODO checkPlayerResult(draw, Database.get().MI SERVONO I BETS JOEL O NO COMBINO)
-        }
-        return results;
-    }
-
-    private int checkPlayerResult(int[] draw, int[] bet) { //ritorna un int che indica quanti numeri ha vinto il giocatore in questione
-        int w = 0;
-        for (int i = 0; i < pull; i++) {
-            if (bet[i] == draw[i]) {
-                w++;
-            }
-        }
-        return w;
     }
 
     private void initPlayers() {
@@ -94,5 +41,45 @@ public class Game {
         playerPatterns[2] = new ThirdPlayer(pull);
         playerPatterns[3] = new FourthPlayer(pull);
         playerPatterns[4] = new FifthPlayer(pull);
+    }
+
+    public void gameLoop() {
+        int[] draw;
+
+        for (int i = 0; i < turnsGame; i++) {
+            draw = generateDraw();
+            db.addPull(draw);
+
+            playersPlay();
+            sendPatternsData();
+        }
+    }
+
+    private void preGameLoop(int games) {
+        for (int i = 0; i < games; i++) {
+            db.addPull(generateDraw());
+            Log.i("LOOP", "Added new game to pregameloop");
+        }
+    }
+
+    private void playersPlay() {
+        for (int i = 0; i < playerPatterns.length; i++) {
+            playerPatterns[i].createBet();
+        }
+    }
+
+    private void sendPatternsData() {
+        for (int i = 0; i < playerPatterns.length; i++) {
+            db.addPlayerBet(playerPatterns[i].getPlayerN(), playerPatterns[i].getBet());
+        }
+    }
+
+    private int[] generateDraw(){
+        try {
+            return StdRandom.getRandomArray(5, 90);
+        } catch (InputException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

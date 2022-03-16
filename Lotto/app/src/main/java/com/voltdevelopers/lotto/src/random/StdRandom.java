@@ -2,7 +2,12 @@ package com.voltdevelopers.lotto.src.random;
 
 import com.voltdevelopers.lotto.src.exception.InputException;
 
+<<<<<<< HEAD
 // Можно заменить на строку с данными метио или атомных вычиследний чтобы добиться максимального рандома
+=======
+import java.util.Arrays;
+
+>>>>>>> TestVersion-lotto
 public class StdRandom {
 
     public static int[] getRandomArray(int num, int maxRandom) throws InputException {
@@ -10,12 +15,16 @@ public class StdRandom {
             throw new InputException("The number is less than 1");
         }
         int[] array = new int[num];
+        int val = 0;
         for (int i = 0; i < num; i++) {
-            array[i] = (int) (Math.random() * maxRandom + 1);
-            if (isAlreadyDrawn(array, array[i])) {
+            val = (int) ( 1 + Math.random() * maxRandom);
+            if (isAlreadyDrawn(array, val)) {
                 i--;
+            }else{
+                array[i] = val;
             }
         }
+        System.out.println("RANDOM ---> " + Arrays.toString(array));
         return array;
     }
 

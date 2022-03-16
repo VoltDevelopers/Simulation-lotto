@@ -3,15 +3,15 @@ package com.voltdevelopers.lotto.src.playerpatterns;
 public class SecondPlayer extends Player {
     public SecondPlayer(int numsPerTurn) {
         super(numsPerTurn);
-        this.name = "Il Ritardatario";
+        this.playerN = 2;
+        this.bet = new int[numsPerTurn];
     }
 
     @Override
     public void createBet() {
-        int[] bet = new int[numsPerTurn];
         for(int i = 0; i < numsPerTurn; i++){
-            //TODO: bet[i] = getPullChronology()[pullChronology.length - 1 - i];
+            // TODO: 16/03/22  
+            bet[i] = 0;
         }
-        //Database.get().addPlayerBet(5, bet);
     }
 }
