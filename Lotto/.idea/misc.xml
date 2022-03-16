@@ -5,10 +5,10 @@
       <map>
         <entry key="app/src/main/res/drawable/ic_logo.xml" value="0.1035" />
         <entry key="app/src/main/res/layout-v28/activity_main.xml" value="0.3098958333333333" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.44950714111328127" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3373016357421875" />
         <entry key="app/src/main/res/layout/activity_pattern_game.xml" value="0.25692342122395834" />
-        <entry key="app/src/main/res/layout/activity_rules.xml" value="0.330181775168508" />
-        <entry key="app/src/main/res/layout/activity_start_game.xml" value="0.2543822146216332" />
+        <entry key="app/src/main/res/layout/activity_rules.xml" value="0.3345611572265623" />
+        <entry key="app/src/main/res/layout/activity_start_game.xml" value="0.1" />
       </map>
     </option>
   </component>

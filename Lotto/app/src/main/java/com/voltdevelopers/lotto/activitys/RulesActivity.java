@@ -19,8 +19,8 @@ public class RulesActivity extends AppCompatActivity {
 
         db = Database.getInstance(5, 18d);
 
-        TextView text;
-        text = findViewById(R.id.db);
-        text.setText(db.toString());
+//        TextView text;
+//        text = findViewById(R.id.db);
+//        text.setText(db.toString());
     }
 }

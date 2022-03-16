@@ -9,6 +9,93 @@
     tools:context=".activitys.RulesActivity">
 
 <!--    Start Header-->
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="334dp"
+        android:layout_height="155dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="604dp"
+        android:fontFamily="@font/courier_new"
+        android:text=" - Ogni volta che giocano spendono 1$\n - Ogni volta che vincono ricevono o 18$, nel caso si consideri lotto come gioco equo, oppure 11.23$, nel caso lo si consideri com’è in realtà."
+        android:textAlignment="viewStart"
+        android:textColor="@color/neon_green"
+        android:textFontWeight="700"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/view"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view12"
+        android:layout_width="30dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="588dp"
+        android:background="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="576dp"
+        android:fontFamily="@font/courier_new"
+        android:text="Guadagnio"
+        android:textAlignment="textStart"
+        android:textColor="@color/neon_green"
+        android:textFontWeight="700"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/view12"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="334dp"
+        android:layout_height="155dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="416dp"
+        android:fontFamily="@font/courier_new"
+        android:text="- il primo gioca un numero della cinquina precedente\n - il secondo gioca il ritardatario, il numero che non esce da più estrazioni\n - il terzo gioca un numero casuale\n - il quarto gioca un numero fisso\n - il quinto gioca il numero uscito più frequentemente"
+        android:textAlignment="viewStart"
+        android:textColor="@color/neon_green"
+        android:textFontWeight="700"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/view"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="102dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="388dp"
+        android:fontFamily="@font/courier_new"
+        android:text="Giocatori"
+        android:textAlignment="textStart"
+        android:textColor="@color/neon_green"
+        android:textFontWeight="700"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/view10"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="334dp"
+        android:layout_height="155dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="208dp"
+        android:fontFamily="@font/courier_new"
+        android:text="È una simulazione del gioco del lotto. Consiste nell’estrazione di cinquine, scelte tra 1 e 90. I giocatori che noi osserveremo cominciano a giocare dopo un numero variabile, preferibilmente grande, di estrazioni. Questi giocatori possono giocare da 1 a 5 numeri a seconda delle impostazioni date all’inizio della simulazione."
+        android:textAlignment="center"
+        android:textColor="@color/neon_green"
+        android:textFontWeight="700"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/view"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <View
         android:id="@+id/view2"
         android:layout_width="48dp"
@@ -102,6 +189,26 @@
         android:layout_height="2dp"
         android:layout_marginStart="101dp"
         android:layout_marginTop="141dp"
+        android:background="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view9"
+        android:layout_width="30dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="216dp"
+        android:background="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view10"
+        android:layout_width="30dp"
+        android:layout_height="2dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="400dp"
         android:background="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
