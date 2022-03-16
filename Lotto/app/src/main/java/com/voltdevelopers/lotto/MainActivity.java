@@ -3,20 +3,25 @@ package com.voltdevelopers.lotto;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.voltdevelopers.lotto.activities.PatternGameActivity;
+import com.voltdevelopers.lotto.activities.RulesActivity;
+import com.voltdevelopers.lotto.activities.StartGameActivity;
 import com.voltdevelopers.lotto.activities.StatActivity;
 import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.game.Game;
 
+
 public class MainActivity extends AppCompatActivity {
 
-    Button standardGame, patternGame, stat;
+    Button start, rules, stat;
+    TextView textViewHTML;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,22 +29,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         findRes();
-        standardGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+
+        stat.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, StatActivity.class);
+            startActivity(intent);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                Log.i("INFO", "Started Activity" + intent.getIdentifier());
             }
         });
-
-        patternGame.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, PatternGameActivity.class);
+        start.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, StartGameActivity.class);
             startActivity(intent);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 Log.i("INFO", "Started Activity" + intent.getIdentifier());
             }
         });
 
-        stat.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, StatActivity.class);
+        rules.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, RulesActivity.class);
             startActivity(intent);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 Log.i("INFO", "Started Activity" + intent.getIdentifier());
@@ -52,12 +59,16 @@ public class MainActivity extends AppCompatActivity {
         } catch (InputException e) {
             e.printStackTrace();
         }
-
     }
 
     private void findRes() {
-        standardGame = findViewById(R.id.btn1);
-        patternGame = findViewById(R.id.btn2);
-        stat = findViewById(R.id.btn3);
+        start = findViewById(R.id.buttonStart);
+        rules = findViewById(R.id.buttonRules);
+        stat = findViewById(R.id.button2);
+        textViewHTML= findViewById(R.id.textViewHTML);
+    }
+
+    private void initRes(){
+        textViewHTML.setText(Html.fromHtml("Se consideriamo il gioco del lotto da un punto di vista <span style=\"color:#FF0000\">matematico</span> e <span style=\"color:#00ff00;\">calcoli</span> la probabilità di vincita di tutte le strategie è assolutamente la stessa e noi lo dimostreremo chiaramente."));
     }
 }

@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.voltdevelopers.lotto.R;
 import com.voltdevelopers.lotto.data.Database;
 
-public class StatActivity extends AppCompatActivity {
+public class RulesActivity extends AppCompatActivity {
 
     Database db;
   

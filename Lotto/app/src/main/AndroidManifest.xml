@@ -18,8 +18,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
+        <activity android:label="PatternGameActivity" android:name=".activitys.StartGameActivity" android:exported="true"/>
+        <activity android:label="StatActivity" android:name=".activitys.RulesActivity" android:exported="true"/>
+=======
         <activity android:label="PatternGameActivity" android:name=".activities.PatternGameActivity" android:exported="true"/>
         <activity android:label="StatActivity" android:name=".activities.StatActivity" android:exported="true"/>
+>>>>>>> TestVersion-lotto
     </application>
 
 </manifest>

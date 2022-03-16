@@ -14,7 +14,7 @@ import com.voltdevelopers.lotto.data.Database;
 
 import java.util.ArrayList;
 
-public class PatternGameActivity extends AppCompatActivity {
+public class StartGameActivity extends AppCompatActivity {
 
     private static final String TAG = "PatternGameActivity";
     private LineChart myChart;
@@ -22,7 +22,7 @@ public class PatternGameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pattern_game);
+        setContentView(R.layout.activity_start_game);
 
         Database.getInstance(5, 18d).setOnGraphData(onGraphData);
 
