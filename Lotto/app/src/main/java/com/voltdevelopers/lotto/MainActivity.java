@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
         Settings settings = Settings.getInstance();
         settings.setExtractions(5);
-        settings.setPlayersToPlay(new boolean[]{true, true, true, true, true});
         settings.setMoneyPerWin(11);
 
         stat.setOnClickListener(view -> {

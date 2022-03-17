@@ -12,6 +12,7 @@ public class Settings {
     private int presetGameCount;
 
     private Settings() {
+        playersToPlay = new boolean[]{true, true, true, true, true};
     }
 
     public static Settings getInstance() {
