@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         try {
-            Game game = new Game(10);
+            Game game = new Game(100);
             game.gameLoop();
         } catch (InputException e) {
             e.printStackTrace();

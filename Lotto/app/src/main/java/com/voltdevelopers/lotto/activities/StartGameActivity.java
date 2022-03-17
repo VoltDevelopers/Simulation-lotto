@@ -15,6 +15,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.voltdevelopers.lotto.R;
 import com.voltdevelopers.lotto.data.Database;
+import com.voltdevelopers.lotto.data.Settings;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -69,7 +70,7 @@ public class StartGameActivity extends AppCompatActivity {
         xAxis.setDrawGridLines(false);
         xAxis.setAvoidFirstLastClipping(true);
 
-        for(int i = 0; i < 5; i++){ //ciclo per le 5 linee
+        for(int i = 0; i < Settings.getInstance().getPlayersToPlay().length; i++){ //ciclo per le 5 linee
 
             yValues.add(new ArrayList<>());
 
@@ -85,11 +86,11 @@ public class StartGameActivity extends AppCompatActivity {
 
             lineDataSets.add(new LineDataSet(yValues.get(i), "player " + i + " winnings"));
             lineDataSets.get(i).setFillAlpha(110);
-            lineDataSets.get(i).setLineWidth(3f);
+            lineDataSets.get(i).setLineWidth(1f);
             lineDataSets.get(i).setDrawCircles(false);
             //lineDataSets.get(i).setCircleRadius(6);
             //lineDataSets.get(i).setCircleHoleRadius(6);
-            lineDataSets.get(i).setValueTextSize(6);
+            lineDataSets.get(i).setValueTextSize(4);
             lineDataSets.get(i).setColor(colors[i]);
            // lineDataSets.get(i).setCircleColor(colors[i]);
             lineDataSets.get(i).setValueTextColor(colors[i]);

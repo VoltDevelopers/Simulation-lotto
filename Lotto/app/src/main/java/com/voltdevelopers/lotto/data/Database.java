@@ -272,7 +272,7 @@ public class Database {
             int[] output = new int[nRequested];
             for (int i = 0; i < output.length; i++) {
                 int max = 0;
-                for (int j : pullsPerNumber) {
+                for (int j = 0; j < pullsPerNumber.length; j++) {
                     if (pullsPerNumber[j] >= max && !intArrayContains(output, j + 1)) {
                         max = pullsPerNumber[j];
                         output[i] = j + 1;
