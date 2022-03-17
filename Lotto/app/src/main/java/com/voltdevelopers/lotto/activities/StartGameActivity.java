@@ -61,7 +61,7 @@ public class StartGameActivity extends AppCompatActivity {
             lineDataSets.add(new LineDataSet(yValues.get(i), "player " + i + " winnings"));
             lineDataSets.get(i).setFillAlpha(110);
             lineDataSets.get(i).setLineWidth(3f);
-            //lineDataSets.get(i).setDrawCircles(true);
+            lineDataSets.get(i).setDrawCircles(false);
             //lineDataSets.get(i).setCircleRadius(6);
             //lineDataSets.get(i).setCircleHoleRadius(6);
             lineDataSets.get(i).setValueTextSize(6);
