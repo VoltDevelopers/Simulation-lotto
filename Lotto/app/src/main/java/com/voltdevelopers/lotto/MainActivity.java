@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.voltdevelopers.lotto.activities.RulesActivity;
 import com.voltdevelopers.lotto.activities.StartGameActivity;
 import com.voltdevelopers.lotto.activities.StatActivity;
+import com.voltdevelopers.lotto.data.Database;
 import com.voltdevelopers.lotto.data.Settings;
 import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.game.Game;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         findRes();
+
+        Database db = Database.getInstance();
 
         Settings settings = Settings.getInstance();
         settings.setExtractions(5);
@@ -65,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (InputException e) {
             e.printStackTrace();
         }
+        db.assignWins();
     }
 
     private void findRes() {
