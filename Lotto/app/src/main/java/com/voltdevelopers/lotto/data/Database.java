@@ -267,28 +267,24 @@ public class Database {
 
             for (Profile current : players) {
 
-
-                for (int i = 0; i < allRounds.size() - settings.getPresetGameCount(); i++) {
-
+                for (int i = 0; i < significantRounds.size(); i++) {
 
                     int winsInCurrentRound = 0;
                     for (int curentBetN : current.getSelectedBet(i)
                     ) {
-                        if (intArrayContains(allRounds.get(i + settings.getPresetGameCount()), curentBetN))
-
+                        if (intArrayContains(significantRounds.get(i), curentBetN))
                             winsInCurrentRound++;
+
                     }
 
                     current.addWin(winsInCurrentRound);
-
                 }
 
                 assignSpendings(current);
                 assignWinMoney(current);
-
             }
-            console.printStr("Assigned wins and money earned to all players" + "\n"); //<-- versione temp di joel che non sa cosa deve fare, TODO farlo giusto secondo necessità
 
+            console.printStr("Assigned wins and money earned to all players" + "\n"); //<-- versione temp di joel che non sa cosa deve fare, TODO farlo giusto secondo necessità
         }
 
         private void assignSpendings(Profile p) {
@@ -399,8 +395,8 @@ class Profile {
                 ",\n" + tabulation + "moneySpent=" + moneySpent +
                 ",\n" + tabulation + "net=" + (moneyWon - moneySpent) +
                 ",\n" + tabulation + "betList=" + betListToString(tabulation + "     ") +
-                ",\n" + tabulation + "winList={" + winListToString(tabulation + "     ") +
-                "}\n";
+                ",\n" + tabulation + "winList=" + winListToString(tabulation + "     ") +
+                "\n}\n";
     }
 
     private String winListToString(String tabulation) {
@@ -423,6 +419,6 @@ class Profile {
             output += "]\n";
         }
 
-        return "{\n" + output + tabulation + "}\n";
+        return "{\n" + output + tabulation + "}";
     }
 }
