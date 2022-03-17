@@ -240,7 +240,7 @@ public class Database {
 
         public int[] getNMostFrequent(int nRequested) {
             int[] output = new int[nRequested];
-            for (int i : output) {
+            for (int i = 0; i < output.length; i++) {
                 int max = 0;
                 for (int j : pullsPerNumber) {
                     if (pullsPerNumber[j] >= max && !intArrayContains(output, j + 1)) {
@@ -254,7 +254,7 @@ public class Database {
         }
 
         private boolean intArrayContains(int[] arr, int n) {
-            for (int i : arr) {
+            for (int i = 0; i < arr.length; i++) {
                 if (arr[i] == n)
                     console.printStr("The array " + arr.toString() + " contains " + n + "\n");
                 return true;

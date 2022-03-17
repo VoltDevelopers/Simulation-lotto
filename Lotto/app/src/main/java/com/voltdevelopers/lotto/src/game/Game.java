@@ -3,6 +3,7 @@ package com.voltdevelopers.lotto.src.game;
 import android.util.Log;
 
 import com.voltdevelopers.lotto.data.Database;
+import com.voltdevelopers.lotto.data.Settings;
 import com.voltdevelopers.lotto.layout.Console;
 import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.playerpatterns.FifthPlayer;
@@ -31,7 +32,7 @@ public class Game {
         random = new StdRandom();
         playerPatterns = new Player[5];
 
-        preGameLoop(10);
+        preGameLoop(Settings.getInstance().getPresetGameCount());
         initPlayers();
     }
 
