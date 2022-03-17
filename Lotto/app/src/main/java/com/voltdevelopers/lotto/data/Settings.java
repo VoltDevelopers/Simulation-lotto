@@ -8,6 +8,8 @@ public class Settings {
     private boolean[] playersToPlay;
     private int extractions;
     private double moneyPerWin;
+    private double costOfPlay;
+    private int presetGameCount;
 
     private Settings() {
     }
@@ -17,6 +19,14 @@ public class Settings {
             return instance;
         instance = new Settings();
         return instance;
+    }
+
+    public int getPresetGameCount() {
+        return presetGameCount;
+    }
+
+    public void setPresetGameCount(int presetGameCount) {
+        this.presetGameCount = presetGameCount;
     }
 
     public boolean[] getPlayersToPlay() {
@@ -41,6 +51,14 @@ public class Settings {
 
     public void setMoneyPerWin(double moneyPerWin) {
         this.moneyPerWin = moneyPerWin;
+    }
+
+    public double getCostOfPlay() {
+        return costOfPlay;
+    }
+
+    public void setCostOfPlay(double costOfPlay) {
+        this.costOfPlay = costOfPlay;
     }
 
 }

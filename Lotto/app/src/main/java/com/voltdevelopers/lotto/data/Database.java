@@ -44,7 +44,7 @@ public class Database {
         for (int i = 0; i < settings.getPlayersToPlay().length; i++) {
             if (settings.getPlayersToPlay()[i]) {
                 players[i] = new Profile(String.valueOf(i));
-            }else {
+            } else {
                 players[i] = null;
             }
         }
@@ -261,8 +261,37 @@ public class Database {
 
         public void assignWins() {
 
-            //TODO the code
+            for (Profile current : players) {
+
+                for (int i = 0; i < allRounds.size() - Settings.getInstance().getPresetGameCount(); i++) {
+
+                    int winsInCurrentRound = 0;
+                    for (int curentBetN : current.getSelectedBet(i)
+                    ) {
+                        if (intArrayContains(allRounds.get(i + Settings.getInstance().getPresetGameCount()), curentBetN))
+                            winsInCurrentRound++;
+                    }
+
+                    current.addWin(winsInCurrentRound);
+
+                }
+
+                assignSpendings(current);
+                assignWinMoney(current);
+
+            }
             console.printStr("Assigned wins and money earned to all players" + "\n"); //<-- versione temp di joel che non sa cosa deve fare, TODO farlo giusto secondo necessità
+
+        }
+
+        private void assignSpendings(Profile p) {
+            p.addToMoneySpent(Settings.getInstance().getCostOfPlay() * p.getNOfBets());
+        }
+
+        private void assignWinMoney(Profile p) {
+
+            for (int i = 0; i < p.getNOfBets(); i++)
+                p.addToMoneyWon(p.getHitsOnSelectedBet(i) * Settings.getInstance().getMoneyPerWin());
 
         }
     }
@@ -271,14 +300,16 @@ public class Database {
 class Profile {
     private String name;
     private double moneyWon, moneySpent;
-    private final int nWins;
+    private int nWins;
     private final ArrayList<int[]> betList;
+    private final ArrayList<Integer> winList;
 
     public Profile() {
         moneyWon = 0;
         moneySpent = 0;
         nWins = 0;
         betList = new ArrayList<>();
+        winList = new ArrayList<>();
     }
 
     public Profile(String name) {
@@ -295,6 +326,14 @@ class Profile {
 
     public int[] getBet(int n) {
         return betList.get(n);
+    }
+
+    public int getNOfBets() {
+        return betList.size();
+    }
+
+    public int getHitsOnSelectedBet(int n) {
+        return winList.get(n);
     }
 
     public int[] getLastBet() {
@@ -327,6 +366,11 @@ class Profile {
 
     public int getNWins() {
         return nWins;
+    }
+
+    public void addWin(int n) {
+        nWins++;
+        winList.add(n);
     }
 
     public void setName(String name) {
