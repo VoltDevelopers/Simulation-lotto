@@ -401,7 +401,6 @@ class Profile {
 
     private String betListToString(String tabulation) {
 
-
         String output = "";
 
         for (int[] arr : betList) {
