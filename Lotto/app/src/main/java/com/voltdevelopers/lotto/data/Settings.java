@@ -13,9 +13,10 @@ public class Settings {
     }
 
     public static Settings getInstance() {
-        if (instance != null)
-            return instance;
-        instance = new Settings();
+        if (instance == null) {
+            instance = new Settings();
+        }
+
         return instance;
     }
 
@@ -31,7 +32,7 @@ public class Settings {
         this.extractions = extractions;
     }
 
-    public int getextractions() {
+    public int getExtractions() {
         return extractions;
     }
 
@@ -42,5 +43,4 @@ public class Settings {
     public void setMoneyPerWin(double moneyPerWin) {
         this.moneyPerWin = moneyPerWin;
     }
-
 }

@@ -1,23 +1,24 @@
 package com.voltdevelopers.lotto.layout;
 
 import android.util.Log;
+
 import java.util.Scanner;
 
 public class Console {
-
-    private final String TAG = this.getClass().getSimpleName();
     private static Console instance = null;
-    Scanner inputSc;
+    private final String TAG = this.getClass().getSimpleName();
+    private final Scanner inputSc;
 
     private Console() {
         inputSc = new Scanner(System.in);
         // add file for logs
     }
 
-    public static Console getInstance () {
-        if (instance != null)
-            return instance;
-        instance = new Console();
+    public static Console getInstance() {
+        if (instance == null) {
+            instance = new Console();
+        }
+
         return instance;
     }
 
@@ -30,15 +31,17 @@ public class Console {
         Log.e(TAG, "EXCEPTION", exp);
     }
 
-    public String getStr(){
+    public String getStr() {
         String input = inputSc.next();
         printStr(input);
+
         return input;
     }
 
-    public int getInt(){
+    public int getInt() {
         int input = inputSc.nextInt();
         printStr(String.valueOf(input));
+
         return input;
     }
 }
