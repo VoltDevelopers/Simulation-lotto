@@ -238,7 +238,7 @@ public class Database {
         public int[] getLatestN(int nRequested) {
             int[] output = new int[nRequested];
             int chronoSize = pullChronology.size() - 1;
-            for (int i : output) {
+            for (int i = 0; i < nRequested; i++) {
                 output[i] = pullChronology.get(chronoSize);
                 chronoSize--;
             }
@@ -257,7 +257,7 @@ public class Database {
 
         public int[] getOldestN(int nRequested) {
             int[] output = new int[nRequested];
-            for (int i : output) {
+            for (int i = 0; i < nRequested; i++) {
                 output[i] = pullChronology.get(i);
             }
 
