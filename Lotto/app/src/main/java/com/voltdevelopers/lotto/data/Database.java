@@ -393,13 +393,27 @@ class Profile {
 
     public String toString(String tabulation) {
         return "Profile{" +
-                ",\n" + tabulation + "name='" + name +
+                ",\n" + tabulation + "name=" + name +
                 ",\n" + tabulation + "nWins=" + nWins +
                 ",\n" + tabulation + "moneyWon=" + moneyWon +
                 ",\n" + tabulation + "moneySpent=" + moneySpent +
                 ",\n" + tabulation + "net=" + (moneyWon - moneySpent) +
                 ",\n" + tabulation + "betList=" + betListToString(tabulation + "     ") +
+                ",\n" + tabulation + "winList=" + winListToString(tabulation + "     ") +
                 "}\n";
+    }
+
+    private String winListToString(String tabulation) {
+
+        String output = "";
+
+        for (int i = 0; i < winList.size(); i++) {
+            output += tabulation + "[" + (i + 1) + " -> " + winList.get(i) + "]\n";
+        }
+
+        return "\n{\n" + output + '}';
+
+
     }
 
     private String betListToString(String tabulation) {
