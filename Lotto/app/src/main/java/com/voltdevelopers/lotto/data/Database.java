@@ -5,7 +5,6 @@ import androidx.annotation.NonNull;
 import com.voltdevelopers.lotto.layout.Console;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Database {
 
@@ -268,12 +267,12 @@ public class Database {
 
             for (Profile current : players) {
 
-                for (int i = 0; i < allRounds.size() - Settings.getInstance().getPresetGameCount(); i++) {
+                for (int i = 0; i < allRounds.size() - settings.getPresetGameCount(); i++) {
 
                     int winsInCurrentRound = 0;
                     for (int curentBetN : current.getSelectedBet(i)
                     ) {
-                        if (intArrayContains(allRounds.get(i + Settings.getInstance().getPresetGameCount()), curentBetN))
+                        if (intArrayContains(allRounds.get(i + settings.getPresetGameCount()), curentBetN))
                             winsInCurrentRound++;
                     }
 
@@ -290,13 +289,13 @@ public class Database {
         }
 
         private void assignSpendings(Profile p) {
-            p.addToMoneySpent(Settings.getInstance().COST_OF_PLAY * p.getNOfBets());
+            p.addToMoneySpent(settings.COST_OF_PLAY * p.getNOfBets());
         }
 
         private void assignWinMoney(Profile p) {
 
             for (int i = 0; i < p.getNOfBets(); i++)
-                p.addToMoneyWon(p.getHitsOnSelectedBet(i) * Settings.getInstance().getMoneyPerWin());
+                p.addToMoneyWon(p.getHitsOnSelectedBet(i) * settings.getMoneyPerWin());
 
         }
     }
