@@ -14,25 +14,14 @@ public class Database {
     private Profile[] players;
     private final Analysis analysis;
 
-    public int allPulls;          // COUNTER: estrazioni primari + significative
-    public int significantPulls;  // COUNTER: estrazioni significative
-    public final double moneyToPay;
-
     private final ArrayList<int[]> allRounds;
     private final ArrayList<int[]> significantRounds;
-    private final int[] pullsPerNumber; //n di estrazioni per valore (n di estrazioni di 1 si trova nella cella 0, di 2 nella 1, etc etc)
-    private final ArrayList<Integer> pullChronology; //ordine estrazioni (ultimo estratto sta all'indice massimo)
-
-
-    private OnGraphData onGraphData;
+    private final int[] pullsPerNumber;                 // Statistica estrazione dei numeri
+    private final ArrayList<Integer> pullChronology;    // Ordine estrazioni (ultimo estratto sta all'indice massimo)
 
     private Database() {
         settings = Settings.getInstance();
         analysis = new Analysis();
-
-        this.allPulls = 0;
-        this.significantPulls = 0;
-        this.moneyToPay = settings.getMoneyPerWin();
 
         allRounds = new ArrayList<>();
         significantRounds = new ArrayList<>();
@@ -71,7 +60,6 @@ public class Database {
             pullsPerNumber[input[i] - 1]++;
             analysis.modChronology(input[i]);
         }
-        allPulls++;
     }
 
     /*
@@ -85,8 +73,6 @@ public class Database {
             pullsPerNumber[input[i] - 1]++;
             analysis.modChronology(input[i]);
         }
-        allPulls++;
-        significantPulls++;
     }
 
     /*
@@ -131,23 +117,6 @@ public class Database {
     }
 
 
-
-    //----------------------interface for adding data to the graph----------------------------------
-
-    public void setOnGraphData(OnGraphData onGraphData) {
-        this.onGraphData = onGraphData;
-    }
-
-    public interface OnGraphData {
-
-        public void addData(int gameCounter, int[] results); // gameCounter asse x, winningsOfAllPlayers asse y
-
-    }
-
-    public void sendDataToGraph(int[] results) {
-        onGraphData.addData(allRounds.size(), results);
-    }
-
     //----------------------analysis methods--------------------------------------------------------
 
     public int[] getNMostFrequent(int nRequested) {
@@ -172,8 +141,7 @@ public class Database {
     @Override
     public String toString() {
         return "Database{" +
-                ",\n" + "-----" + "moneyPerWin=" + moneyToPay +
-                ",\n" + "-----" + "betsPerRound=" + allPulls +
+                ",\n" + "-----" + "moneyPerWin=" + settings.getMoneyPerWin() +
                 ",\n" + "-----" + "gameCounter=" + allRounds.size() +
                 ",\n" + "-----" + "pullChronology=" + pullChronologyToString("-----" + "     ") +//\t non va, idk
                 ",\n" + "-----" + "pullsPerNumber=" + pullsPerNumberToString("-----" + "     ") +
