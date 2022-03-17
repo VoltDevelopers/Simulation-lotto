@@ -255,9 +255,10 @@ public class Database {
 
         private boolean intArrayContains(int[] arr, int n) {
             for (int i = 0; i < arr.length; i++) {
-                if (arr[i] == n)
+                if (arr[i] == n) {
                     console.printStr("The array " + arr.toString() + " contains " + n + "\n");
-                return true;
+                    return true;
+                }
             }
             console.printStr("The array " + arr.toString() + " does not contains " + n + "\n");
             return false;
