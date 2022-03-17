@@ -92,7 +92,7 @@ public class Database {
     }
 
     public int getSizeSignificantPulls() {
-        return allRounds.size();
+        return significantRounds.size();
     }
 
     public double getPlayerMoneyWon(int playerN) {
@@ -109,6 +109,9 @@ public class Database {
 
     public int getPlayerWins(int playerN) {
         return players[playerN].getNWins();
+    }
+    public ArrayList<Integer> getPlayerWinList(int playerN) {
+        return players[playerN].getWinList();
     }
 
     public int[] getPlayerBet(int playerN, int n) {
@@ -398,6 +401,10 @@ class Profile {
 
     public int getNWins() {
         return nWins;
+    }
+
+    public ArrayList<Integer> getWinList() {
+        return winList;
     }
 
     public void addWin(int n) {

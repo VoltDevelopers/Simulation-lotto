@@ -6,6 +6,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -31,6 +34,11 @@ public class StartGameActivity extends AppCompatActivity {
 
         myChart.setDragEnabled(true);
         myChart.setScaleEnabled(false);
+        myChart.setDrawBorders(true);
+        myChart.setPinchZoom(false);
+        myChart.setDrawGridBackground(false);
+        myChart.getAxisRight().setEnabled(false);
+        myChart.setBorderColor(Color.GREEN);
 
         db = Database.getInstance();
         addDataToGraph();
@@ -39,21 +47,38 @@ public class StartGameActivity extends AppCompatActivity {
     private void addDataToGraph(){
 
         int colors[] = {Color.RED,Color.YELLOW,Color.WHITE,Color.GREEN,Color.BLUE};
+        Random random = new Random();
+
         ArrayList<ArrayList<Entry>> yValues = new ArrayList<>();
         ArrayList<LineDataSet> lineDataSets = new ArrayList<>();
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        Random random = new Random();
-        int range = 5;// roba temporanea per i dati dell ' asse y
+
+        YAxis yAxis = myChart.getAxisLeft();
+        yAxis.setDrawGridLines(false);
+        yAxis.setLabelCount(5,true);
+        yAxis.setTextColor(Color.GREEN);
+        yAxis.removeAllLimitLines();
+        yAxis.setAxisMaximum(5f);
+
+        XAxis xAxis = myChart.getXAxis();
+        xAxis.setTextColor(Color.GREEN);
+        xAxis.setLabelCount(db.getSizeSignificantPulls(),true);
+        xAxis.removeAllLimitLines();
+        xAxis.setAxisMaximum(db.getSizeSignificantPulls());
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setAvoidFirstLastClipping(true);
 
         for(int i = 0; i < 5; i++){ //ciclo per le 5 linee
 
             yValues.add(new ArrayList<>());
 
-            for(int j = 0; j < db.getSizeAllPulls(); j++){ //ciclo per scorrere tutte le vincite del singolo giocatore
+            for(int j = 0; j < db.getSizeSignificantPulls(); j++){ //ciclo per scorrere tutte le vincite del singolo giocatore
 
                 //asse X = j
                 int y = 0; // asse y;
-                y = random.nextInt(range);
+                y = db.getPlayerWinList(i).get(j);
+                //y = random.nextInt(6);
                 yValues.get(i).add(new Entry(j,y));
 
             }
