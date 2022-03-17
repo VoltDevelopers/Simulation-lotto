@@ -149,16 +149,43 @@ public class Database {
                 ",\n" + tabulation + "gameCounter=" + allRounds.size() +
                 ",\n" + tabulation + "pullChronology=" + pullChronologyToString(tabulation + "     ") +//\t non va, idk
                 ",\n" + tabulation + "pullsPerNumber=" + pullsPerNumberToString(tabulation + "     ") +
-                ",\n" + tabulation + "rounds=" + roundsToString(tabulation + "     ") +
+                ",\n" + tabulation + "rounds=" + allRoundsToString(tabulation + "     ") +
                 ",\n" + tabulation + "players=\n" + allPlayersToString(tabulation + "     ") +
                 ",\n" + tabulation + '}';
     }
 
-    private String roundsToString(String tabulation) {
+    private String allRoundsToString(String tabulation) {
+
+        return  "\n{" +
+                "\n" + tabulation + "preGameRounds=" + preGameRoundsToString(tabulation + "     ") +
+                ",\n" + tabulation + "significantRouds=" + significantRoundsToString(tabulation + "     ") +
+                '}';
+
+    }
+
+    private String preGameRoundsToString(String tabulation) {
 
         String output = "";
 
-        for (int[] arr : allRounds) {
+        for (int i = 0; i < settings.getPresetGameCount(); i++) {
+            output += tabulation + "[ ";
+            for (int n : allRounds.get(i)) {
+
+                output += n + " ";
+
+            }
+            output += "]\n";
+        }
+
+        return "\n{\n" + output + '}';
+
+    }
+
+    private String significantRoundsToString(String tabulation) {
+
+        String output = "";
+
+        for (int[] arr : significantRounds) {
             output += tabulation + "[ ";
             for (int n : arr) {
 
