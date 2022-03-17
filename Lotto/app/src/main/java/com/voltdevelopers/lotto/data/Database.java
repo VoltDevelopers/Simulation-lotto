@@ -139,15 +139,20 @@ public class Database {
 
     @NonNull
     @Override
-    public String toString() {
+    public String toString() { //per poter essere chiamato da chi non sa
+        return toString("");
+    }
+
+    @NonNull
+    public String toString(String tabulation) {
         return "Database{" +
-                ",\n" + "-----" + "moneyPerWin=" + settings.getMoneyPerWin() +
-                ",\n" + "-----" + "gameCounter=" + allRounds.size() +
-                ",\n" + "-----" + "pullChronology=" + pullChronologyToString("-----" + "     ") +//\t non va, idk
-                ",\n" + "-----" + "pullsPerNumber=" + pullsPerNumberToString("-----" + "     ") +
-                ",\n" + "-----" + "rounds=" + roundsToString("-----" + "     ") +
-                ",\n" + "-----" + "players=\n" + allPlayersToString("-----" + "     ") +
-                ",\n" + "-----" + '}';
+                ",\n" + tabulation + "moneyPerWin=" + settings.getMoneyPerWin() +
+                ",\n" + tabulation + "gameCounter=" + allRounds.size() +
+                ",\n" + tabulation + "pullChronology=" + pullChronologyToString(tabulation + "     ") +//\t non va, idk
+                ",\n" + tabulation + "pullsPerNumber=" + pullsPerNumberToString(tabulation + "     ") +
+                ",\n" + tabulation + "rounds=" + roundsToString(tabulation + "     ") +
+                ",\n" + tabulation + "players=\n" + allPlayersToString(tabulation + "     ") +
+                ",\n" + tabulation + '}';
     }
 
     private String roundsToString(String tabulation) {
@@ -285,7 +290,7 @@ public class Database {
         }
 
         private void assignSpendings(Profile p) {
-            p.addToMoneySpent(Settings.getInstance().getCostOfPlay() * p.getNOfBets());
+            p.addToMoneySpent(Settings.getInstance().COST_OF_PLAY * p.getNOfBets());
         }
 
         private void assignWinMoney(Profile p) {

@@ -4,11 +4,11 @@ public class Settings {
     private static Settings instance = null;
     public static final int MAX_EXIT = 90;
     public static final int MAX_PLAYERS = 5;
+    public static final int COST_OF_PLAY = 1;
 
     private boolean[] playersToPlay;
     private int extractions;
     private double moneyPerWin;
-    private double costOfPlay;
     private int presetGameCount;
 
     private Settings() {
@@ -51,14 +51,6 @@ public class Settings {
 
     public void setMoneyPerWin(double moneyPerWin) {
         this.moneyPerWin = moneyPerWin;
-    }
-
-    public double getCostOfPlay() {
-        return costOfPlay;
-    }
-
-    public void setCostOfPlay(double costOfPlay) {
-        this.costOfPlay = costOfPlay;
     }
 
 }
