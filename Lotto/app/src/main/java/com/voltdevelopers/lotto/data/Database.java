@@ -290,13 +290,13 @@ public class Database {
         }
 
         private void assignSpendings(Profile p) {
-            p.addToMoneySpent(Settings.getInstance().COST_OF_PLAY * p.getNOfBets());
+            p.addToMoneySpent(Settings.COST_OF_PLAY * p.getNOfBets());
         }
 
         private void assignWinMoney(Profile p) {
 
             for (int i = 0; i < p.getNOfBets(); i++)
-                p.addToMoneyWon(p.getHitsOnSelectedBet(i) * Settings.getInstance().getMoneyPerWin());
+                p.addToMoneyWon(p.getHitsOnSelectedBet(i) * settings.getMoneyPerWin());
 
         }
     }
