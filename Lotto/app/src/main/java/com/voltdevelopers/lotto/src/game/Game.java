@@ -17,7 +17,6 @@ import com.voltdevelopers.lotto.src.random.StdRandom;
 public class Game {
 
     private final int turnsGame;
-    private final int pull = 5;
 
     Database db;
     Player[] playerPatterns;
@@ -40,10 +39,10 @@ public class Game {
         int[] draw;
 
         for (int i = 0; i < turnsGame; i++) {
+            playersPlayBets();
+
             draw = generateDraw();
             db.addSignificantPull(draw);
-
-            playersPlay();
             sendPatternsData();
         }
     }
@@ -63,7 +62,7 @@ public class Game {
         }
     }
 
-    private void playersPlay() {
+    private void playersPlayBets() {
         for (int i = 0; i < playerPatterns.length; i++) {
             playerPatterns[i].createBet();
         }
