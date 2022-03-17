@@ -8,7 +8,8 @@ public abstract class Player {
     protected int[] bet;
 
     public Player() {
-        this.extractions = Settings.getInstance().getextractions();
+        this.extractions = Settings.getInstance().getExtractions();
+        bet = new int[extractions];
     }
 
     public abstract void createBet();

@@ -7,10 +7,11 @@ public class ThirdPlayer extends Player {
 
     /*
    Pattern III:
-       Gioca il numero che non esce da più estrazioni
+       Gioca un numero casuale
    */
 
     public ThirdPlayer() {
+        super();
         this.id = 2;
         this.bet = new int[extractions];
     }

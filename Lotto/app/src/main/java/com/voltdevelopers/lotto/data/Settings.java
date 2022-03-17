@@ -42,7 +42,7 @@ public class Settings {
         this.extractions = extractions;
     }
 
-    public int getextractions() {
+    public int getExtractions() {
         return extractions;
     }
 
