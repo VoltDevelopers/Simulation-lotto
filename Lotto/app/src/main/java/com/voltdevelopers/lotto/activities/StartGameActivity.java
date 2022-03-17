@@ -18,54 +18,59 @@ public class StartGameActivity extends AppCompatActivity {
 
     private static final String TAG = "PatternGameActivity";
     private LineChart myChart;
+    private Database db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_game);
 
-        Database.getInstance(5, 18d).setOnGraphData(onGraphData);
-
         myChart = (LineChart) findViewById(R.id.graph);
 
         myChart.setDragEnabled(true);
         myChart.setScaleEnabled(false);
-        /*ArrayList<Entry> yValues = new ArrayList<>();
-        yValues.add(new Entry(0, 60f));
-        yValues.add(new Entry(1, 50f));
-        yValues.add(new Entry(2, 20f));
-        yValues.add(new Entry(3, 90f));
 
-        LineDataSet set_1 = new LineDataSet(yValues, "Player 1 winnings");
-        set_1.setFillAlpha(110);
-        ArrayList<ILineDataSet> dataSets= new ArrayList<>();
-        dataSets.add(set_1);
+//
+//
+//        ArrayList<Entry> yValues = new ArrayList<>();
+//        yValues.add(new Entry(0, 60f));
+//        yValues.add(new Entry(1, 50f));
+//        yValues.add(new Entry(2, 20f));
+//        yValues.add(new Entry(3, 90f));
+//
+//        LineDataSet set_1 = new LineDataSet(yValues, "Player 1 winnings");
+//        set_1.setFillAlpha(110);
+//        ArrayList<ILineDataSet> dataSets= new ArrayList<>();
+//        dataSets.add(set_1);
+//
+//        LineData data = new LineData(dataSets);
+//        myChart.setData(data);
 
-        LineData data = new LineData(dataSets);
-        myChart.setData(data);*/
+        db = Database.getInstance();
+        addDataToGraph();
     }
 
-    private void addDataToGraph(int gameCounter, int[] results){
+    private void addDataToGraph(){
+        ArrayList<Entry> yValues = new ArrayList<>();
 
-        ArrayList<ArrayList<Entry>> yValues = new ArrayList<>(5);
+        for (int i = 0; i < db.getPullCount(); i++) {
 
-        for (int i = 0; i < 5; i++) {
+            // ASSE Y
+            for (int j = 0; j < 5; j++) {
+                int Y = 0;
+                int[] arr = db.getPlayerLastBet(j);
+                for (int m = 0; m < arr.length; m++) {
+                    Y += arr[m];
+                }
+                yValues.add(new Entry(i, Y));
+                LineDataSet lineDataSet = new LineDataSet(yValues, "Player " + i + "winnings");
+                lineDataSet.setFillAlpha(110);
+                ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+                dataSets.add(lineDataSet);
 
-            yValues.get(i).add(new Entry(gameCounter, results[i]));
-            LineDataSet lineDataSet = new LineDataSet(yValues.get(i), "Player " + i + "winnings");
-            lineDataSet.setFillAlpha(110);
-            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-            dataSets.add(lineDataSet);
-
-            LineData data = new LineData(dataSets);
-            myChart.setData(data);
-            myChart.invalidate();
-
+                LineData data = new LineData(dataSets);
+                myChart.setData(data);
+            }
         }
-
-
     }
-
-    Database.OnGraphData onGraphData = (gameCounter, results) -> addDataToGraph(gameCounter, results);
-
 }

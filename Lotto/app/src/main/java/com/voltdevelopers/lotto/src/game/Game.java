@@ -35,14 +35,6 @@ public class Game {
         initPlayers();
     }
 
-    private void initPlayers() {
-        playerPatterns[0] = new FirstPlayer(pull);
-        playerPatterns[1] = new SecondPlayer(pull);
-        playerPatterns[2] = new ThirdPlayer(pull);
-        playerPatterns[3] = new FourthPlayer(pull);
-        playerPatterns[4] = new FifthPlayer(pull);
-    }
-
     public void gameLoop() {
         int[] draw;
 
@@ -53,6 +45,14 @@ public class Game {
             playersPlay();
             sendPatternsData();
         }
+    }
+
+    private void initPlayers() {
+        playerPatterns[0] = new FirstPlayer(pull);
+        playerPatterns[1] = new SecondPlayer(pull);
+        playerPatterns[2] = new ThirdPlayer(pull);
+        playerPatterns[3] = new FourthPlayer(pull);
+        playerPatterns[4] = new FifthPlayer(pull);
     }
 
     private void preGameLoop(int games) {

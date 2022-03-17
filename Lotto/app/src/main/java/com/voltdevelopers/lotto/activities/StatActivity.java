@@ -10,17 +10,16 @@ import com.voltdevelopers.lotto.data.Database;
 
 public class StatActivity extends AppCompatActivity {
 
-    Database db;
+
   
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rules);
 
-        db = Database.getInstance(5, 18d);
+        Database db = Database.getInstance();
 
-        TextView text;
-        text = findViewById(R.id.db);
-        text.setText(db.toString("  "));
+        TextView text= findViewById(R.id.dbStat);
+        text.setText(db.toString());
     }
 }
