@@ -18,7 +18,7 @@ public class ThirdPlayer extends Player {
     @Override
     public void createBet() {
         try {
-            bet = StdRandom.getRandomArray(extractions, 90);
+            this.bet = StdRandom.getRandomArray(extractions, 90);
         } catch (InputException e) {
             e.printStackTrace();
         }

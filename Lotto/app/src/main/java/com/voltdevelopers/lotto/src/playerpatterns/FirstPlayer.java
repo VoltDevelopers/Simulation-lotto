@@ -1,6 +1,8 @@
 package com.voltdevelopers.lotto.src.playerpatterns;
 
 import com.voltdevelopers.lotto.data.Database;
+import com.voltdevelopers.lotto.src.exception.InputException;
+import com.voltdevelopers.lotto.src.random.StdRandom;
 
 public class FirstPlayer extends Player {
 
@@ -16,6 +18,10 @@ public class FirstPlayer extends Player {
 
     @Override
     public void createBet() {
-        bet = Database.getInstance().getLatestN(5);
+        try {
+            this.bet = StdRandom.getRandomArray(extractions, 90);
+        } catch (InputException e) {
+            e.printStackTrace();
+        }
     }
 }

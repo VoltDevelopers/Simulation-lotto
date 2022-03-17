@@ -13,14 +13,15 @@ public class FourthPlayer extends Player {
     public FourthPlayer() {
         this.id = 3;
         this.bet = new int[extractions];
-    }
-
-    @Override
-    public void createBet() {
         try {
             this.bet = StdRandom.getRandomArray(extractions, 90);
         } catch (InputException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void createBet() {
+
     }
 }
