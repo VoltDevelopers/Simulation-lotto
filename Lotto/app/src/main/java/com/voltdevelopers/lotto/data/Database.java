@@ -268,12 +268,12 @@ public class Database {
 
             for (Profile current : players) {
 
-                for (int i = 0; i < allRounds.size() - Settings.getInstance().getPresetGameCount(); i++) {
+                for (int i = 0; i < allRounds.size() - significantRounds.size(); i++) {
 
                     int winsInCurrentRound = 0;
                     for (int curentBetN : current.getSelectedBet(i)
                     ) {
-                        if (intArrayContains(allRounds.get(i + Settings.getInstance().getPresetGameCount()), curentBetN))
+                        if (intArrayContains(allRounds.get(i + significantRounds.size()), curentBetN))
                             winsInCurrentRound++;
                     }
 
