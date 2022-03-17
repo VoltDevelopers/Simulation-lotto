@@ -1,8 +1,6 @@
 package com.voltdevelopers.lotto.src.playerpatterns;
 
 import com.voltdevelopers.lotto.data.Database;
-import com.voltdevelopers.lotto.src.exception.InputException;
-import com.voltdevelopers.lotto.src.random.StdRandom;
 
 public class FifthPlayer extends Player {
 
