@@ -1,22 +1,23 @@
 package com.voltdevelopers.lotto.src.playerpatterns;
 
+import com.voltdevelopers.lotto.data.Settings;
+
 public abstract class Player {
-    protected int numsPerTurn;
-    protected int playerN;
+    protected int id;
+    protected int extractions;
     protected int[] bet;
 
-    public Player(int numsPerTurn) {
-        this.numsPerTurn = 5;
+    public Player() {
+        this.extractions = Settings.getInstance().getextractions();
     }
+
+    public abstract void createBet();
 
     public int[] getBet() {
         return bet;
     }
 
-    public int getPlayerN(){
-        return playerN;
+    public int getId() {
+        return id;
     }
-
-    public abstract void createBet();
-
 }

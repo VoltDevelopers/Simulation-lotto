@@ -17,7 +17,7 @@ public class RulesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rules);
 
-        db = Database.getInstance(5, 18d);
+        db = Database.getInstance();
 
 //        TextView text;
 //        text = findViewById(R.id.db);

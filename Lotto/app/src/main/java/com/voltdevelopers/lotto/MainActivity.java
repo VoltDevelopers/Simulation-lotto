@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.voltdevelopers.lotto.activities.RulesActivity;
 import com.voltdevelopers.lotto.activities.StartGameActivity;
 import com.voltdevelopers.lotto.activities.StatActivity;
+import com.voltdevelopers.lotto.data.Settings;
 import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.game.Game;
 
@@ -29,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         findRes();
+
+        Settings settings = Settings.getInstance();
+        settings.setExtractions(5);
+        settings.setPlayersToPlay(new boolean[]{true, true, true, true, true});
+        settings.setMoneyPerWin(11);
 
         stat.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, StatActivity.class);

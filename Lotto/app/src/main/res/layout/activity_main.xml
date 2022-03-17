@@ -230,10 +230,10 @@
         android:id="@+id/buttonStat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="145dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="17dp"
         android:text="Stat"
         app:layout_constraintStart_toEndOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRules" />
+        app:layout_constraintTop_toBottomOf="@+id/view5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

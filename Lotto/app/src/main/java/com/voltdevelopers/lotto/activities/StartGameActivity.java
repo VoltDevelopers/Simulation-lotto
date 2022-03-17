@@ -53,7 +53,7 @@ public class StartGameActivity extends AppCompatActivity {
     private void addDataToGraph(){
         ArrayList<Entry> yValues = new ArrayList<>();
 
-        for (int i = 0; i < db.getPullCount(); i++) {
+        for (int i = 0; i < db.getSizeAllPulls(); i++) {
 
             // ASSE Y
             for (int j = 0; j < 5; j++) {

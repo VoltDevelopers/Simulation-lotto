@@ -26,7 +26,7 @@ public class Game {
     public Game(int turnsGame) throws InputException {
         this.turnsGame = turnsGame;
 
-        db = Database.getInstance(pull, 18d);
+        db = Database.getInstance();
         console = Console.getInstance();
         random = new StdRandom();
         playerPatterns = new Player[5];
@@ -40,7 +40,7 @@ public class Game {
 
         for (int i = 0; i < turnsGame; i++) {
             draw = generateDraw();
-            db.addPull(draw);
+            db.addSignificantPull(draw);
 
             playersPlay();
             sendPatternsData();
@@ -48,11 +48,11 @@ public class Game {
     }
 
     private void initPlayers() {
-        playerPatterns[0] = new FirstPlayer(pull);
-        playerPatterns[1] = new SecondPlayer(pull);
-        playerPatterns[2] = new ThirdPlayer(pull);
-        playerPatterns[3] = new FourthPlayer(pull);
-        playerPatterns[4] = new FifthPlayer(pull);
+        playerPatterns[0] = new FirstPlayer();
+        playerPatterns[1] = new SecondPlayer();
+        playerPatterns[2] = new ThirdPlayer();
+        playerPatterns[3] = new FourthPlayer();
+        playerPatterns[4] = new FifthPlayer();
     }
 
     private void preGameLoop(int games) {
@@ -70,7 +70,7 @@ public class Game {
 
     private void sendPatternsData() {
         for (int i = 0; i < playerPatterns.length; i++) {
-            db.addPlayerBet(playerPatterns[i].getPlayerN(), playerPatterns[i].getBet());
+            db.addPlayerBet(playerPatterns[i].getId(), playerPatterns[i].getBet());
         }
     }
 
