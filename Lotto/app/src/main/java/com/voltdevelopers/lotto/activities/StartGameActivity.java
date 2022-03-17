@@ -30,8 +30,6 @@ public class StartGameActivity extends AppCompatActivity {
         myChart.setDragEnabled(true);
         myChart.setScaleEnabled(false);
 
-//
-//
 //        ArrayList<Entry> yValues = new ArrayList<>();
 //        yValues.add(new Entry(0, 60f));
 //        yValues.add(new Entry(1, 50f));
