@@ -28,8 +28,17 @@ public class StartGameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_game);
+
+        db = Database.getInstance();
+
+        initFirstChart();
+        addDataToGraph();
+    }
+
+    private void initFirstChart(){
 
         myChart = (LineChart) findViewById(R.id.graph);
 
@@ -41,25 +50,14 @@ public class StartGameActivity extends AppCompatActivity {
         myChart.getAxisRight().setEnabled(false);
         myChart.setBorderColor(Color.GREEN);
 
-        db = Database.getInstance();
-        addDataToGraph();
-    }
-
-    private void addDataToGraph(){
-
-        int colors[] = {Color.RED,Color.YELLOW,Color.WHITE,Color.GREEN,Color.BLUE};
-        Random random = new Random();
-
-        ArrayList<ArrayList<Entry>> yValues = new ArrayList<>();
-        ArrayList<LineDataSet> lineDataSets = new ArrayList<>();
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-
         YAxis yAxis = myChart.getAxisLeft();
+        yAxis.setSpaceBottom(0);
+        yAxis.setSpaceTop(0);
         yAxis.setDrawGridLines(false);
         yAxis.setLabelCount(5,true);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
-        yAxis.setAxisMaximum(5f);
+        yAxis.setAxisMaximum(5);
 
         XAxis xAxis = myChart.getXAxis();
         xAxis.setTextColor(Color.GREEN);
@@ -70,6 +68,16 @@ public class StartGameActivity extends AppCompatActivity {
         xAxis.setDrawGridLines(false);
         xAxis.setAvoidFirstLastClipping(true);
 
+    }
+
+    private void addDataToGraph(){
+
+        int colors[] = {Color.RED,Color.YELLOW,Color.WHITE,Color.MAGENTA,Color.BLUE};
+
+        ArrayList<ArrayList<Entry>> yValues = new ArrayList<>();
+        ArrayList<LineDataSet> lineDataSets = new ArrayList<>();
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+
         for(int i = 0; i < Settings.getInstance().getPlayersToPlay().length; i++){ //ciclo per le 5 linee
 
             yValues.add(new ArrayList<>());
@@ -79,7 +87,6 @@ public class StartGameActivity extends AppCompatActivity {
                 //asse X = j
                 int y = 0; // asse y;
                 y = db.getPlayerWinList(i).get(j);
-                //y = random.nextInt(6);
                 yValues.get(i).add(new Entry(j,y));
 
             }
@@ -88,19 +95,16 @@ public class StartGameActivity extends AppCompatActivity {
             lineDataSets.get(i).setFillAlpha(110);
             lineDataSets.get(i).setLineWidth(1f);
             lineDataSets.get(i).setDrawCircles(false);
-            //lineDataSets.get(i).setCircleRadius(6);
-            //lineDataSets.get(i).setCircleHoleRadius(6);
             lineDataSets.get(i).setValueTextSize(4);
             lineDataSets.get(i).setColor(colors[i]);
-           // lineDataSets.get(i).setCircleColor(colors[i]);
             lineDataSets.get(i).setValueTextColor(colors[i]);
             dataSets.add(lineDataSets.get(i));
 
         }
 
-        //LineData data = new LineData(lineDataSets.get(0),lineDataSets.get(1),lineDataSets.get(2),lineDataSets.get(3),lineDataSets.get(4));
         LineData data = new LineData(dataSets);
         myChart.setData(data);
+        myChart.invalidate();
 
     }
 }
