@@ -331,7 +331,7 @@ public class Database {
 
             for (int i = 0; i < p.getNOfBets(); i++)
                 if (p.getHitsOnSelectedBet(i) == settings.getExtractionsPerRound())
-                    p.addToMoneyWon(p.getNWins() * settings.getMoneyPerWin());
+                    p.addToMoneyWon(settings.getMoneyPerWin());
 
         }
     }
