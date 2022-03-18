@@ -3,3 +3,7 @@
  - Implement the second chart of net income patterns.
  - Convert text in the user interface to html.
  - Implement new Random class on base of some random nubmers from real world.
+ - Settings page
+ - Settings functionality
+ - Reset
+ - Icon and other details
