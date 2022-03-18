@@ -20,7 +20,6 @@ public class Game {
 
     Database db;
     Player[] playerPatterns;
-    StdRandom random;
     Console console;
 
     public Game(int turnsGame) throws InputException {
@@ -28,7 +27,6 @@ public class Game {
 
         db = Database.getInstance();
         console = Console.getInstance();
-        random = new StdRandom();
         playerPatterns = new Player[5];
 
         preGameLoop(Settings.getInstance().getPresetGameCount());
