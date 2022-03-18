@@ -8,11 +8,13 @@
         <entry key="app/src/main/res/layout-v28/activity_main.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_pattern_game.xml" value="0.25692342122395834" />
-        <entry key="app/src/main/res/layout/activity_rules.xml" value="0.373321533203125" />
+        <entry key="app/src/main/res/layout/activity_rules.xml" value="0.2938796997070313" />
         <entry key="app/src/main/res/layout/activity_rules_test.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_scrolling.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_start_game.xml" value="0.383392333984375" />
         <entry key="app/src/main/res/layout/content_scrolling.xml" value="0.2543822146216332" />
+        <entry key="app/src/main/res/menu/menu_rules_activity_test.xml" value="0.25116082735331363" />
+        <entry key="app/src/main/res/menu/menu_scrolling.xml" value="0.25116082735331363" />
       </map>
     </option>
   </component>

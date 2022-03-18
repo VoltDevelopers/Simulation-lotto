@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
         Database db = Database.getInstance();
 
         Settings settings = Settings.getInstance(); //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        settings.setExtractions(5);                 //temporaneo, da sostituire con input
+        settings.setExtractions(5);
+        settings.setExtractionsPerRound(1);
         settings.setMoneyPerWin(11);
         settings.setPresetGameCount(10);
 

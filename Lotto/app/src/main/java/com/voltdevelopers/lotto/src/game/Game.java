@@ -47,19 +47,19 @@ public class Game {
         }
     }
 
+    private void preGameLoop(int games) {
+        for (int i = 0; i < games; i++) {
+            db.addPull(generateDraw());
+            Log.i("LOOP", "Added new game to pregameloop");
+        }
+    }
+
     private void initPlayers() {
         playerPatterns[0] = new FirstPlayer();
         playerPatterns[1] = new SecondPlayer();
         playerPatterns[2] = new ThirdPlayer();
         playerPatterns[3] = new FourthPlayer();
         playerPatterns[4] = new FifthPlayer();
-    }
-
-    private void preGameLoop(int games) {
-        for (int i = 0; i < games; i++) {
-            db.addPull(generateDraw());
-            Log.i("LOOP", "Added new game to pregameloop");
-        }
     }
 
     private void playersPlayBets() {
@@ -76,7 +76,7 @@ public class Game {
 
     private int[] generateDraw(){
         try {
-            return StdRandom.getRandomArray(5, 90);
+            return StdRandom.getRandomArray(Settings.getInstance().getExtractions(), Settings.MAX_EXIT);
         } catch (InputException e) {
             e.printStackTrace();
         }
