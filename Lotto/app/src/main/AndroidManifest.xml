@@ -14,12 +14,21 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:label="PatternGameActivity" android:name=".activitys.PatternGameActivity" android:exported="true"/>
-        <activity android:label="StatActivity" android:name=".activitys.StatActivity" android:exported="true"/>
+        <activity
+            android:label="StatActivity"
+            android:name=".activities.StatActivity"
+            android:exported="true"/>
+        <activity
+            android:label="RulesActivity"
+            android:name=".activities.RulesActivity"
+            android:exported="true"/>
+        <activity
+            android:label="StartGameActivity"
+            android:name=".activities.StartGameActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>

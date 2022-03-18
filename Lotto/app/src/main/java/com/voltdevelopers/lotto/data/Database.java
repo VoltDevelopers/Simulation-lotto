@@ -1,50 +1,98 @@
 package com.voltdevelopers.lotto.data;
 
+import androidx.annotation.NonNull;
+
+import com.voltdevelopers.lotto.layout.Console;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Database {
 
-    public final int numOfPulls; //Il numero di estrazioni
-    public final double moneyToPay;
+    private final Settings settings;
     private static Database instance = null;
-    private Profile[] players; //i 5 giocatori, ordinati come nel pptx con le istruzioni
-    private final int gameCounter;
-    private final ArrayList<int[]> rounds;
-    private final int[] pullsPerNumber; //n di estrazioni per valore (n di estrazioni di 1 si trova nella cella 0, di 2 nella 1, etc etc)
-    private final ArrayList<Integer> pullChronology; //ordine estrazioni (ultimo estratto sta all'indice massimo)
+    private Profile[] players;
+    private final Analysis analysis;
 
-    private Analisys analisys;
+    private final ArrayList<int[]> allRounds;
+    private final ArrayList<int[]> significantRounds;
+    private final int[] pullsPerNumber;                 // Statistica estrazione dei numeri
+    private final ArrayList<Integer> pullChronology;    // Ordine estrazioni (ultimo estratto sta all'indice massimo)
 
-    private Database(int numOfPulls, double moneyToPay) {
-        this.numOfPulls = numOfPulls;
-        this.moneyToPay = moneyToPay;
-        analisys = new Analisys();
+    private Database() {
+        settings = Settings.getInstance();
+        analysis = new Analysis();
+
+        allRounds = new ArrayList<>();
+        significantRounds = new ArrayList<>();
+
+        pullsPerNumber = new int[Settings.MAX_EXIT];
+        pullChronology = new ArrayList<>();
 
         initPlayers();
-        gameCounter = 0;
-
-        rounds = new ArrayList<>();
-
-        pullsPerNumber = new int[Settings.N_NUMBERS];
-        for (int i : pullsPerNumber) pullsPerNumber[i] = 0; //inizializzo array
-        pullChronology = new ArrayList<>();
     }
 
-    public static Database getInstance(int numOfPulls, double moneyToPay) {
-
+    public static Database getInstance() {
         if (instance != null)
             return instance;
-        instance = new Database(numOfPulls, moneyToPay);
+        instance = new Database();
         return instance;
-
     }
 
     private void initPlayers() {
-        players = new Profile[Settings.N_PLAYERS];
-        for (int i = 0; i < Settings.N_PLAYERS; i++) {
-            players[i] = new Profile(Settings.PLAYER_NAMES[i]);
+        players = new Profile[Settings.MAX_PLAYERS];
+        for (int i = 0; i < settings.getPlayersToPlay().length; i++) {
+            if (settings.getPlayersToPlay()[i]) {
+                players[i] = new Profile(String.valueOf(i));
+            } else {
+                players[i] = null;
+            }
         }
+    }
+
+    /*
+    Add new pull
+        input {45,32,56,..}
+    */
+    public void addPull(int[] input) {
+        allRounds.add(input);
+        for (int i = 0; i < input.length; i++) {
+            pullsPerNumber[input[i] - 1]++;
+            analysis.modChronology(input[i]);
+        }
+    }
+
+    /*
+    Add new significant pull
+        input {45,32,56,..}
+    */
+    public void addSignificantPull(int[] input) {
+        allRounds.add(input);
+        significantRounds.add(input);
+        for (int i = 0; i < input.length; i++) {
+            pullsPerNumber[input[i] - 1]++;
+            analysis.modChronology(input[i]);
+        }
+    }
+
+    /*
+    Add player bet
+        id {3},input {45,32,56,..}
+    */
+    public void addPlayerBet(int playerID, int[] input) {
+        players[playerID].addBet(input);
+    }
+
+
+    public int[] getPlayerLastBet(int playerN) {
+        return players[playerN].getLastBet();
+    }
+
+    public int getSizeAllPulls() {
+        return allRounds.size();
+    }
+
+    public int getSizeSignificantPulls() {
+        return significantRounds.size();
     }
 
     public double getPlayerMoneyWon(int playerN) {
@@ -62,90 +110,143 @@ public class Database {
     public int getPlayerWins(int playerN) {
         return players[playerN].getNWins();
     }
-
-    public void addPull(int[] input) {
-        rounds.add(input);
-        for (int i : input) { //copio i valori ricevuti e ne aumento il numero di estrazioni
-            pullsPerNumber[input[i] - 1]++;
-            analisys.modChronology(input[i]);
-        }
-
-    }
-
-    public void addPlayerBet(int playerN, int[] input) {
-        players[playerN].addBet(input);
+    public ArrayList<Integer> getPlayerWinList(int playerN) {
+        return players[playerN].getWinList();
     }
 
     public int[] getPlayerBet(int playerN, int n) {
         return players[playerN].getBet(n);
     }
 
-    public int[] getPlayerLastBet(int playerN) {
-        return players[playerN].getLastBet();
-    }
 
-    public int getPullCount() {
-        return gameCounter;
-    }
-
-
-    //----------------------analisys methods--------------------------------------------------------
+    //----------------------analysis methods--------------------------------------------------------
 
     public int[] getNMostFrequent(int nRequested) {
-        return analisys.getNMostFrequent(nRequested);
+        return analysis.getNMostFrequent(nRequested);
     }
 
     public int[] getLatestN(int nRequested) {
-        return analisys.getLatestN(nRequested);
+        return analysis.getLatestN(nRequested);
     }
 
-
     public int[] getOldestN(int nRequested) {
-        return analisys.getOldestN(nRequested);
+        return analysis.getOldestN(nRequested);
+    }
+
+    public void assignWins() {
+        analysis.assignWins();
     }
 
     //-----------------------log managment----------------------------------------------------------
 
+    @NonNull
     @Override
-    public String toString() {
-        return "Database{" +
-                "numOfPulls=" + numOfPulls +
-                ", moneyToPay=" + moneyToPay +
-                ", players=" + allPlayersToString() +
-                ", gameCounter=" + gameCounter +
-                ", rounds=" + rounds.toString() +
-                ", pullsPerNumber=" + Arrays.toString(pullsPerNumber) +
-                ", pullChronology=" + pullChronology +
-                ", analisys=" + analisys +
-                '}';
+    public String toString() { //per poter essere chiamato da chi non sa
+        return toString("");
     }
 
-    private String allPlayersToString(){
+    @NonNull
+    public String toString(String tabulation) {
+        return "Database{" +
+                ",\n" + tabulation + "moneyPerWin=" + settings.getMoneyPerWin() +
+                ",\n" + tabulation + "gameCounter=" + allRounds.size() +
+                ",\n" + tabulation + "pullChronology=" + pullChronologyToString(tabulation + "     ") +//\t non va, idk
+                ",\n" + tabulation + "pullsPerNumber=" + pullsPerNumberToString(tabulation + "     ") +
+                ",\n" + tabulation + "rounds=" + allRoundsToString(tabulation + "     ") +
+                ",\n" + tabulation + "players=\n" + allPlayersToString(tabulation + "     ") +
+                ",\n" + tabulation + '}';
+    }
+
+    private String allRoundsToString(String tabulation) {
+
+        return  "\n{" +
+                "\n" + tabulation + "preGameRounds=" + preGameRoundsToString(tabulation + "     ") +
+                ",\n" + tabulation + "significantRouds=" + significantRoundsToString(tabulation + "     ") +
+                '}';
+
+    }
+
+    private String preGameRoundsToString(String tabulation) {
+
+        String output = "";
+
+        for (int i = 0; i < settings.getPresetGameCount(); i++) {
+            output += tabulation + "[ ";
+            for (int n : allRounds.get(i)) {
+
+                output += n + " ";
+
+            }
+            output += "]\n";
+        }
+
+        return "\n{\n" + output + '}';
+
+    }
+
+    private String significantRoundsToString(String tabulation) {
+
+        String output = "";
+
+        for (int[] arr : significantRounds) {
+            output += tabulation + "[ ";
+            for (int n : arr) {
+
+                output += n + " ";
+
+            }
+            output += "]\n";
+        }
+
+        return "\n{\n" + output + '}';
+    }
+
+    private String pullsPerNumberToString(String tabulation) {
+
+        String output = "";
+
+        for (int i = 0; i < pullsPerNumber.length; i++) {
+            output += tabulation + "[" + (i + 1) + " -> " + pullsPerNumber[i] + "]\n";
+        }
+
+        return "\n{\n" + output + '}';
+    }
+
+    private String pullChronologyToString(String tabulation) {
+
+        String output = pullChronology.toString() + "\n";
+
+        return "\n{\n" + output + '}';
+    }
+
+    private String allPlayersToString(String tabulation) {
 
         String out = "";
-        for(int i = 0; i < players.length; i++)
-            out += playerToString(i);
+        for (int i = 0; i < players.length; i++)
+            out += tabulation + playerToString(i, tabulation);
 
-        return out;
+        return "{\n" + out + '}';
+    }
+
+    public String playerToString(int n, String tabulation) {
+
+        return players[n].toString(tabulation);
 
     }
 
-    public String playerToString(int n){
+    private class Analysis {
 
-        return players[n].toString();
-
-    }
-
-    private class Analisys {
+        private Console console = Console.getInstance();
 
         public int[] getLatestN(int nRequested) {
             int[] output = new int[nRequested];
-            int chronoSize = pullChronology.size();
-            for (int i : output) {
+            int chronoSize = pullChronology.size() - 1;
+            for (int i = 0; i < nRequested; i++) {
                 output[i] = pullChronology.get(chronoSize);
                 chronoSize--;
             }
-            //TODO add log
+
+            console.printStr("Took an array of length " + nRequested + " containing the last numbers -> " + output.toString() + "\n");
             return output;
         }
 
@@ -154,42 +255,79 @@ public class Database {
                 pullChronology.remove(pullChronology.lastIndexOf(n));
 
             pullChronology.add(n);
-            //TODO add log
+            console.printStr("Modified pullChronology " + pullChronology.toString() + "\n");
         }
 
         public int[] getOldestN(int nRequested) {
             int[] output = new int[nRequested];
-            for (int i : output) {
+            for (int i = 0; i < nRequested; i++) {
                 output[i] = pullChronology.get(i);
             }
 
-            //TODO add log
+            console.printStr("Took an array of length " + nRequested + " containing the oldest numbers -> " + output.toString() + "\n");
             return output;
         }
 
         public int[] getNMostFrequent(int nRequested) {
             int[] output = new int[nRequested];
-            for (int i : output) {
+            for (int i = 0; i < output.length; i++) {
                 int max = 0;
-                for (int j : pullsPerNumber) {
+                for (int j = 0; j < pullsPerNumber.length; j++) {
                     if (pullsPerNumber[j] >= max && !intArrayContains(output, j + 1)) {
                         max = pullsPerNumber[j];
                         output[i] = j + 1;
                     }
                 }
             }
-            //TODO add log
+            console.printStr("Took an array of length " + nRequested + " containing the most frequent numbers -> " + output.toString() + "\n");
             return output;
         }
 
         private boolean intArrayContains(int[] arr, int n) {
-            for (int i : arr) {
-                if (arr[i] == n)
-                    //TODO add log
+            for (int i = 0; i < arr.length; i++) {
+                if (arr[i] == n) {
+                    console.printStr("The array " + arr.toString() + " contains " + n + "\n");
                     return true;
+                }
             }
-            //TODO add log
+            console.printStr("The array " + arr.toString() + " does not contains " + n + "\n");
             return false;
+        }
+
+        public void assignWins() {
+
+            for (Profile current : players) {
+
+                for (int i = 0; i < significantRounds.size(); i++) {
+
+                    int winsInCurrentRound = 0;
+                    for (int curentBetN : current.getSelectedBet(i)
+                    ) {
+                        if (intArrayContains(significantRounds.get(i), curentBetN))
+                            winsInCurrentRound++;
+
+                    }
+
+                    current.addWin(winsInCurrentRound);
+                }
+
+                assignSpendings(current);
+                assignWinMoney(current);
+            }
+
+            console.printStr("Assigned wins and money earned to all players" + "\n"); //<-- versione temp di joel che non sa cosa deve fare, TODO farlo giusto secondo necessità
+        }
+
+        private void assignSpendings(Profile p) {
+            p.addToMoneySpent(settings.COST_OF_PLAY * p.getNOfBets());
+
+        }
+
+        private void assignWinMoney(Profile p) {
+
+            for (int i = 0; i < p.getNOfBets(); i++)
+                p.addToMoneyWon(p.getHitsOnSelectedBet(i) * settings.getMoneyPerWin());
+
         }
     }
 }
@@ -197,14 +335,16 @@ public class Database {
 class Profile {
     private String name;
     private double moneyWon, moneySpent;
-    private final int nWins;
+    private int nWins;
     private final ArrayList<int[]> betList;
+    private final ArrayList<Integer> winList;
 
     public Profile() {
         moneyWon = 0;
         moneySpent = 0;
         nWins = 0;
         betList = new ArrayList<>();
+        winList = new ArrayList<>();
     }
 
     public Profile(String name) {
@@ -213,14 +353,22 @@ class Profile {
     }
 
     public void addBet(int[] input) {
-        betList.add(new int[Settings.get().getnOfPulls()]);
-        for (int i : betList.get(betList.size() - 1)) {
+        betList.add(new int[input.length]);
+        for (int i = 0; i < betList.get(betList.size() - 1).length; i++) {
             betList.get(betList.size() - 1)[i] = input[i];
         }
     }
 
     public int[] getBet(int n) {
         return betList.get(n);
+    }
+
+    public int getNOfBets() {
+        return betList.size();
+    }
+
+    public int getHitsOnSelectedBet(int n) {
+        return winList.get(n);
     }
 
     public int[] getLastBet() {
@@ -255,6 +403,15 @@ class Profile {
         return nWins;
     }
 
+    public ArrayList<Integer> getWinList() {
+        return winList;
+    }
+
+    public void addWin(int n) {
+        nWins++;
+        winList.add(n);
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -265,171 +422,38 @@ class Profile {
         return "name not set";
     }
 
-    @Override
-    public String toString() {
+    public String toString(String tabulation) {
         return "Profile{" +
-                "name='" + name + '\'' +
-                ", moneyWon=" + moneyWon +
-                ", moneySpent=" + moneySpent +
-                ", nWins=" + nWins +
-                //", betList=" + betList +
-                '}';
+                ",\n" + tabulation + "name=" + name +
+                ",\n" + tabulation + "nWins=" + nWins +
+                ",\n" + tabulation + "moneyWon=" + moneyWon +
+                ",\n" + tabulation + "moneySpent=" + moneySpent +
+                ",\n" + tabulation + "net=" + (moneyWon - moneySpent) +
+                ",\n" + tabulation + "betList=" + betListToString(tabulation + "     ") +
+                ",\n" + tabulation + "winList=" + winListToString(tabulation + "     ") +
+                "\n}\n";
     }
-}
-=======
 
-public class Database {
+    private String winListToString(String tabulation) {
 
-    private static Database instance = null;
-    private Profile[] players; //i 5 giocatori, ordinati come nel pptx con le istruzioni
-    private int[] gameCounter;
-    private ArrayList<Integer[]> rounds;
-    private int[] pullsPerNumber; //n di estrazioni per valore (n di estrazioni di 1 si trova nella cella 0, di 2 nella 1, etc etc)
-    private int[] pullChronology; //ordine estrazioni (ultimo estratto sta in arr[89])
-    private String log;             //log usato per la console
-
-    private Database() {
-
-        initPlayers();
-        gameCounter = new int[2]; //il primo è per le partite "storiche", il secondo è per quelle in cui partecipano i giocatori
-        gameCounter[0] = 0;
-        gameCounter[1] = 0;
-
-        rounds = new ArrayList<Integer[]>();
-
-        pullsPerNumber = new int[90];
-        for (int i : pullsPerNumber) pullsPerNumber[i] = 0; //inizializzo array
-        pullChronology = new int[90];
-
-        log = "";
-
-        //TODO add log edit
+        return winList.toString();
 
     }
 
-    public static Database get() {
+    private String betListToString(String tabulation) {
 
-        if (instance != null)
-            return instance;
-        instance = new Database();
-        return instance;
+        String output = "";
 
-        //TODO add log edit
-    }
+        for (int[] arr : betList) {
+            output += tabulation + "[ ";
+            for (int n : arr) {
 
-    private void initPlayers(){
+                output += n + " ";
 
-        //TODO initialize players and set player names via constructor if needed
-        //TODO add log edit
-
-    }
-
-    public int getPlayerWinnings(int playerN){
-
-        return players[playerN].getWinnings();
-        //TODO add log edit
-
-    }
-
-    public int getPlayerSpendings(int playerN){
-
-        return players[playerN].getSpendings();
-        //TODO add log edit
-
-    }
-
-    public int getPlayerNet(int playerN){
-
-        return players[playerN].getNet();
-        //TODO add log edit
-
-    }
-
-    public int getPlayerWins(int playerN){
-
-        return players[playerN].getWins();
-        //TODO add log edit
-
-    }
-
-    public void addPull(int[] input) {
-
-        rounds.add(new Integer[5]);
-        for (int i : rounds.get(rounds.size() - 1)) { //copio i valori ricevuti e ne aumento il numero di estrazioni
-            rounds.get(rounds.size() - 1)[i] = input[i];
-            pullsPerNumber[input[i] - 1]++;
-            //TODO modifico la cronologia dei valori estratti
-            //TODO add log edit
+            }
+            output += "]\n";
         }
 
+        return "{\n" + output + tabulation + "}";
     }
-
-    public void addPlayerBet(int playerN, int[] input){
-
-        players[playerN].addPull(input);
-
-    }
-
-    public int getTotalPulls() {
-        return gameCounter[0] + gameCounter[1];
-        //TODO add log edit
-    }
-
-    public int getHistoricPulls() {
-        return gameCounter[0];
-        //TODO add log edit
-    }
-
-    public int getPlayedPulls() {
-        return gameCounter[1];
-        //TODO add log edit
-    }
-
-    /*public int getMostFrequent(int nRequested){
-
-        //TODO return most pulled
-        //TODO add log edit
-
-    }*/
-
-    /*public int[] getLatestN(int nRequested){
-
-        //TODO return latest n pulled form pullChronology
-        //TODO add log edit
-
-    }*/
-
-    /*public int[] getOldestN(int nRequested){
-
-        //TODO return oldest n pulled form pullChronology
-        //TODO add log edit
-
-    }*/
-
-    private void addToString(String in) { //aggiunge un azione al log
-
-        log += in + "\n";
-        //TODO add log edit
-
-    }
-
-    public String pushString() { //ritorna il log senza pulirlo
-
-        return log;
-        //TODO add log edit
-
-    }
-
-    public String pushString(boolean clear) { //ritorna il log, pulisce se input vero
-
-        if (clear) {
-
-        }
-        String out = log;
-        log = "";
-        return out;
-        //TODO add log edit
-
-    }
-
 }

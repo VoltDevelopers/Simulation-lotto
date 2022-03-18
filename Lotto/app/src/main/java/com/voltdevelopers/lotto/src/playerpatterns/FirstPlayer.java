@@ -1,18 +1,22 @@
 package com.voltdevelopers.lotto.src.playerpatterns;
 
+import com.voltdevelopers.lotto.data.Database;
+
 public class FirstPlayer extends Player {
 
-    public FirstPlayer(int numsPerTurn) {
-        super(numsPerTurn);
-        this.name = "Il Copione";
+    /*
+    Pattern I:
+        Gioca un numero della cinquina precedente
+    */
+
+    public FirstPlayer() {
+        super();
+        this.id = 0;
+        this.bet = new int[extractions];
     }
 
     @Override
     public void createBet() {
-        int[] bet = new int[numsPerTurn];
-        for(int i = 0; i < numsPerTurn; i++){
-            //TODO: bet[i] = getPullChronology()[i];
-        }
-        //Database.get().addPlayerBet(5, bet);
+        this.bet = Database.getInstance().getLatestN(extractions);
     }
 }

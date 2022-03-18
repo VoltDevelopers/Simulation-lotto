@@ -1,22 +1,32 @@
 package com.voltdevelopers.lotto.src.playerpatterns;
 
-import com.voltdevelopers.lotto.src.game.NumberGenerator;
+import com.voltdevelopers.lotto.src.exception.InputException;
+import com.voltdevelopers.lotto.src.random.StdRandom;
 
 public class FourthPlayer extends Player {
 
-    private int[] bet;
-    private NumberGenerator gen;
+    /*
+   Pattern VI:
+       Gioca un numero fisso
+   */
 
-    public FourthPlayer(int numsPerTurn) {
-        super(numsPerTurn);
-        this.name = "Il testardo";
-
-        gen = new NumberGenerator();
-        bet = gen.numSeries(numsPerTurn); //creazione di una giocata fissa
+    public FourthPlayer() {
+        super();
+        this.id = 3;
+        this.bet = new int[extractions];
+        createFinalBet();
     }
 
     @Override
     public void createBet() {
-        //Database.get().addPlayerBet(5, bet);
+        //already created a definitive array
+    }
+
+    private void createFinalBet(){
+        try {
+            this.bet = StdRandom.getRandomArray(extractions, 90);
+        } catch (InputException e) {
+            e.printStackTrace();
+        }
     }
 }

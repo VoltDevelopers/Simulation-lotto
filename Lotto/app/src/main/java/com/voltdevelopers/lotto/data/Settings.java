@@ -1,36 +1,57 @@
 package com.voltdevelopers.lotto.data;
 
 public class Settings {
-
     private static Settings instance = null;
-    public static final int N_NUMBERS = 90;
-    public static final int N_PLAYERS = 5;
-    public static final int NUMBERS_X_EXTRACTION = 5;
-    public static final String[] PLAYER_NAMES = {"Il Copione", "Il Ritardatario", "L' Azzardoso", "Il Testardo", "L' Ingenuo"};
-    private static int nOfPulls;
-    private static double moneyPerWin;
+    public static final int MAX_EXIT = 90;
+    public static final int MAX_PLAYERS = 5;
+    public static final int COST_OF_PLAY = 1;
 
+    private boolean[] playersToPlay;
+    private int extractions;
+    private double moneyPerWin;
+    private int presetGameCount;
 
     private Settings() {
+        playersToPlay = new boolean[]{true, true, true, true, true};
     }
 
-    public static Settings get() {
-
+    public static Settings getInstance() {
         if (instance != null)
             return instance;
         instance = new Settings();
         return instance;
     }
 
-    public int getnOfPulls() {
-        return nOfPulls;
+    public int getPresetGameCount() {
+        return presetGameCount;
     }
 
-    public void setNOfPulls(int nOfPulls) {
-        this.nOfPulls = nOfPulls;
+    public void setPresetGameCount(int presetGameCount) {
+        this.presetGameCount = presetGameCount;
     }
 
-    public double getMoneyPerWin() { return moneyPerWin; }
+    public boolean[] getPlayersToPlay() {
+        return playersToPlay;
+    }
 
-    public void setMoneyPerWin(double moneyPerWin) { this.moneyPerWin = moneyPerWin; }
+    public void setPlayersToPlay(boolean[] playersToPlay) {
+        this.playersToPlay = playersToPlay;
+    }
+
+    public void setExtractions(int extractions) {
+        this.extractions = extractions;
+    }
+
+    public int getExtractions() {
+        return extractions;
+    }
+
+    public double getMoneyPerWin() {
+        return moneyPerWin;
+    }
+
+    public void setMoneyPerWin(double moneyPerWin) {
+        this.moneyPerWin = moneyPerWin;
+    }
+
 }
