@@ -40,7 +40,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     private void initFirstChart(){
 
-        myChart = (LineChart) findViewById(R.id.graph);
+        myChart = (LineChart) findViewById(R.id.graphic_1);
 
         myChart.setDragEnabled(true);
         myChart.setScaleEnabled(false);

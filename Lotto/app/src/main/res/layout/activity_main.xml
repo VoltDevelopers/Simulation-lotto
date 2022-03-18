@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
-    android:backgroundTint="@color/black">
+    android:background="@color/main_background"
+    android:backgroundTint="@color/main_background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_width="5dp"
             android:layout_height="700dp"
             android:layout_marginStart="8dp"
-            android:background="@color/white"
+            android:background="@color/standard_text_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -48,7 +48,7 @@
             android:fontFamily="@font/cour_bold"
             android:text="Avviare la simulazione..."
             android:textAlignment="viewStart"
-            android:textColor="@color/white"
+            android:textColor="@color/standard_text_color"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintTop_toTopOf="parent" />
@@ -76,7 +76,7 @@
             android:fontFamily="@font/cour_bold"
             android:text="O leggere la teoria ;)"
             android:textAlignment="viewStart"
-            android:textColor="@color/white"
+            android:textColor="@color/standard_text_color"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintTop_toTopOf="parent" />
