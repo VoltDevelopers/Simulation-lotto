@@ -5,7 +5,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -23,7 +22,7 @@ import com.voltdevelopers.lotto.src.game.Game;
 public class MainActivity extends AppCompatActivity {
 
     Button start, rules, stat;
-    TextView textViewHTML;
+    TextView textViewHero, textViewStart, textViewRules;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         findRes();
+        initRes();
 
         Database db = Database.getInstance();
 
@@ -75,10 +75,14 @@ public class MainActivity extends AppCompatActivity {
         start = findViewById(R.id.buttonStart);
         rules = findViewById(R.id.buttonRules);
         stat = findViewById(R.id.buttonStat);
-        textViewHTML= findViewById(R.id.textViewHTML);
+        textViewHero = findViewById(R.id.textViewHTML);
+        textViewStart = findViewById(R.id.textView5);
+        textViewRules = findViewById(R.id.textView6);
     }
 
     private void initRes(){
-        textViewHTML.setText(Html.fromHtml("Se consideriamo il gioco del lotto da un punto di vista <span style=\"color:#FF0000\">matematico</span> e <span style=\"color:#00ff00;\">calcoli</span> la probabilità di vincita di tutte le strategie è assolutamente la stessa e noi lo dimostreremo chiaramente."));
+        textViewHero.setText(Html.fromHtml("<p>Se consideriamo il gioco del lotto da un punto di vista <span style=\"color:#00ff00;\">matematico</span> e <span style=\"color:#00ff00;\">calcoli</span> la probabilità di vincita di tutte le strategie è assolutamente la stessa e noi lo dimostreremo chiaramente.</p>"));
+        textViewStart.setText(Html.fromHtml("<p>Avviare la <span style=\"color:#00ff00;\">simulazione...</span></p>"));
+        textViewRules.setText(Html.fromHtml("<p>O leggere la <span style=\"color:#00ff00;\">teoria ;)</span></p>"));
     }
 }
