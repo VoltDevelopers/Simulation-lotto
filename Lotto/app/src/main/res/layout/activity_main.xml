@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
-    android:backgroundTint="#000000">
+    android:background="@color/black"
+    android:backgroundTint="@color/black">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_width="5dp"
             android:layout_height="700dp"
             android:layout_marginStart="8dp"
-            android:background="#FFFFFF"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -35,8 +35,7 @@
             android:text="@string/htmlText"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:textStyle="normal"
+            android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintTop_toTopOf="parent" />
         <!-- _______________________________________________________________________ -->
@@ -51,7 +50,6 @@
             android:textAlignment="viewStart"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,16 +57,10 @@
 
         <Button
             android:id="@+id/buttonStart"
-            android:layout_width="140dp"
-            android:layout_height="50dp"
+            style="@style/standard_btn"
             android:layout_marginStart="120dp"
             android:layout_marginTop="4dp"
-            android:backgroundTint="#C4C4C4"
-            android:fontFamily="@font/courier_new"
             android:text="Start"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textSize="18sp"
             app:cornerRadius="40dp"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
@@ -92,22 +84,17 @@
         <include layout="@layout/line_from_side_to_btn_2" />
 
         <Button
+            style="@style/standard_btn"
             android:id="@+id/buttonRules"
-            android:layout_width="140dp"
-            android:layout_height="50dp"
             android:layout_marginStart="120dp"
             android:layout_marginTop="4dp"
-            android:backgroundTint="#C4C4C4"
-            android:fontFamily="@font/courier_new"
             android:text="Rules"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textSize="18sp"
             app:cornerRadius="40dp"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintTop_toBottomOf="@+id/textView6"
             app:strokeColor="@color/neon_green"
-            app:strokeWidth="2dp" />
+            app:strokeWidth="2dp"
+             />
         <!-- _______________________________________________________________________ -->
         <Button
             android:id="@+id/buttonStat"
