@@ -6,3 +6,4 @@
  - Settings page
  - Settings functionality
  - Reset
+ - Icon and other details
