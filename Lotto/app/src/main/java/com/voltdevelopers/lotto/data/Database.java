@@ -110,6 +110,7 @@ public class Database {
     public int getPlayerWins(int playerN) {
         return players[playerN].getNWins();
     }
+
     public ArrayList<Integer> getPlayerWinList(int playerN) {
         return players[playerN].getWinList();
     }
@@ -159,7 +160,7 @@ public class Database {
 
     private String allRoundsToString(String tabulation) {
 
-        return  "\n{" +
+        return "\n{" +
                 "\n" + tabulation + "preGameRounds=" + preGameRoundsToString(tabulation + "     ") +
                 ",\n" + tabulation + "significantRouds=" + significantRoundsToString(tabulation + "     ") +
                 '}';
@@ -308,7 +309,10 @@ public class Database {
 
                     }
 
-                    current.addWin(winsInCurrentRound);
+                    current.addScore(winsInCurrentRound);
+                    if (winsInCurrentRound == settings.getExtractionsPerRound())
+                        current.addWin();
+
                 }
 
                 assignSpendings(current);
@@ -326,7 +330,7 @@ public class Database {
         private void assignWinMoney(Profile p) {
 
             for (int i = 0; i < p.getNOfBets(); i++)
-                if(p.getHitsOnSelectedBet(i) == settings.getExtractionsPerRound())
+                if (p.getHitsOnSelectedBet(i) == settings.getExtractionsPerRound())
                     p.addToMoneyWon(p.getNWins() * settings.getMoneyPerWin());
 
         }
@@ -408,9 +412,12 @@ class Profile {
         return winList;
     }
 
-    public void addWin(int n) {
-        nWins++;
+    public void addScore(int n) {
         winList.add(n);
+    }
+
+    public void addWin() {
+        nWins++;
     }
 
     public void setName(String name) {
