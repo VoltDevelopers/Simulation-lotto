@@ -1,9 +1,14 @@
 package com.voltdevelopers.lotto.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -28,9 +33,9 @@ import java.util.ArrayList;
 public class StartGameActivity extends AppCompatActivity {
 
     private static final String TAG = "PatternGameActivity";
-    private LineChart firstChart;
+    private LineChart firstChart, secondChart;
     private Database db;
-    private static final int COLORS[] = {Color.RED,Color.YELLOW,Color.WHITE,Color.MAGENTA,Color.BLUE};
+    private static final int[] COLORS = {Color.RED, Color.YELLOW, Color.WHITE, Color.MAGENTA, Color.BLUE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +44,17 @@ public class StartGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start_game);
 
         db = Database.getInstance();
-
         initAll();
+
+
     }
 
-    private void initAll(){
+    public void showSettings(View view) {
+        SettingsDialogFragment settings = new SettingsDialogFragment();
+        settings.show(getSupportFragmentManager(), "custom");
+    }
+
+    private void initAll() {
 
         initChart();
         initYAxis();
@@ -54,28 +65,29 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void initChart(){
+    private void initChart() {
 
-        firstChart = (LineChart) findViewById(R.id.graphic_1);
+        firstChart = findViewById(R.id.graphic_1);
+        secondChart = findViewById(R.id.graphic_2);
 
         firstChart.setDragEnabled(true);
-        firstChart.setScaleEnabled(true);
+        firstChart.setScaleEnabled(false);
         firstChart.setDrawBorders(true);
         firstChart.setPinchZoom(false);
         firstChart.setDrawGridBackground(false);
         firstChart.getAxisRight().setEnabled(false);
         firstChart.setBorderColor(Color.GREEN);
-        firstChart.setExtraOffsets(0,5f,0,5f);
+        firstChart.setExtraOffsets(0, 5f, 0, 5f);
 
     }
 
-    private void initYAxis(){
+    private void initYAxis() {
 
         YAxis yAxis = firstChart.getAxisLeft();
         yAxis.setSpaceBottom(0);
         yAxis.setSpaceTop(0);
         yAxis.setDrawGridLines(false);
-        yAxis.setLabelCount(100,true);
+        yAxis.setLabelCount(100, true);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
         yAxis.setAxisMaximum(100); //percentuale massima
@@ -90,11 +102,11 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void initXAxis(){
+    private void initXAxis() {
 
         XAxis xAxis = firstChart.getXAxis();
         xAxis.setTextColor(Color.GREEN);
-        xAxis.setLabelCount(db.getSizeSignificantPulls(),true);
+        xAxis.setLabelCount(db.getSizeSignificantPulls(), true);
         xAxis.removeAllLimitLines();
         xAxis.setAxisMaximum(db.getSizeSignificantPulls());
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -103,18 +115,18 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void addDescription(){
+    private void addDescription() {
 
         Description description = new Description();
         description.setText("Percentuale di vincite");
         description.setTextColor(Color.GREEN);
         description.setTextSize(15);
-        description.setPosition(900,100);
+        description.setPosition(900, 100);
         firstChart.setDescription(description);
 
     }
 
-    private void addLegend(){
+    private void addLegend() {
 
         Legend legend;
         legend = firstChart.getLegend();
@@ -140,26 +152,26 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void addDataToGraph(){
+    private void addDataToGraph() {
 
         ArrayList<ArrayList<Entry>> yValues = new ArrayList<>();
         ArrayList<LineDataSet> lineDataSets = new ArrayList<>();
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
 
-        for(int i = 0; i < Settings.getInstance().getPlayersToPlay().length; i++){ //ciclo per le 5 linee
+        for (int i = 0; i < Settings.getInstance().getPlayersToPlay().length; i++) { //ciclo per le 5 linee
 
             yValues.add(new ArrayList<>());
             float y = 0;
 
-            for(int j = 0; j < db.getSizeSignificantPulls(); j++){ //ciclo per scorrere tutte le vincite del singolo giocatore
+            for (int j = 0; j < db.getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
 
-                if(db.getPlayerWinList(i).get(j) == Settings.getInstance().getExtractionsPerRound()){//se quel pattern ha vinto in quella prtita la percentuale aumenta
+                if (db.getPlayerWinList(i).get(j) == Settings.getInstance().getExtractionsPerRound()) {//se quel pattern ha vinto in quella prtita la percentuale aumenta
 
                     y++;
 
                 }
-                yValues.get(i).add(new Entry(j,y));
+                yValues.get(i).add(new Entry(j, y));
 
             }
 
@@ -180,4 +192,13 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
+    public static class SettingsDialogFragment extends DialogFragment {
+        @NonNull
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+            return builder
+                    .setView(R.layout.settings_modal)
+                    .create();
+        }
+    }
 }

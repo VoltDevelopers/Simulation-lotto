@@ -12,12 +12,13 @@
         <entry key="app/src/main/res/layout/activity_rules.xml" value="0.36043090820312507" />
         <entry key="app/src/main/res/layout/activity_rules_test.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_scrolling.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_start_game.xml" value="0.3234710693359376" />
+        <entry key="app/src/main/res/layout/activity_start_game.xml" value="0.35499168740963455" />
         <entry key="app/src/main/res/layout/content_scrolling.xml" value="0.2543822146216332" />
         <entry key="app/src/main/res/layout/graphic.xml" value="0.25116082735331363" />
         <entry key="app/src/main/res/layout/header.xml" value="0.4530319213867187" />
         <entry key="app/src/main/res/layout/line_from_side_to_btn.xml" value="0.25116082735331363" />
         <entry key="app/src/main/res/layout/line_from_side_to_btn_2.xml" value="0.25116082735331363" />
+        <entry key="app/src/main/res/layout/settings_modal.xml" value="0.39581298828125" />
         <entry key="app/src/main/res/menu/menu_rules_activity_test.xml" value="0.25116082735331363" />
         <entry key="app/src/main/res/menu/menu_scrolling.xml" value="0.25116082735331363" />
       </map>
