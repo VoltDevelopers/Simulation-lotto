@@ -112,6 +112,10 @@ public class Database {
         return players[playerN].getNWins();
     }
 
+    public double getPlayerWinPercentage(int playerN) {
+        return (double)players[playerN].getNWins()/(double)players[playerN].getNOfBets()*100d;
+    }
+
     public ArrayList<Integer> getPlayerWinList(int playerN) {
         return players[playerN].getWinList();
     }
@@ -233,6 +237,7 @@ public class Database {
     public String playerToString(int n, String tabulation) {
 
         return players[n].toString(tabulation);
+
 
     }
 
