@@ -32,14 +32,6 @@ public class MainActivity extends AppCompatActivity {
         findRes();
         initRes();
 
-        Database db = Database.getInstance();
-
-        Settings settings = Settings.getInstance(); //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        settings.setExtractions(5);
-        settings.setExtractionsPerRound(1);
-        settings.setMoneyPerWin(11);
-        settings.setPresetGameCount(100);
-
         stat.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, StatActivity.class);
             startActivity(intent);
@@ -62,14 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("INFO", "Started Activity" + intent.getIdentifier());
             }
         });
-
-        try {
-            Game game = new Game(1000);
-            game.gameLoop();
-        } catch (InputException e) {
-            e.printStackTrace();
-        }
-        db.assignWins();
     }
 
     private void findRes() {

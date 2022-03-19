@@ -7,20 +7,22 @@
         <entry key="app/src/main/res/font/font.xml" value="0.2791791363830697" />
         <entry key="app/src/main/res/layout-v28/activity_main.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout-w936dp/content_scrolling.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33204345703125004" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_pattern_game.xml" value="0.25692342122395834" />
         <entry key="app/src/main/res/layout/activity_rules.xml" value="0.36043090820312507" />
         <entry key="app/src/main/res/layout/activity_rules_test.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_scrolling.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_start_game.xml" value="0.35499168740963455" />
+        <entry key="app/src/main/res/layout/activity_start_game.xml" value="0.4155027932960894" />
         <entry key="app/src/main/res/layout/content_scrolling.xml" value="0.2543822146216332" />
         <entry key="app/src/main/res/layout/graphic.xml" value="0.25116082735331363" />
         <entry key="app/src/main/res/layout/header.xml" value="0.4530319213867187" />
         <entry key="app/src/main/res/layout/line_from_side_to_btn.xml" value="0.25116082735331363" />
         <entry key="app/src/main/res/layout/line_from_side_to_btn_2.xml" value="0.25116082735331363" />
-        <entry key="app/src/main/res/layout/settings_modal.xml" value="0.39581298828125" />
+        <entry key="app/src/main/res/layout/settings_modal.xml" value="0.1" />
         <entry key="app/src/main/res/menu/menu_rules_activity_test.xml" value="0.25116082735331363" />
         <entry key="app/src/main/res/menu/menu_scrolling.xml" value="0.25116082735331363" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1825" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1825" />
       </map>
     </option>
   </component>

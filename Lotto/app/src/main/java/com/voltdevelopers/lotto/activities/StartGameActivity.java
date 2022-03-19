@@ -9,6 +9,10 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -27,6 +31,8 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.voltdevelopers.lotto.R;
 import com.voltdevelopers.lotto.data.Database;
 import com.voltdevelopers.lotto.data.Settings;
+import com.voltdevelopers.lotto.src.exception.InputException;
+import com.voltdevelopers.lotto.src.game.Game;
 
 import java.util.ArrayList;
 
@@ -45,8 +51,6 @@ public class StartGameActivity extends AppCompatActivity {
 
         db = Database.getInstance();
         initAll();
-
-
     }
 
     public void showSettings(View view) {
@@ -55,18 +59,15 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private void initAll() {
-
         initChart();
         initYAxis();
         initXAxis();
         addDescription();
         addLegend();
         addDataToGraph();
-
     }
 
     private void initChart() {
-
         firstChart = findViewById(R.id.graphic_1);
         secondChart = findViewById(R.id.graphic_2);
 
@@ -78,7 +79,6 @@ public class StartGameActivity extends AppCompatActivity {
         firstChart.getAxisRight().setEnabled(false);
         firstChart.setBorderColor(Color.GREEN);
         firstChart.setExtraOffsets(0, 5f, 0, 5f);
-
     }
 
     private void initYAxis() {
@@ -195,7 +195,7 @@ public class StartGameActivity extends AppCompatActivity {
     public static class SettingsDialogFragment extends DialogFragment {
         @NonNull
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             return builder
                     .setView(R.layout.settings_modal)
                     .create();
