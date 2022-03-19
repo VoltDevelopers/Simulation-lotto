@@ -10,6 +10,7 @@ public class Database {
 
     private final Settings settings;
     private static Database instance = null;
+
     private Profile[] players;
     private final Analysis analysis;
 
@@ -78,10 +79,10 @@ public class Database {
     Add player bet
         id {3},input {45,32,56,..}
     */
+
     public void addPlayerBet(int playerID, int[] input) {
         players[playerID].addBet(input);
     }
-
 
     public int[] getPlayerLastBet(int playerN) {
         return players[playerN].getLastBet();

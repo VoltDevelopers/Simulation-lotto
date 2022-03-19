@@ -6,25 +6,31 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.voltdevelopers.lotto.R;
 import com.voltdevelopers.lotto.data.Database;
 import com.voltdevelopers.lotto.data.Settings;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class StartGameActivity extends AppCompatActivity {
 
     private static final String TAG = "PatternGameActivity";
-    private LineChart myChart;
+    private LineChart firstChart;
     private Database db;
+    private static final int COLORS[] = {Color.RED,Color.YELLOW,Color.WHITE,Color.MAGENTA,Color.BLUE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,32 +40,59 @@ public class StartGameActivity extends AppCompatActivity {
 
         db = Database.getInstance();
 
-        initFirstChart();
-        addDataToGraph();
+        initAll();
     }
 
-    private void initFirstChart(){
+    private void initAll(){
 
-        myChart = (LineChart) findViewById(R.id.graphic_1);
+        initChart();
+        initYAxis();
+        initXAxis();
+        addDescription();
+        addLegend();
+        addDataToGraph();
 
-        myChart.setDragEnabled(true);
-        myChart.setScaleEnabled(false);
-        myChart.setDrawBorders(true);
-        myChart.setPinchZoom(false);
-        myChart.setDrawGridBackground(false);
-        myChart.getAxisRight().setEnabled(false);
-        myChart.setBorderColor(Color.GREEN);
+    }
 
-        YAxis yAxis = myChart.getAxisLeft();
+    private void initChart(){
+
+        firstChart = (LineChart) findViewById(R.id.graphic_1);
+
+        firstChart.setDragEnabled(true);
+        firstChart.setScaleEnabled(false);
+        firstChart.setDrawBorders(true);
+        firstChart.setPinchZoom(false);
+        firstChart.setDrawGridBackground(false);
+        firstChart.getAxisRight().setEnabled(false);
+        firstChart.setBorderColor(Color.GREEN);
+        firstChart.setExtraOffsets(0,5f,0,5f);
+
+    }
+
+    private void initYAxis(){
+
+        YAxis yAxis = firstChart.getAxisLeft();
         yAxis.setSpaceBottom(0);
         yAxis.setSpaceTop(0);
         yAxis.setDrawGridLines(false);
-        yAxis.setLabelCount(5,true);
+        yAxis.setLabelCount(30,true);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
-        yAxis.setAxisMaximum(5);
+        yAxis.setAxisMaximum(30); //percentuale massima
+        yAxis.setGranularity(1f);
+        yAxis.setCenterAxisLabels(false);
+        yAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return super.getFormattedValue(value) + "%";
+            }
+        });
 
-        XAxis xAxis = myChart.getXAxis();
+    }
+
+    private void initXAxis(){
+
+        XAxis xAxis = firstChart.getXAxis();
         xAxis.setTextColor(Color.GREEN);
         xAxis.setLabelCount(db.getSizeSignificantPulls(),true);
         xAxis.removeAllLimitLines();
@@ -70,41 +103,81 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void addDataToGraph(){
+    private void addDescription(){
 
-        int colors[] = {Color.RED,Color.YELLOW,Color.WHITE,Color.MAGENTA,Color.BLUE};
+        Description description = new Description();
+        description.setText("Percentuale di vincite");
+        description.setTextColor(Color.GREEN);
+        description.setTextSize(15);
+        description.setPosition(900,100);
+        firstChart.setDescription(description);
+
+    }
+
+    private void addLegend(){
+
+        Legend legend;
+        legend = firstChart.getLegend();
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setEnabled(true);
+        legend.setTextColor(Color.GREEN);
+        legend.setYOffset(10);
+        legend.setWordWrapEnabled(true);
+        legend.setMaxSizePercent(0.7f);
+        legend.setForm(Legend.LegendForm.CIRCLE);
+        LegendEntry[] legendEntries = new LegendEntry[5];
+
+        for (int i = 0; i < legendEntries.length; i++) {
+
+            LegendEntry entry = new LegendEntry();
+            entry.formColor = COLORS[i];
+            entry.label = "giocatore " + (i + 1);
+            legendEntries[i] = entry;
+
+        }
+
+        legend.setCustom(legendEntries);
+
+    }
+
+    private void addDataToGraph(){
 
         ArrayList<ArrayList<Entry>> yValues = new ArrayList<>();
         ArrayList<LineDataSet> lineDataSets = new ArrayList<>();
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
+
         for(int i = 0; i < Settings.getInstance().getPlayersToPlay().length; i++){ //ciclo per le 5 linee
 
             yValues.add(new ArrayList<>());
+            float y = 0;
 
             for(int j = 0; j < db.getSizeSignificantPulls(); j++){ //ciclo per scorrere tutte le vincite del singolo giocatore
 
-                //asse X = j
-                int y = 0; // asse y;
-                y = db.getPlayerWinList(i).get(j);
+                if(db.getPlayerWinList(i).get(j) == Settings.getInstance().getExtractionsPerRound()){//se quel pattern ha vinto in quella prtita la percentuale aumenta
+
+                    y++;
+
+                }
                 yValues.get(i).add(new Entry(j,y));
 
             }
 
-            lineDataSets.add(new LineDataSet(yValues.get(i), "player " + i + " winnings"));
+            lineDataSets.add(new LineDataSet(yValues.get(i), ""));
             lineDataSets.get(i).setFillAlpha(110);
             lineDataSets.get(i).setLineWidth(1f);
             lineDataSets.get(i).setDrawCircles(false);
             lineDataSets.get(i).setValueTextSize(4);
-            lineDataSets.get(i).setColor(colors[i]);
-            lineDataSets.get(i).setValueTextColor(colors[i]);
+            lineDataSets.get(i).setColor(COLORS[i]);
+            lineDataSets.get(i).setValueTextColor(COLORS[i]);
             dataSets.add(lineDataSets.get(i));
 
         }
 
         LineData data = new LineData(dataSets);
-        myChart.setData(data);
-        myChart.invalidate();
+        firstChart.setData(data);
+        firstChart.invalidate();
 
     }
+
 }
