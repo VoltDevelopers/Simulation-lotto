@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         settings.setExtractions(5);
         settings.setExtractionsPerRound(1);
         settings.setMoneyPerWin(11);
-        settings.setPresetGameCount(10);
+        settings.setPresetGameCount(100);
 
         stat.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, StatActivity.class);
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         try {
-            Game game = new Game(100);
+            Game game = new Game(1000);
             game.gameLoop();
         } catch (InputException e) {
             e.printStackTrace();

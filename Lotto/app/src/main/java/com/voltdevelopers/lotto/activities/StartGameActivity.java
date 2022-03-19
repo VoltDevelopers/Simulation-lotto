@@ -59,7 +59,7 @@ public class StartGameActivity extends AppCompatActivity {
         firstChart = (LineChart) findViewById(R.id.graphic_1);
 
         firstChart.setDragEnabled(true);
-        firstChart.setScaleEnabled(false);
+        firstChart.setScaleEnabled(true);
         firstChart.setDrawBorders(true);
         firstChart.setPinchZoom(false);
         firstChart.setDrawGridBackground(false);
@@ -75,10 +75,10 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setSpaceBottom(0);
         yAxis.setSpaceTop(0);
         yAxis.setDrawGridLines(false);
-        yAxis.setLabelCount(30,true);
+        yAxis.setLabelCount(100,true);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
-        yAxis.setAxisMaximum(30); //percentuale massima
+        yAxis.setAxisMaximum(100); //percentuale massima
         yAxis.setGranularity(1f);
         yAxis.setCenterAxisLabels(false);
         yAxis.setValueFormatter(new ValueFormatter() {

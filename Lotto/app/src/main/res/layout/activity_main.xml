@@ -29,13 +29,13 @@
             android:id="@+id/textViewHTML"
             android:layout_width="318dp"
             android:layout_height="108dp"
-            android:layout_marginStart="34dp"
             android:layout_marginTop="220dp"
             android:fontFamily="@font/cour"
             android:text="@string/htmlText"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintTop_toTopOf="parent" />
         <!-- _______________________________________________________________________ -->
@@ -43,7 +43,8 @@
             android:id="@+id/textView5"
             android:layout_width="228dp"
             android:layout_height="40dp"
-            android:layout_marginStart="16dp"
+
+            android:layout_marginStart="15dp"
             android:layout_marginTop="364dp"
             android:fontFamily="@font/cour_bold"
             android:text="Avviare la simulazione..."
@@ -58,10 +59,10 @@
         <Button
             android:id="@+id/buttonStart"
             style="@style/standard_btn"
-            android:layout_marginStart="120dp"
             android:layout_marginTop="4dp"
             android:text="Start"
             app:cornerRadius="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
             app:strokeColor="@color/neon_green"
@@ -71,7 +72,7 @@
             android:id="@+id/textView6"
             android:layout_width="228dp"
             android:layout_height="40dp"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="508dp"
             android:fontFamily="@font/cour_bold"
             android:text="O leggere la teoria ;)"
@@ -84,17 +85,16 @@
         <include layout="@layout/line_from_side_to_btn_2" />
 
         <Button
-            style="@style/standard_btn"
             android:id="@+id/buttonRules"
-            android:layout_marginStart="120dp"
+            style="@style/standard_btn"
             android:layout_marginTop="4dp"
             android:text="Rules"
             app:cornerRadius="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintTop_toBottomOf="@+id/textView6"
             app:strokeColor="@color/neon_green"
-            app:strokeWidth="2dp"
-             />
+            app:strokeWidth="2dp" />
         <!-- _______________________________________________________________________ -->
         <Button
             android:id="@+id/buttonStat"
