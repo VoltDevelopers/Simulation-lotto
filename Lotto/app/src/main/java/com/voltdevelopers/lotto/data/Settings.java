@@ -5,9 +5,9 @@ public class Settings {
     public static final int MAX_EXIT = 90;
     public static final int MAX_PLAYERS = 5;
     public static final int COST_OF_PLAY = 1;
+    public static final int EXTRACTIONS = 5;
 
     private boolean[] playersToPlay;
-    private int extractions;
     private double moneyPerWin;
     private int presetGameCount;
     private int extractionsPerRound;
@@ -45,14 +45,6 @@ public class Settings {
 
     public void setPlayersToPlay(boolean[] playersToPlay) {
         this.playersToPlay = playersToPlay;
-    }
-
-    public void setExtractions(int extractions) {
-        this.extractions = extractions;
-    }
-
-    public int getExtractions() {
-        return extractions;
     }
 
     public double getMoneyPerWin() {

@@ -6,18 +6,15 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -30,12 +27,14 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.voltdevelopers.lotto.MainActivity;
 import com.voltdevelopers.lotto.R;
 import com.voltdevelopers.lotto.data.Database;
 import com.voltdevelopers.lotto.data.Settings;
+import com.voltdevelopers.lotto.src.exception.InputException;
+import com.voltdevelopers.lotto.src.game.Game;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class StartGameActivity extends AppCompatActivity {
 
@@ -60,32 +59,38 @@ public class StartGameActivity extends AppCompatActivity {
         initSettingsBtn();
     }
 
-    private void initSettingsBtn(){
+    private void initSettingsBtn() {
         ImageButton settingsBtn = findViewById(R.id.settingsImageButton);
         settingsBtn.setOnClickListener(view -> {
             showSettings();
         });
     }
 
-    private void showSettings(){
+    private void showSettings() {
         settingsDialog = new Dialog(this);
         settingsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         settingsDialog.setContentView(R.layout.settings_modal);
-        buttonStart = (Button)settingsDialog.findViewById(R.id.buttonStartModal);
+        initRes();
         buttonStart.setOnClickListener(view -> {
-            Log.i("Modal", "BTN START WAS PRESSED");
-
-            btn1 = settingsDialog.findViewById(R.id.radioButton1);
-            presetGameCount = settingsDialog.findViewById(R.id.presetGameCount);
-            significantGameCount = settingsDialog.findViewById(R.id.significantGameCount);
-
             Settings.getInstance().setMoneyPerWin(btn1.isActivated() ? 18 : 11.23);
-
-            Settings.getInstance().setExtractions(5);
             Settings.getInstance().setExtractionsPerRound(1);
-            Settings.getInstance().setPresetGameCount(Integer.parseInt (presetGameCount.getText().toString()));
+
+            int num1 = Optional.ofNullable(presetGameCount.getText())
+                    .map(Editable::toString)
+                    .filter(s -> s.matches("\\d+"))
+                    .map(Integer::valueOf)
+                    .orElse(1000);
+
+            int num2 = Optional.ofNullable(significantGameCount.getText())
+                    .map(Editable::toString)
+                    .filter(s -> s.matches("\\d+"))
+                    .map(Integer::valueOf)
+                    .orElse(1000);
+
+            Settings.getInstance().setPresetGameCount(num1);
+
             try {
-                Game game = new Game(Integer.parseInt (significantGameCount.getText().toString()));
+                Game game = new Game(num2);
                 game.gameLoop();
             } catch (InputException e) {
                 e.printStackTrace();
@@ -96,6 +101,13 @@ public class StartGameActivity extends AppCompatActivity {
             settingsDialog.dismiss();
         });
         settingsDialog.show();
+    }
+
+    private void initRes() {
+        buttonStart = settingsDialog.findViewById(R.id.buttonStartModal);
+        btn1 = settingsDialog.findViewById(R.id.radioButton1);
+        presetGameCount = settingsDialog.findViewById(R.id.presetGameCount);
+        significantGameCount = settingsDialog.findViewById(R.id.significantGameCount);
     }
 
     private void initAll() {
@@ -236,7 +248,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void initSecondChart(){
+    private void initSecondChart() {
 
         secondChart = findViewById(R.id.graphic_2);
 
@@ -251,7 +263,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void initSecondYAxis(){
+    private void initSecondYAxis() {
 
         YAxis yAxis = secondChart.getAxisLeft();
         yAxis.setSpaceBottom(0);
@@ -272,7 +284,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void initSecondXAxis(){
+    private void initSecondXAxis() {
 
         XAxis xAxis = secondChart.getXAxis();
         xAxis.setTextColor(Color.GREEN);
@@ -285,7 +297,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void addSecondDescription(){
+    private void addSecondDescription() {
 
         Description description = new Description();
         description.setText("Soldi guadagnati");
@@ -296,7 +308,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void addSecondLegend(){
+    private void addSecondLegend() {
 
         Legend legend;
         legend = secondChart.getLegend();
@@ -322,7 +334,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void addDataToSecondChart(){
+    private void addDataToSecondChart() {
 
         ArrayList<ArrayList<Entry>> yValues = new ArrayList<>();
         ArrayList<LineDataSet> lineDataSets = new ArrayList<>();

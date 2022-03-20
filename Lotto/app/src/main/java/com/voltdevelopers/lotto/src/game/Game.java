@@ -74,7 +74,7 @@ public class Game {
 
     private int[] generateDraw(){
         try {
-            return StdRandom.getRandomArray(Settings.getInstance().getExtractions(), Settings.MAX_EXIT);
+            return StdRandom.getRandomArray(Settings.EXTRACTIONS, Settings.MAX_EXIT);
         } catch (InputException e) {
             e.printStackTrace();
         }
