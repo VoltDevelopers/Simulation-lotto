@@ -129,6 +129,9 @@ public class Database {
         return players[playerN].getBet(n);
     }
 
+    public double getPlayerNetAtRound(int playerN, int roundN) {
+        return players[playerN].getNetAtRound(roundN);
+    }
 
     //----------------------analysis methods--------------------------------------------------------
 
@@ -445,6 +448,16 @@ class Profile {
         if (name != null)
             return name;
         return "name not set";
+    }
+
+    public double getNetAtRound(int round){ //chiedo perdono per ciò che ho fatto, specialmente alla ram
+
+        if(round < 0)
+            return 0;
+        if(winList.get(round) < Settings.getInstance().getExtractionsPerRound())
+            return getNetAtRound(round -1);
+        return Settings.getInstance().getMoneyPerWin() + getNetAtRound(round -1);
+
     }
 
     public String toString(String tabulation) {
