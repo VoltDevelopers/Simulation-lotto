@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/editTextNumber2"
+            android:id="@+id/significantGameCount"
             android:layout_width="wrap_content"
             android:fontFamily="@font/cour"
             android:layout_height="wrap_content"
