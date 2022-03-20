@@ -55,7 +55,6 @@ public class StartGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_game);
 
-        db = Database.getInstance();
         showSettings();
         initSettingsBtn();
     }
@@ -68,6 +67,8 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private void showSettings() {
+        Database.createInstance();
+        db = Database.getInstance();
         settingsDialog = new Dialog(this);
         settingsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         settingsDialog.setContentView(R.layout.settings_modal);
@@ -91,13 +92,13 @@ public class StartGameActivity extends AppCompatActivity {
                     .map(Editable::toString)
                     .filter(s -> s.matches("\\d+"))
                     .map(Integer::valueOf)
-                    .orElse(1000);
+                    .orElse(10);
 
             int significantGames = Optional.ofNullable(significantGameCount.getText())
                     .map(Editable::toString)
                     .filter(s -> s.matches("\\d+"))
                     .map(Integer::valueOf)
-                    .orElse(1000);
+                    .orElse(10);
 
             int money = Optional.ofNullable(startMoney.getText())
                     .map(Editable::toString)
