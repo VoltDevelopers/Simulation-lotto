@@ -9,13 +9,8 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.RadioButton;
-import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
@@ -24,15 +19,11 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.voltdevelopers.lotto.R;
 import com.voltdevelopers.lotto.data.Database;
 import com.voltdevelopers.lotto.data.Settings;
-import com.voltdevelopers.lotto.src.exception.InputException;
-import com.voltdevelopers.lotto.src.game.Game;
 
 import java.util.ArrayList;
 
@@ -59,17 +50,23 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private void initAll() {
-        initChart();
-        initYAxis();
-        initXAxis();
-        addDescription();
-        addLegend();
-        addDataToGraph();
+        initFirstChart();
+        initFirstYAxis();
+        initFirstXAxis();
+        addFirstDescription();
+        addFirstLegend();
+        addDataToFirstChart();
+
+        initSecondChart();
+        initSecondYAxis();
+        initSecondXAxis();
+        addSecondDescription();
+        addSecondLegend();
+        addDataToSecondChart();
     }
 
-    private void initChart() {
+    private void initFirstChart() {
         firstChart = findViewById(R.id.graphic_1);
-        secondChart = findViewById(R.id.graphic_2);
 
         firstChart.setDragEnabled(true);
         firstChart.setScaleEnabled(false);
@@ -81,13 +78,13 @@ public class StartGameActivity extends AppCompatActivity {
         firstChart.setExtraOffsets(0, 5f, 0, 5f);
     }
 
-    private void initYAxis() {
+    private void initFirstYAxis() {
 
         YAxis yAxis = firstChart.getAxisLeft();
         yAxis.setSpaceBottom(0);
         yAxis.setSpaceTop(0);
         yAxis.setDrawGridLines(false);
-        yAxis.setLabelCount(100, true);
+        yAxis.setLabelCount(10, true);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
         yAxis.setAxisMaximum(100); //percentuale massima
@@ -102,11 +99,11 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void initXAxis() {
+    private void initFirstXAxis() {
 
         XAxis xAxis = firstChart.getXAxis();
         xAxis.setTextColor(Color.GREEN);
-        xAxis.setLabelCount(db.getSizeSignificantPulls(), true);
+        xAxis.setLabelCount(db.getSizeSignificantPulls() / 10, true);
         xAxis.removeAllLimitLines();
         xAxis.setAxisMaximum(db.getSizeSignificantPulls());
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -115,7 +112,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void addDescription() {
+    private void addFirstDescription() {
 
         Description description = new Description();
         description.setText("Percentuale di vincite");
@@ -126,7 +123,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void addLegend() {
+    private void addFirstLegend() {
 
         Legend legend;
         legend = firstChart.getLegend();
@@ -152,7 +149,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void addDataToGraph() {
+    private void addDataToFirstChart() {
 
         ArrayList<ArrayList<Entry>> yValues = new ArrayList<>();
         ArrayList<LineDataSet> lineDataSets = new ArrayList<>();
@@ -189,6 +186,128 @@ public class StartGameActivity extends AppCompatActivity {
         LineData data = new LineData(dataSets);
         firstChart.setData(data);
         firstChart.invalidate();
+
+    }
+
+    private void initSecondChart(){
+
+        secondChart = findViewById(R.id.graphic_2);
+
+        secondChart.setDragEnabled(true);
+        secondChart.setScaleEnabled(false);
+        secondChart.setDrawBorders(true);
+        secondChart.setPinchZoom(false);
+        secondChart.setDrawGridBackground(false);
+        secondChart.getAxisRight().setEnabled(false);
+        secondChart.setBorderColor(Color.GREEN);
+        secondChart.setExtraOffsets(0, 5f, 0, 5f);
+
+    }
+
+    private void initSecondYAxis(){
+
+        YAxis yAxis = secondChart.getAxisLeft();
+        yAxis.setSpaceBottom(0);
+        yAxis.setSpaceTop(0);
+        yAxis.setDrawGridLines(false);
+        yAxis.setLabelCount(10, true);
+        yAxis.setTextColor(Color.GREEN);
+        yAxis.removeAllLimitLines();
+        yAxis.setAxisMaximum(1000); //soldi massimi guadagnati
+        yAxis.setGranularity(1f);
+        yAxis.setCenterAxisLabels(false);
+        yAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return super.getFormattedValue(value) + "$";
+            }
+        });
+
+    }
+
+    private void initSecondXAxis(){
+
+        XAxis xAxis = secondChart.getXAxis();
+        xAxis.setTextColor(Color.GREEN);
+        xAxis.setLabelCount(db.getSizeSignificantPulls() / 10, true);
+        xAxis.removeAllLimitLines();
+        xAxis.setAxisMaximum(db.getSizeSignificantPulls());
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setAvoidFirstLastClipping(true);
+
+    }
+
+    private void addSecondDescription(){
+
+        Description description = new Description();
+        description.setText("Soldi guadagnati");
+        description.setTextColor(Color.GREEN);
+        description.setTextSize(15);
+        description.setPosition(900, 100);
+        secondChart.setDescription(description);
+
+    }
+
+    private void addSecondLegend(){
+
+        Legend legend;
+        legend = secondChart.getLegend();
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
+        legend.setEnabled(true);
+        legend.setTextColor(Color.GREEN);
+        legend.setYOffset(10);
+        legend.setWordWrapEnabled(true);
+        legend.setMaxSizePercent(0.7f);
+        legend.setForm(Legend.LegendForm.CIRCLE);
+        LegendEntry[] legendEntries = new LegendEntry[5];
+
+        for (int i = 0; i < legendEntries.length; i++) {
+
+            LegendEntry entry = new LegendEntry();
+            entry.formColor = COLORS[i];
+            entry.label = "giocatore " + (i + 1);
+            legendEntries[i] = entry;
+
+        }
+
+        legend.setCustom(legendEntries);
+
+    }
+
+    private void addDataToSecondChart(){
+
+        ArrayList<ArrayList<Entry>> yValues = new ArrayList<>();
+        ArrayList<LineDataSet> lineDataSets = new ArrayList<>();
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+
+
+        for (int i = 0; i < Settings.getInstance().getPlayersToPlay().length; i++) { //ciclo per le 5 linee
+
+            yValues.add(new ArrayList<>());
+            float y = 0;
+
+            for (int j = 0; j < db.getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
+
+                y = (float) db.getPlayerMoneyWon(i);
+                yValues.get(i).add(new Entry(j, y));
+
+            }
+
+            lineDataSets.add(new LineDataSet(yValues.get(i), ""));
+            lineDataSets.get(i).setFillAlpha(110);
+            lineDataSets.get(i).setLineWidth(1f);
+            lineDataSets.get(i).setDrawCircles(false);
+            lineDataSets.get(i).setValueTextSize(4);
+            lineDataSets.get(i).setColor(COLORS[i]);
+            lineDataSets.get(i).setValueTextColor(COLORS[i]);
+            dataSets.add(lineDataSets.get(i));
+
+        }
+
+        LineData data = new LineData(dataSets);
+        secondChart.setData(data);
+        secondChart.invalidate();
 
     }
 
