@@ -186,6 +186,7 @@
             style="@style/standard_btn"
             android:layout_marginTop="452dp"
             android:text="Start"
+            android:onClick="openText"
             app:cornerRadius="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.494"

@@ -9,12 +9,13 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
-import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -33,6 +34,11 @@ import com.voltdevelopers.lotto.data.Settings;
 import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.game.Game;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -75,15 +81,15 @@ public class StartGameActivity extends AppCompatActivity {
         initRes();
         buttonStart.setOnClickListener(view -> {
 
-            if (btn1.isChecked()){
+            if (btn1.isChecked()) {
                 Settings.getInstance().setMoneyPerWin(11.23);
                 Settings.getInstance().setExtractionsPerRound(1);
             }
-            if (btn2.isChecked()){
+            if (btn2.isChecked()) {
                 Settings.getInstance().setMoneyPerWin(18);
                 Settings.getInstance().setExtractionsPerRound(1);
             }
-            if (btn3.isChecked()){
+            if (btn3.isChecked()) {
                 Settings.getInstance().setMoneyPerWin(250);
                 Settings.getInstance().setExtractionsPerRound(2);
             }
@@ -92,19 +98,19 @@ public class StartGameActivity extends AppCompatActivity {
                     .map(Editable::toString)
                     .filter(s -> s.matches("\\d+"))
                     .map(Integer::valueOf)
-                    .orElse(10);
+                    .orElse(1000);
 
             int significantGames = Optional.ofNullable(significantGameCount.getText())
                     .map(Editable::toString)
                     .filter(s -> s.matches("\\d+"))
                     .map(Integer::valueOf)
-                    .orElse(10);
+                    .orElse(1000);
 
             int money = Optional.ofNullable(startMoney.getText())
                     .map(Editable::toString)
                     .filter(s -> s.matches("\\d+"))
                     .map(Integer::valueOf)
-                    .orElse(10);
+                    .orElse(100);
 
             Settings.getInstance().setStartMoney(money);
             Settings.getInstance().setPresetGameCount(preGames);
@@ -375,7 +381,7 @@ public class StartGameActivity extends AppCompatActivity {
 
             for (int j = 0; j < db.getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
 
-                y = (float) db.getPlayerNetAtRound(i,j);
+                y = (float) db.getPlayerNetAtRound(i, j);
                 yValues.get(i).add(new Entry(j, y));
 
             }
@@ -397,13 +403,28 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    public static class SettingsDialogFragment extends DialogFragment {
-        @NonNull
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            return builder
-                    .setView(R.layout.settings_modal)
-                    .create();
+    public void saveText(View view){
+        FileOutputStream fos = null;
+        try {
+            String text = Database.getInstance().toString();
+
+            fos = openFileOutput("DataLotto.txt", MODE_PRIVATE);
+            fos.write(text.getBytes());
+            Toast.makeText(this, "Файл сохранен", Toast.LENGTH_SHORT).show();
+        }
+        catch(IOException ex) {
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        finally{
+            try{
+                if(fos!=null)
+                    fos.close();
+            }
+            catch(IOException ex){
+
+                Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
+
 }
