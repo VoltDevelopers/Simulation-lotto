@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -48,6 +49,7 @@ public class StartGameActivity extends AppCompatActivity {
     Button buttonStart;
     RadioButton btn1, btn2, btn3;
     ArrayList<RadioButton> arrayBtn;
+    TextView textData, textData2;
 
     private static final String TAG = "PatternGameActivity";
 
@@ -150,6 +152,7 @@ public class StartGameActivity extends AppCompatActivity {
         addFirstDescription();
         addFirstLegend();
         addDataToFirstChart();
+        addFinalResultsFirstChart();
 
         initSecondChart();
         initSecondYAxis();
@@ -181,7 +184,7 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setLabelCount(10, false);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
-        yAxis.setAxisMaximum(100); //percentuale massima
+        yAxis.setAxisMaximum(db.getSizeSignificantPulls()); //percentuale massima
         yAxis.setGranularity(1f);
         yAxis.setCenterAxisLabels(false);
 
@@ -272,6 +275,22 @@ public class StartGameActivity extends AppCompatActivity {
         LineData data = new LineData(dataSets);
         firstChart.setData(data);
         firstChart.invalidate();
+
+    }
+
+    private void addFinalResultsFirstChart(){
+
+        textData = findViewById(R.id.textData);
+        String text = "Percentuale di vittorie in " + db.getSizeSignificantPulls() +  " partite:\n";
+
+        for(int i = 0; i < 5; i++){
+
+            text+= "Giocatore " + (i + 1) + " percentuale --> " + (double) db.getPlayerWinPercentage(i) + "\n";
+
+        }
+
+        textData.setText(text);
+
 
     }
 

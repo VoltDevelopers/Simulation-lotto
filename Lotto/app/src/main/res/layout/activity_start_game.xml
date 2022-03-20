@@ -54,7 +54,6 @@
             android:layout_height="155dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/cour"
-            android:text=" - il primo gioca un numero della cinquina precedente\n - il secondo gioca il ritardatario, il numero che non esce da più estrazioni\n - il terzo gioca un numero casuale\n - il quarto gioca un numero fisso\n - il quinto gioca il numero uscito più frequentemente"
             android:textAlignment="viewStart"
             android:textColor="@color/standard_text_color"
             android:textSize="14sp"
