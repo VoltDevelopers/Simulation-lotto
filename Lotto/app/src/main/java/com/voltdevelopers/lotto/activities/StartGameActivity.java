@@ -50,6 +50,8 @@ import java.util.Optional;
 
 public class StartGameActivity extends AppCompatActivity {
 
+    // BUG: если открыть настройки но нажать на кнопку назад то будет ошибка бустой инстанции db
+
     private static final String LOG_TAG = "StartGameActivity";
     EditText presetGameCount, significantGameCount, startMoney;
     Button buttonStart;
@@ -444,12 +446,11 @@ public class StartGameActivity extends AppCompatActivity {
 
 
     public void saveText(View view) {
-        try(FileOutputStream fos = new FileOutputStream(getExternalPath())) {
+        try (FileOutputStream fos = new FileOutputStream(getExternalPath())) {
             String text = Database.getInstance().toString();
             fos.write(text.getBytes());
             Toast.makeText(this, "File saved to /storage/self/primary/Android/data/com.voltdevelopers.lotto", Toast.LENGTH_SHORT).show();
-        }
-        catch(IOException ex) {
+        } catch (IOException ex) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
@@ -458,4 +459,11 @@ public class StartGameActivity extends AppCompatActivity {
         return new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "LottoData.txt");
     }
 
+    public void showText(View view) {
+        Intent intent = new Intent(StartGameActivity.this, StatActivity.class);
+        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            Log.i("INFO", "Started Activity" + intent.getIdentifier());
+        }
+    }
 }
