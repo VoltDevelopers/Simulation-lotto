@@ -32,9 +32,9 @@ public class Database {
         initPlayers();
     }
 
-    public static Database createInstance() {
+    public static void createInstance() {
         instance.add(new Database());
-        return instance.get(instance.size() - 1);
+        instance.size();
     }
 
     public static Database getInstance() {
