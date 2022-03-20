@@ -419,5 +419,4 @@ public class StartGameActivity extends AppCompatActivity {
             }
         }
     }
-
 }
