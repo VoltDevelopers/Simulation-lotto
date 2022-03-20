@@ -181,7 +181,7 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setLabelCount(10, false);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
-        yAxis.setAxisMaximum(db.getSizeSignificantPulls()); //percentuale massima
+        yAxis.setAxisMaximum(Database.getInstance().getSizeSignificantPulls()/10); //percentuale massima
         yAxis.setGranularity(1f);
         yAxis.setCenterAxisLabels(false);
 

@@ -18,7 +18,7 @@
         <View
             android:id="@+id/view"
             android:layout_width="5dp"
-            android:layout_height="1300dp"
+            android:layout_height="1500dp"
             android:layout_marginStart="10dp"
             android:background="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
