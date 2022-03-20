@@ -2,8 +2,9 @@ package com.voltdevelopers.lotto.src.random;
 
 import com.voltdevelopers.lotto.src.exception.InputException;
 
-// Можно заменить на строку с данными метио или атомных вычиследний чтобы добиться максимального рандома
 import java.util.Arrays;
+
+import it.unimi.dsi.util.XoRoShiRo128PlusRandom;
 
 public class StdRandom {
 
@@ -14,7 +15,7 @@ public class StdRandom {
         int[] array = new int[num];
         int val = 0;
         for (int i = 0; i < num; i++) {
-            val = (int) ( 1 + Math.random() * maxRandom);
+            val = (int) ( new XoRoShiRo128PlusRandom().nextInt(maxRandom - 1) + 1);
             if (isAlreadyDrawn(array, val)) {
                 i--;
             }else{
