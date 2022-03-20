@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Lotto</string>
-    <string name="htmlText"><p>Se consideriamo il gioco del lotto da un punto di vista <span style="color:#00ff00;">matematico</span> e <span style="color:#00ff00;">calcoli</span> la probabilità di vincita di tutte le strategie è assolutamente la stessa e noi lo dimostreremo chiaramente.</p></string>
+    <string name="htmlText"><p>Se consideriamo il gioco del lotto da un punto di vista <span style="color:#00ff00;">matematico,</span> <span style="color:#00ff00;">calcolando</span> la probabilità di vincita di ciascuna strategia, essa è assolutamente la stessa, e questa simulazione lo andrà a dimostrare.</p></string>
     <string name="lotto_misconcetti">Lotto | Misconcetti</string>
     <string name="std_game">Standard Game</string>
     <string name="pattern_game">Pattern Game</string>
@@ -97,4 +97,9 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
+
+    <string name="info">È una simulazione del gioco del lotto. Consiste nell’estrazione di cinquine, scelte tra 1 e 90. I giocatori che noi osserveremo cominciano a giocare dopo un numero variabile, preferibilmente grande, di estrazioni. Questi giocatori possono giocare da 1 a 5 numeri a seconda delle impostazioni date all’inizio della simulazione.</string>
+    <string name="giocatori">Giocatori</string>
+    <string name="mode">Modalità</string>
+    <string name="winnings">Guadagno</string>
 </resources>
