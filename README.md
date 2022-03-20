@@ -68,4 +68,35 @@ Database.
 
 ## Risultati dell'esperimento: analisi dei grafici
 
----
+### Esperimento Realistico
+
+Avviando la simulazione in modalita\` realistica, si evince una tendenza
+piuttosto simile tra le partite vinte dai diversi giocatori. Tuttavia,
+essendo il gioco del lotto per definizione **non equo**, tutti i player
+vanno inevitabilmente a perdere del denaro. Si fa notare che l'eventuale
+guadagno maggiore di qualche giocatore rispetto agli altri e\` puramente
+casuale, e cio\` e\` facilmente dimostrabile ripetendo la simulazione
+altre volte, osservando che il giocatore che ha subito meno perdite
+sara\`, con buona probabilita\`, diverso dal precedente.
+
+### Esperimento Equo
+
+In maniera del tutto analoga al caso precedente, la simulazione del gioco
+equo sottolinea una percentuale di vincita che spazia in media tra il
+4.5% e il 6.5% tra i vari giocatori, salvo casi eccezionali. Il grafico
+dei guadagni, invece, mostra dei guadagni mediamente piu\` tendenti allo
+zero, con alcuni casi eccezionali. Come nel caso dell'esperimento
+realistico, alcuni giocatori potrebbero eccezionalmente subire spiccati
+guadagni o perdite rispetto al resto, ma questo evento e\` da considerare
+come puramente imprevedibile e non condizionato dai metodi utilizzati dai
+vari player.
+
+### Modalita\` Ambo
+
+Questa particolare modalita\` fa giocare ai singoli giocatori una coppia
+di numeri. Essi vinceranno una somma pari a 250$ nel caso **entrambi** i
+numeri giocati venissero estratti. In questo caso si ha una decrescita
+costante nel denaro di ciascun giocatore, con alcune rare crescite
+improvvise delle loro entrate. Ancora di piu\` rispetto alle altre
+simulazioni, la quantita\` estremamente ridotta di vincite rimane 
+costante tra i vari giocatori.
