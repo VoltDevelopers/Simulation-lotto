@@ -5,12 +5,11 @@ import androidx.annotation.NonNull;
 import com.voltdevelopers.lotto.layout.Console;
 
 import java.util.ArrayList;
-import java.util.Set;
 
 public class Database {
 
     private final Settings settings;
-    private static Database instance = null;
+    private static ArrayList<Database> instance = null;
 
     private Profile[] players;
     private final Analysis analysis;
@@ -33,11 +32,18 @@ public class Database {
         initPlayers();
     }
 
+    public static Database createInstance() {
+
+        instance.add(new Database());
+        return instance.get(instance.size());
+
+    }
+
     public static Database getInstance() {
         if (instance != null)
-            return instance;
-        instance = new Database();
-        return instance;
+            return instance.get(instance.size());
+        instance.add(new Database());
+        return instance.get(instance.size());
     }
 
     private void initPlayers() {
