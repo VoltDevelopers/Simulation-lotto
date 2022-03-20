@@ -33,10 +33,8 @@ public class Database {
     }
 
     public static Database createInstance() {
-
         instance.add(new Database());
-        return instance.get(instance.size());
-
+        return instance.get(instance.size() - 1);
     }
 
     public static Database getInstance() {
