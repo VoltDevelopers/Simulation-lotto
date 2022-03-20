@@ -172,7 +172,7 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setSpaceBottom(0);
         yAxis.setSpaceTop(0);
         yAxis.setDrawGridLines(false);
-        yAxis.setLabelCount(10, true);
+        yAxis.setLabelCount(10, false);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
         yAxis.setAxisMaximum(100); //percentuale massima
@@ -191,7 +191,7 @@ public class StartGameActivity extends AppCompatActivity {
 
         XAxis xAxis = firstChart.getXAxis();
         xAxis.setTextColor(Color.GREEN);
-        xAxis.setLabelCount(db.getSizeSignificantPulls() / 10, true);
+        xAxis.setLabelCount(5, false);
         xAxis.removeAllLimitLines();
         xAxis.setAxisMaximum(db.getSizeSignificantPulls());
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -296,7 +296,7 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setSpaceBottom(0);
         yAxis.setSpaceTop(0);
         yAxis.setDrawGridLines(false);
-        yAxis.setLabelCount(10, true);
+        yAxis.setLabelCount(10, false);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
         yAxis.setAxisMaximum(1000); //soldi massimi guadagnati
@@ -315,7 +315,7 @@ public class StartGameActivity extends AppCompatActivity {
 
         XAxis xAxis = secondChart.getXAxis();
         xAxis.setTextColor(Color.GREEN);
-        xAxis.setLabelCount(db.getSizeSignificantPulls() / 10, true);
+        xAxis.setLabelCount(5, false);
         xAxis.removeAllLimitLines();
         xAxis.setAxisMaximum(db.getSizeSignificantPulls());
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -375,7 +375,7 @@ public class StartGameActivity extends AppCompatActivity {
 
             for (int j = 0; j < db.getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
 
-                y = (float) db.getPlayerMoneyWon(i);
+                y = (float) db.getPlayerNetAtRound(i,j);
                 yValues.get(i).add(new Entry(j, y));
 
             }
