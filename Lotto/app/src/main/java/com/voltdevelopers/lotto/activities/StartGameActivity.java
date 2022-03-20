@@ -309,8 +309,8 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setLabelCount(10, false);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
-        yAxis.setAxisMaximum(Database.getInstance().getSizeSignificantPulls());//soldi massimi guadagnati
-        yAxis.setAxisMinimum(-Database.getInstance().getSizeSignificantPulls());
+        yAxis.setAxisMaximum((float) (Settings.getInstance().getStartMoney() * 1.5));//soldi massimi guadagnati
+        yAxis.setAxisMinimum(-(float) (Settings.getInstance().getStartMoney() * 1.5));
         yAxis.setGranularity(1f);
         yAxis.setCenterAxisLabels(false);
         yAxis.setValueFormatter(new ValueFormatter() {
