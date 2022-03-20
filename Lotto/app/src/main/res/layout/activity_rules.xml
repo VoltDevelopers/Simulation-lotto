@@ -32,13 +32,13 @@
         <TextView
             android:layout_width="334dp"
             android:layout_height="155dp"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="208dp"
             android:fontFamily="@font/cour"
             android:text="È una simulazione del gioco del lotto. Consiste nell’estrazione di cinquine, scelte tra 1 e 90. I giocatori che noi osserveremo cominciano a giocare dopo un numero variabile, preferibilmente grande, di estrazioni. Questi giocatori possono giocare da 1 a 5 numeri a seconda delle impostazioni date all’inizio della simulazione."
             android:textAlignment="center"
             android:textColor="@color/standard_text_color"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,13 +70,13 @@
         <TextView
             android:layout_width="334dp"
             android:layout_height="155dp"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="416dp"
             android:fontFamily="@font/cour"
             android:text=" - il primo gioca un numero della cinquina precedente\n - il secondo gioca il ritardatario, il numero che non esce da più estrazioni\n - il terzo gioca un numero casuale\n - il quarto gioca un numero fisso\n - il quinto gioca il numero uscito più frequentemente"
             android:textAlignment="viewStart"
             android:textColor="@color/standard_text_color"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -108,13 +108,13 @@
         <TextView
             android:layout_width="331dp"
             android:layout_height="102dp"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="608dp"
             android:fontFamily="@font/cour"
             android:text=" - Modalita con una estrazione: Ogni pattern gioca un solo numero e viene pagato per quello.\n - Modalita Ambo: Ogni parrent gioca 2 numeri, viene pagata se vince tutti i due."
             android:textAlignment="viewStart"
             android:textColor="@color/standard_text_color"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -146,13 +146,13 @@
         <TextView
             android:layout_width="334dp"
             android:layout_height="155dp"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="764dp"
             android:fontFamily="@font/cour"
             android:text=" - Ogni volta che giocano spendono 1$\n - In modalita standart ogni volta che vincono ricevono o 18$, nel caso si consideri lotto come gioco equo, oppure 11.23$, nel caso lo si consideri com’è in realtà.\n - In modalita Ambo ogni volta che vincono due numeri entrambi ricevono 250$"
             android:textAlignment="viewStart"
             android:textColor="@color/standard_text_color"
             android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintTop_toTopOf="parent" />
 

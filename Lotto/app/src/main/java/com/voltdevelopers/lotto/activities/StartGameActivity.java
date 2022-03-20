@@ -38,9 +38,10 @@ import java.util.Optional;
 
 public class StartGameActivity extends AppCompatActivity {
 
-    EditText presetGameCount, significantGameCount;
+    EditText presetGameCount, significantGameCount, startMoney;
     Button buttonStart;
-    RadioButton btn1, btn2, btn3, btn4, btn5, btn6, btn7;
+    RadioButton btn1, btn2, btn3;
+    ArrayList<RadioButton> arrayBtn;
 
     private static final String TAG = "PatternGameActivity";
 
@@ -72,25 +73,43 @@ public class StartGameActivity extends AppCompatActivity {
         settingsDialog.setContentView(R.layout.settings_modal);
         initRes();
         buttonStart.setOnClickListener(view -> {
-            Settings.getInstance().setMoneyPerWin(btn1.isActivated() ? 18 : 11.23);
+
             Settings.getInstance().setExtractionsPerRound(1);
 
-            int num1 = Optional.ofNullable(presetGameCount.getText())
+            if (!btn1.isActivated()){
+                Settings.getInstance().setMoneyPerWin(11.23);
+            }
+            if (!btn2.isActivated()){
+                Settings.getInstance().setMoneyPerWin(18);
+            }
+            if (!btn3.isActivated()){
+                Settings.getInstance().setMoneyPerWin(250);
+                Settings.getInstance().setExtractionsPerRound(2);
+            }
+
+            int preGames = Optional.ofNullable(presetGameCount.getText())
                     .map(Editable::toString)
                     .filter(s -> s.matches("\\d+"))
                     .map(Integer::valueOf)
                     .orElse(1000);
 
-            int num2 = Optional.ofNullable(significantGameCount.getText())
+            int significantGames = Optional.ofNullable(significantGameCount.getText())
                     .map(Editable::toString)
                     .filter(s -> s.matches("\\d+"))
                     .map(Integer::valueOf)
                     .orElse(1000);
 
-            Settings.getInstance().setPresetGameCount(num1);
+            int money = Optional.ofNullable(startMoney.getText())
+                    .map(Editable::toString)
+                    .filter(s -> s.matches("\\d+"))
+                    .map(Integer::valueOf)
+                    .orElse(10);
+
+            Settings.getInstance().setStartMoney(money);
+            Settings.getInstance().setPresetGameCount(preGames);
 
             try {
-                Game game = new Game(num2);
+                Game game = new Game(significantGames);
                 game.gameLoop();
             } catch (InputException e) {
                 e.printStackTrace();
@@ -104,10 +123,17 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private void initRes() {
+        arrayBtn = new ArrayList<>();
         buttonStart = settingsDialog.findViewById(R.id.buttonStartModal);
         btn1 = settingsDialog.findViewById(R.id.radioButton1);
+        arrayBtn.add(btn1);
+        btn2 = settingsDialog.findViewById(R.id.radioButton2);
+        arrayBtn.add(btn2);
+        btn3 = settingsDialog.findViewById(R.id.radioButton3);
+        arrayBtn.add(btn3);
         presetGameCount = settingsDialog.findViewById(R.id.presetGameCount);
         significantGameCount = settingsDialog.findViewById(R.id.significantGameCount);
+        startMoney = settingsDialog.findViewById(R.id.startMoney);
     }
 
     private void initAll() {

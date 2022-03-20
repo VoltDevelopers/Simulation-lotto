@@ -13,13 +13,26 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:id="@+id/startMoney"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="0dp"
+            android:ems="10"
+            android:fontFamily="@font/cour"
+            android:hint="10$"
+            android:inputType="number"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+        <EditText
             android:id="@+id/significantGameCount"
             android:layout_width="wrap_content"
-            android:fontFamily="@font/cour"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="2dp"
             android:ems="10"
+            android:fontFamily="@font/cour"
             android:hint="1000"
             android:inputType="number"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,8 +43,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="240dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/cour_bold"
             android:text="Partite significative da giocare:"
             android:textAlignment="viewStart"
@@ -39,7 +52,7 @@
             android:textColor="@color/neon_green"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/presetGameCount" />
 
         <TextView
             android:id="@+id/textView4"
@@ -76,15 +89,15 @@
             android:layout_height="wrap_content"
 
             android:layout_marginStart="15dp"
-            android:layout_marginTop="336dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/cour_bold"
-            android:text="Patterns:"
+            android:text="Soldi iniziali per giocatori:"
             android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textColor="@color/neon_green"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/significantGameCount" />
 
         <RadioGroup
             android:id="@+id/radio_grup_1"
@@ -121,6 +134,20 @@
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="3dp"
+                android:buttonTint="@color/neon_green"
+                android:checked="false"
+                android:fontFamily="@font/cour"
+                android:text="Ambo"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView5" />
         </RadioGroup>
 
         <TextView
@@ -129,7 +156,7 @@
             android:layout_height="wrap_content"
 
             android:layout_marginStart="15dp"
-            android:layout_marginTop="160dp"
+            android:layout_marginTop="14dp"
             android:fontFamily="@font/cour_bold"
             android:text="Partite primari da giocare:"
             android:textAlignment="viewStart"
@@ -137,7 +164,7 @@
             android:textColor="@color/neon_green"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/radio_grup_1" />
 
         <EditText
             android:id="@+id/presetGameCount"
@@ -157,76 +184,15 @@
         <Button
             android:id="@+id/buttonStartModal"
             style="@style/standard_btn"
-            android:layout_marginTop="550dp"
+            android:layout_marginTop="452dp"
             android:text="Start"
             app:cornerRadius="40dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
             app:strokeColor="@color/neon_green"
             app:strokeWidth="2dp" />
-
-        <RadioButton
-            android:id="@+id/radioButton3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="8dp"
-            android:buttonTint="@color/neon_green"
-            android:fontFamily="@font/cour"
-            android:text="Pattern 1"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-        <RadioButton
-            android:id="@+id/radioButton4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:buttonTint="@color/neon_green"
-            android:fontFamily="@font/cour"
-            android:text="Pattern 2"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioButton3" />
-
-        <RadioButton
-            android:id="@+id/radioButton5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:buttonTint="@color/neon_green"
-            android:fontFamily="@font/cour"
-            android:text="Pattern 4"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioButton6" />
-
-        <RadioButton
-            android:id="@+id/radioButton6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:buttonTint="@color/neon_green"
-            android:fontFamily="@font/cour"
-            android:text="Pattern 3"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioButton4" />
-
-        <RadioButton
-            android:id="@+id/radioButton7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:buttonTint="@color/neon_green"
-            android:fontFamily="@font/cour"
-            android:text="Pattern 5"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioButton5" />
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -334,11 +334,9 @@ public class Database {
         }
 
         private void assignWinMoney(Profile p) {
-
             for (int i = 0; i < p.getNOfBets(); i++)
                 if (p.getHitsOnSelectedBet(i) == settings.getExtractionsPerRound())
                     p.addToMoneyWon(settings.getMoneyPerWin());
-
         }
     }
 }

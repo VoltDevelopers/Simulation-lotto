@@ -7,6 +7,7 @@ public class Settings {
     public static final int COST_OF_PLAY = 1;
     public static final int EXTRACTIONS = 5;
 
+    private int startMoney;
     private boolean[] playersToPlay;
     private double moneyPerWin;
     private int presetGameCount;
@@ -55,4 +56,11 @@ public class Settings {
         this.moneyPerWin = moneyPerWin;
     }
 
+    public void setStartMoney(int startMoney) {
+        this.startMoney = startMoney;
+    }
+
+    public int getStartMoney() {
+        return startMoney;
+    }
 }
