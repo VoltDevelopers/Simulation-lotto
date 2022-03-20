@@ -75,15 +75,15 @@ public class StartGameActivity extends AppCompatActivity {
         initRes();
         buttonStart.setOnClickListener(view -> {
 
-            Settings.getInstance().setExtractionsPerRound(1);
-
-            if (!btn1.isActivated()){
+            if (btn1.isChecked()){
                 Settings.getInstance().setMoneyPerWin(11.23);
+                Settings.getInstance().setExtractionsPerRound(1);
             }
-            if (!btn2.isActivated()){
+            if (btn2.isChecked()){
                 Settings.getInstance().setMoneyPerWin(18);
+                Settings.getInstance().setExtractionsPerRound(1);
             }
-            if (!btn3.isActivated()){
+            if (btn3.isChecked()){
                 Settings.getInstance().setMoneyPerWin(250);
                 Settings.getInstance().setExtractionsPerRound(2);
             }

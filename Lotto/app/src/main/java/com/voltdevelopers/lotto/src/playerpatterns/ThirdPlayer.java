@@ -1,5 +1,6 @@
 package com.voltdevelopers.lotto.src.playerpatterns;
 
+import com.voltdevelopers.lotto.data.Settings;
 import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.random.StdRandom;
 
@@ -11,7 +12,6 @@ public class ThirdPlayer extends Player {
    */
 
     public ThirdPlayer() {
-        super();
         this.id = 2;
         this.bet = new int[extractions];
     }

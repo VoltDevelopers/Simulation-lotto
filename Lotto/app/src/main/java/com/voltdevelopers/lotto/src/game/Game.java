@@ -29,8 +29,8 @@ public class Game {
         console = Console.getInstance();
         playerPatterns = new Player[5];
 
-        preGameLoop(Settings.getInstance().getPresetGameCount());
         initPlayers();
+        preGameLoop(Settings.getInstance().getPresetGameCount());
     }
 
     public void gameLoop() {

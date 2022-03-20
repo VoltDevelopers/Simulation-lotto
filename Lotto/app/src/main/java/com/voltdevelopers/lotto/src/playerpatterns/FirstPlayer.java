@@ -1,6 +1,7 @@
 package com.voltdevelopers.lotto.src.playerpatterns;
 
 import com.voltdevelopers.lotto.data.Database;
+import com.voltdevelopers.lotto.data.Settings;
 
 public class FirstPlayer extends Player {
 

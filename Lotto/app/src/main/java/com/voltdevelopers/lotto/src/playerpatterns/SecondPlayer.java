@@ -1,6 +1,7 @@
 package com.voltdevelopers.lotto.src.playerpatterns;
 
 import com.voltdevelopers.lotto.data.Database;
+import com.voltdevelopers.lotto.data.Settings;
 
 public class SecondPlayer extends Player {
 
@@ -10,7 +11,6 @@ public class SecondPlayer extends Player {
    */
 
     public SecondPlayer() {
-        super();
         this.id = 1;
         this.bet = new int[extractions];
     }
