@@ -96,15 +96,6 @@
             app:strokeColor="@color/neon_green"
             app:strokeWidth="2dp" />
         <!-- _______________________________________________________________________ -->
-        <Button
-            android:id="@+id/buttonStat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="144dp"
-            android:layout_marginTop="33dp"
-            android:text="Stat"
-            app:layout_constraintStart_toEndOf="@+id/view"
-            app:layout_constraintTop_toBottomOf="@+id/buttonRules" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
