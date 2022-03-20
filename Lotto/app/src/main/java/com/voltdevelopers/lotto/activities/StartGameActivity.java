@@ -157,6 +157,7 @@ public class StartGameActivity extends AppCompatActivity {
         addSecondDescription();
         addSecondLegend();
         addDataToSecondChart();
+        addFinalResultsSecondChart();
     }
 
     private void initFirstChart() {
@@ -282,7 +283,8 @@ public class StartGameActivity extends AppCompatActivity {
 
         for(int i = 0; i < 5; i++){
 
-            text+= "Giocatore " + (i + 1) + " percentuale --> " + (double) db.getPlayerWinPercentage(i) + "\n";
+            double aproxPerc = Math.round(db.getPlayerWinPercentage(i) * 100.0) / 100.0;
+            text+= "Giocatore " + (i + 1) + " percentuale --> " + aproxPerc + "\n";
 
         }
 
@@ -412,6 +414,23 @@ public class StartGameActivity extends AppCompatActivity {
         LineData data = new LineData(dataSets);
         secondChart.setData(data);
         secondChart.invalidate();
+
+    }
+
+    private void addFinalResultsSecondChart(){
+
+        textData2 = findViewById(R.id.textData2);
+        String text = "Credito dei giocatori dopo " + db.getSizeSignificantPulls() +  " partite:\n";
+
+        for(int i = 0; i < 5; i++){
+
+            double aproxPerc = Math.round(db.getPlayerNet(i) * 100.0) / 100.0;
+            text+= "Credito del giocatore " + (i + 1) + " --> " + aproxPerc + "$\n";
+
+        }
+
+        textData2.setText(text);
+
 
     }
 
