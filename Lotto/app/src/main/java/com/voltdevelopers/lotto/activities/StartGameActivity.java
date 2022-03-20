@@ -103,13 +103,13 @@ public class StartGameActivity extends AppCompatActivity {
                     .map(Editable::toString)
                     .filter(s -> s.matches("\\d+"))
                     .map(Integer::valueOf)
-                    .orElse(1000);
+                    .orElse(100);
 
             int money = Optional.ofNullable(startMoney.getText())
                     .map(Editable::toString)
                     .filter(s -> s.matches("\\d+"))
                     .map(Integer::valueOf)
-                    .orElse(100);
+                    .orElse(0);
 
             Settings.getInstance().setStartMoney(money);
             Settings.getInstance().setPresetGameCount(preGames);

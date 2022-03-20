@@ -20,7 +20,7 @@
             android:layout_marginTop="0dp"
             android:ems="10"
             android:fontFamily="@font/cour"
-            android:hint="100$"
+            android:hint="0$"
             android:inputType="number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
@@ -33,7 +33,7 @@
             android:layout_marginTop="2dp"
             android:ems="10"
             android:fontFamily="@font/cour"
-            android:hint="1000"
+            android:hint="100"
             android:inputType="number"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
