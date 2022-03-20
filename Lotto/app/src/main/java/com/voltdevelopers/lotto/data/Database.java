@@ -456,7 +456,7 @@ class Profile {
             return 0;
         if(winList.get(round) < Settings.getInstance().getExtractionsPerRound())
             return getNetAtRound(round -1);
-        return Settings.getInstance().getMoneyPerWin() + getNetAtRound(round -1);
+        return Settings.getInstance().getMoneyPerWin() + getNetAtRound(round -1) -1;
 
     }
 
