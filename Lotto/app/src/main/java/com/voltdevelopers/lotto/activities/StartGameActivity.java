@@ -34,10 +34,7 @@ import com.voltdevelopers.lotto.data.Settings;
 import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.game.Game;
 
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
