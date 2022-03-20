@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Database {
 
     private final Settings settings;
-    private static ArrayList<Database> instance = null;
+    private static ArrayList<Database> instance = new ArrayList<Database>();;
 
     private Profile[] players;
     private final Analysis analysis;
@@ -41,10 +41,9 @@ public class Database {
 
     public static Database getInstance() {
         if (!instance.isEmpty())
-            return instance.get(instance.size());
-        instance = new ArrayList<Database>();
+            return instance.get(instance.size()-1);
         instance.add(new Database());
-        return instance.get(instance.size());
+        return instance.get(instance.size()-1);
     }
 
     private void initPlayers() {
@@ -166,11 +165,11 @@ public class Database {
 
             output += "Database" + i + "{" +
                     ",\n" + tabulation + "moneyPerWin=" + settings.getMoneyPerWin() +
-                    ",\n" + tabulation + "gameCounter=" + allRounds.size() +
-                    ",\n" + tabulation + "pullChronology=" + pullChronologyToString(tabulation + "     ") +//\t non va, idk
-                    ",\n" + tabulation + "pullsPerNumber=" + pullsPerNumberToString(tabulation + "     ") +
-                    ",\n" + tabulation + "rounds=" + allRoundsToString(tabulation + "     ") +
-                    ",\n" + tabulation + "players=\n" + allPlayersToString(tabulation + "     ") +
+                    ",\n" + tabulation + "gameCounter=" + instance.get(i).allRounds.size() +
+                    ",\n" + tabulation + "pullChronology=" + instance.get(i).pullChronologyToString(tabulation + "     ") +//\t non va, idk
+                    ",\n" + tabulation + "pullsPerNumber=" + instance.get(i).pullsPerNumberToString(tabulation + "     ") +
+                    ",\n" + tabulation + "rounds=" + instance.get(i).allRoundsToString(tabulation + "     ") +
+                    ",\n" + tabulation + "players=\n" + instance.get(i).allPlayersToString(tabulation + "     ") +
                     ",\n" + tabulation + '}';
 
         }
