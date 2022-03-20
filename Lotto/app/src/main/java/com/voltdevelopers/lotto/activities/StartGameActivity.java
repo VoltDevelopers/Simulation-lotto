@@ -6,10 +6,15 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -28,6 +33,7 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.voltdevelopers.lotto.MainActivity;
 import com.voltdevelopers.lotto.R;
 import com.voltdevelopers.lotto.data.Database;
 import com.voltdevelopers.lotto.data.Settings;
@@ -38,24 +44,63 @@ import java.util.ArrayList;
 
 public class StartGameActivity extends AppCompatActivity {
 
+    EditText presetGameCount, significantGameCount;
+    Button buttonStart;
+    RadioButton btn1, btn2, btn3, btn4, btn5, btn6, btn7;
+
     private static final String TAG = "PatternGameActivity";
+
+    private Dialog settingsDialog;
     private LineChart firstChart, secondChart;
     private Database db;
     private static final int[] COLORS = {Color.RED, Color.YELLOW, Color.WHITE, Color.MAGENTA, Color.BLUE};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_game);
 
         db = Database.getInstance();
-        initAll();
+        showSettings();
+        initSettingsBtn();
     }
 
-    public void showSettings(View view) {
-        SettingsDialogFragment settings = new SettingsDialogFragment();
-        settings.show(getSupportFragmentManager(), "custom");
+    private void initSettingsBtn(){
+        ImageButton settingsBtn = findViewById(R.id.settingsImageButton);
+        settingsBtn.setOnClickListener(view -> {
+            showSettings();
+        });
+    }
+
+    private void showSettings(){
+        settingsDialog = new Dialog(this);
+        settingsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        settingsDialog.setContentView(R.layout.settings_modal);
+        buttonStart = (Button)settingsDialog.findViewById(R.id.buttonStartModal);
+        buttonStart.setOnClickListener(view -> {
+            Log.i("Modal", "BTN START WAS PRESSED");
+
+            btn1 = settingsDialog.findViewById(R.id.radioButton1);
+            presetGameCount = settingsDialog.findViewById(R.id.presetGameCount);
+            significantGameCount = settingsDialog.findViewById(R.id.significantGameCount);
+
+            Settings.getInstance().setMoneyPerWin(btn1.isActivated() ? 18 : 11.23);
+
+            Settings.getInstance().setExtractions(5);
+            Settings.getInstance().setExtractionsPerRound(1);
+            Settings.getInstance().setPresetGameCount(Integer.parseInt (presetGameCount.getText().toString()));
+            try {
+                Game game = new Game(Integer.parseInt (significantGameCount.getText().toString()));
+                game.gameLoop();
+            } catch (InputException e) {
+                e.printStackTrace();
+            }
+            Database.getInstance().assignWins();
+
+            initAll();
+            settingsDialog.dismiss();
+        });
+        settingsDialog.show();
     }
 
     private void initAll() {
@@ -69,7 +114,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     private void initChart() {
         firstChart = findViewById(R.id.graphic_1);
-        secondChart = findViewById(R.id.graphic_2);
+//        secondChart = findViewById(R.id.graphic_2);
 
         firstChart.setDragEnabled(true);
         firstChart.setScaleEnabled(false);
@@ -167,9 +212,7 @@ public class StartGameActivity extends AppCompatActivity {
             for (int j = 0; j < db.getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
 
                 if (db.getPlayerWinList(i).get(j) == Settings.getInstance().getExtractionsPerRound()) {//se quel pattern ha vinto in quella prtita la percentuale aumenta
-
                     y++;
-
                 }
                 yValues.get(i).add(new Entry(j, y));
 
@@ -190,15 +233,5 @@ public class StartGameActivity extends AppCompatActivity {
         firstChart.setData(data);
         firstChart.invalidate();
 
-    }
-
-    public static class SettingsDialogFragment extends DialogFragment {
-        @NonNull
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            return builder
-                    .setView(R.layout.settings_modal)
-                    .create();
-        }
     }
 }
