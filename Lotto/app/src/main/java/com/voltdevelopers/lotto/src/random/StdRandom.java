@@ -35,3 +35,5 @@ public class StdRandom {
         return false;
     }
 }
+
+// https://dsiutils.di.unimi.it/docs/it/unimi/dsi/util/XoRoShiRo128PlusRandom.html
