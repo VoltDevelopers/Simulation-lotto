@@ -42,6 +42,7 @@ public class Database {
     public static Database getInstance() {
         if (!instance.isEmpty())
             return instance.get(instance.size());
+        instance = new ArrayList<Database>();
         instance.add(new Database());
         return instance.get(instance.size());
     }
@@ -161,9 +162,9 @@ public class Database {
     @NonNull
     public String toString(String tabulation) {
         String output = "";
-        for (Database current : instance) {
+        for (int i = 0; i < instance.size(); i++) {
 
-            output += "Database{" +
+            output += "Database" + i + "{" +
                     ",\n" + tabulation + "moneyPerWin=" + settings.getMoneyPerWin() +
                     ",\n" + tabulation + "gameCounter=" + allRounds.size() +
                     ",\n" + tabulation + "pullChronology=" + pullChronologyToString(tabulation + "     ") +//\t non va, idk
@@ -174,7 +175,7 @@ public class Database {
 
         }
 
-        return "TEMP BUILD, NOT IMPLEMENTED";
+        return output;
 
     }
 
