@@ -279,7 +279,7 @@ public class StartGameActivity extends AppCompatActivity {
         for (int i = 0; i < 5; i++) {
 
             double aproxPerc = Math.round(db.getPlayerWinPercentage(i) * 100.0) / 100.0;
-            text += "Giocatore " + (i + 1) + " percentuale --> " + aproxPerc + "\n";
+            text += "Giocatore " + (i + 1) + " percentuale --> " + aproxPerc + "%\n";
 
         }
         textData.setText(text);
