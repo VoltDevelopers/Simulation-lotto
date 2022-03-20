@@ -178,12 +178,6 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setAxisMaximum(100); //percentuale massima
         yAxis.setGranularity(1f);
         yAxis.setCenterAxisLabels(false);
-        yAxis.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                return super.getFormattedValue(value) + "%";
-            }
-        });
 
     }
 
@@ -203,7 +197,7 @@ public class StartGameActivity extends AppCompatActivity {
     private void addFirstDescription() {
 
         Description description = new Description();
-        description.setText("Percentuale di vincite");
+        description.setText("Numero di vittorie");
         description.setTextColor(Color.GREEN);
         description.setTextSize(15);
         description.setPosition(900, 100);
@@ -328,7 +322,7 @@ public class StartGameActivity extends AppCompatActivity {
     private void addSecondDescription() {
 
         Description description = new Description();
-        description.setText("Soldi guadagnati");
+        description.setText("'Guadagno' netto");
         description.setTextColor(Color.GREEN);
         description.setTextSize(15);
         description.setPosition(900, 100);
