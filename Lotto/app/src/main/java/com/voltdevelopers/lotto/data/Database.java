@@ -130,7 +130,7 @@ public class Database {
     }
 
     public double getPlayerNetAtRound(int playerN, int roundN) {
-        return players[playerN].getNetAtRound(roundN);
+        return players[playerN].getNetAtRound(roundN) + settings.getStartMoney();
     }
 
     //----------------------analysis methods--------------------------------------------------------
@@ -455,7 +455,7 @@ class Profile {
         if(round < 0)
             return 0;
         if(winList.get(round) < Settings.getInstance().getExtractionsPerRound())
-            return getNetAtRound(round -1);
+            return getNetAtRound(round -1) -1;
         return Settings.getInstance().getMoneyPerWin() + getNetAtRound(round -1) -1;
 
     }

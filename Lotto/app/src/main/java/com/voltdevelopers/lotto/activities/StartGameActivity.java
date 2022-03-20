@@ -184,12 +184,6 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setAxisMaximum(100); //percentuale massima
         yAxis.setGranularity(1f);
         yAxis.setCenterAxisLabels(false);
-        yAxis.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                return super.getFormattedValue(value) + "%";
-            }
-        });
 
     }
 
@@ -209,7 +203,7 @@ public class StartGameActivity extends AppCompatActivity {
     private void addFirstDescription() {
 
         Description description = new Description();
-        description.setText("Percentuale di vincite");
+        description.setText("Numero di vittorie");
         description.setTextColor(Color.GREEN);
         description.setTextSize(15);
         description.setPosition(900, 100);
@@ -305,7 +299,8 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setLabelCount(10, false);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
-        yAxis.setAxisMaximum(1000); //soldi massimi guadagnati
+        yAxis.setAxisMaximum(1000);//soldi massimi guadagnati
+        yAxis.setAxisMinimum(-db.getSizeSignificantPulls());
         yAxis.setGranularity(1f);
         yAxis.setCenterAxisLabels(false);
         yAxis.setValueFormatter(new ValueFormatter() {
@@ -333,7 +328,7 @@ public class StartGameActivity extends AppCompatActivity {
     private void addSecondDescription() {
 
         Description description = new Description();
-        description.setText("Soldi guadagnati");
+        description.setText("'Guadagno' netto");
         description.setTextColor(Color.GREEN);
         description.setTextSize(15);
         description.setPosition(900, 100);
@@ -377,11 +372,12 @@ public class StartGameActivity extends AppCompatActivity {
         for (int i = 0; i < Settings.getInstance().getPlayersToPlay().length; i++) { //ciclo per le 5 linee
 
             yValues.add(new ArrayList<>());
-            float y = 0;
+            float y;
 
             for (int j = 0; j < db.getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
 
                 y = (float) db.getPlayerNetAtRound(i, j);
+
                 yValues.get(i).add(new Entry(j, y));
 
             }
