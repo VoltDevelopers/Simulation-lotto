@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.voltdevelopers.lotto.layout.Console;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class Database {
 
@@ -329,7 +330,7 @@ public class Database {
         }
 
         private void assignSpendings(Profile p) {
-            p.addToMoneySpent(settings.COST_OF_PLAY * p.getNOfBets());
+            p.addToMoneySpent(Settings.COST_OF_PLAY * p.getNOfBets());
 
         }
 
@@ -405,7 +406,7 @@ class Profile {
     }
 
     public double getNet() {
-        return moneyWon - moneySpent;
+        return moneyWon - moneySpent + Settings.getInstance().getStartMoney();
     }
 
     public int getNWins() {
@@ -436,20 +437,19 @@ class Profile {
 
     public String toString(String tabulation) {
         return "Profile{" +
-                ",\n" + tabulation + "name=" + name +
-                ",\n" + tabulation + "nWins=" + nWins +
-                ",\n" + tabulation + "moneyWon=" + moneyWon +
-                ",\n" + tabulation + "moneySpent=" + moneySpent +
-                ",\n" + tabulation + "net=" + (moneyWon - moneySpent) +
+                ",\n" + tabulation + "name=" + getName() +
+                ",\n" + tabulation + "StartMoney=" + Settings.getInstance().getStartMoney() +
+                ",\n" + tabulation + "nWins=" + getNWins() +
+                ",\n" + tabulation + "moneyWon=" + getMoneyWon() +
+                ",\n" + tabulation + "moneySpent=" + getMoneySpent() +
+                ",\n" + tabulation + "net=" + getNet() +
                 ",\n" + tabulation + "betList=" + betListToString(tabulation + "     ") +
                 ",\n" + tabulation + "winList=" + winListToString(tabulation + "     ") +
                 "\n}\n";
     }
 
     private String winListToString(String tabulation) {
-
         return winList.toString();
-
     }
 
     private String betListToString(String tabulation) {
