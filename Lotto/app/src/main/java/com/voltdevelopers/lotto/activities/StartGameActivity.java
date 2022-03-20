@@ -3,9 +3,16 @@ package com.voltdevelopers.lotto.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -26,19 +33,24 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.voltdevelopers.lotto.MainActivity;
 import com.voltdevelopers.lotto.R;
 import com.voltdevelopers.lotto.data.Database;
 import com.voltdevelopers.lotto.data.Settings;
 import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.game.Game;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Optional;
 
 public class StartGameActivity extends AppCompatActivity {
 
+    private static final String LOG_TAG = "StartGameActivity";
     EditText presetGameCount, significantGameCount, startMoney;
     Button buttonStart;
     RadioButton btn1, btn2, btn3;
@@ -422,24 +434,28 @@ public class StartGameActivity extends AppCompatActivity {
         textData2.setText(text);
     }
 
-    public void saveText(View view) {
-        FileOutputStream fos = null;
-        try {
-            String text = Database.getInstance().toString();
-
-            fos = openFileOutput("DataLotto.txt", MODE_PRIVATE);
-            fos.write(text.getBytes());
-            Toast.makeText(this, "Файл сохранен", Toast.LENGTH_SHORT).show();
-        } catch (IOException ex) {
-            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
-        } finally {
-            try {
-                if (fos != null)
-                    fos.close();
-            } catch (IOException ex) {
-
-                Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+    public void showData() {
+        Intent intent = new Intent(StartGameActivity.this, StatActivity.class);
+        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            Log.i("INFO", "Started Activity" + intent.getIdentifier());
         }
     }
+
+
+    public void saveText(View view) {
+        try(FileOutputStream fos = new FileOutputStream(getExternalPath())) {
+            String text = Database.getInstance().toString();
+            fos.write(text.getBytes());
+            Toast.makeText(this, "File saved to /storage/self/primary/Android/data/com.voltdevelopers.lotto", Toast.LENGTH_SHORT).show();
+        }
+        catch(IOException ex) {
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private File getExternalPath() {
+        return new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "LottoData.txt");
+    }
+
 }

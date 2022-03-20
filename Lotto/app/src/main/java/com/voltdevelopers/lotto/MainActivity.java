@@ -21,7 +21,7 @@ import com.voltdevelopers.lotto.src.game.Game;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button start, rules, stat;
+    Button start, rules;
     TextView textViewHero, textViewStart, textViewRules;
 
     @Override
@@ -32,13 +32,6 @@ public class MainActivity extends AppCompatActivity {
         findRes();
         initRes();
 
-        stat.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, StatActivity.class);
-            startActivity(intent);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                Log.i("INFO", "Started Activity" + intent.getIdentifier());
-            }
-        });
         start.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, StartGameActivity.class);
             startActivity(intent);
@@ -59,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
     private void findRes() {
         start = findViewById(R.id.buttonStart);
         rules = findViewById(R.id.buttonRules);
-        stat = findViewById(R.id.buttonStat);
         textViewHero = findViewById(R.id.textViewHTML);
         textViewStart = findViewById(R.id.textView5);
         textViewRules = findViewById(R.id.textView6);
