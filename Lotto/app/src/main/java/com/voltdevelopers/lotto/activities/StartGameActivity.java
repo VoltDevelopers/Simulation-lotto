@@ -1,10 +1,7 @@
 package com.voltdevelopers.lotto.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -182,7 +179,7 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setLabelCount(10, false);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
-        yAxis.setAxisMaximum(Database.getInstance().getSizeSignificantPulls()/10); //percentuale massima
+        yAxis.setAxisMaximum(Database.getInstance().getSizeSignificantPulls() / 2); //percentuale massima
         yAxis.setGranularity(1f);
         yAxis.setCenterAxisLabels(false);
 
@@ -202,14 +199,12 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private void addFirstDescription() {
-
         Description description = new Description();
         description.setText("Numero di vittorie");
         description.setTextColor(Color.GREEN);
         description.setTextSize(15);
         description.setPosition(900, 100);
         firstChart.setDescription(description);
-
     }
 
     private void addFirstLegend() {
@@ -276,21 +271,18 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void addFinalResultsFirstChart(){
+    private void addFinalResultsFirstChart() {
 
         textData = findViewById(R.id.textData);
-        String text = "Percentuale di vittorie in " + db.getSizeSignificantPulls() +  " partite:\n";
+        String text = "Percentuale di vittorie in " + db.getSizeSignificantPulls() + " partite:\n";
 
-        for(int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
 
             double aproxPerc = Math.round(db.getPlayerWinPercentage(i) * 100.0) / 100.0;
-            text+= "Giocatore " + (i + 1) + " percentuale --> " + aproxPerc + "\n";
+            text += "Giocatore " + (i + 1) + " percentuale --> " + aproxPerc + "\n";
 
         }
-
         textData.setText(text);
-
-
     }
 
     private void initSecondChart() {
@@ -317,8 +309,8 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setLabelCount(10, false);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
-        yAxis.setAxisMaximum(1000);//soldi massimi guadagnati
-        yAxis.setAxisMinimum(-db.getSizeSignificantPulls());
+        yAxis.setAxisMaximum(Database.getInstance().getSizeSignificantPulls());//soldi massimi guadagnati
+        yAxis.setAxisMinimum(-Database.getInstance().getSizeSignificantPulls());
         yAxis.setGranularity(1f);
         yAxis.setCenterAxisLabels(false);
         yAxis.setValueFormatter(new ValueFormatter() {
@@ -386,7 +378,6 @@ public class StartGameActivity extends AppCompatActivity {
         ArrayList<LineDataSet> lineDataSets = new ArrayList<>();
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
-
         for (int i = 0; i < Settings.getInstance().getPlayersToPlay().length; i++) { //ciclo per le 5 linee
 
             yValues.add(new ArrayList<>());
@@ -417,24 +408,21 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void addFinalResultsSecondChart(){
+    private void addFinalResultsSecondChart() {
 
         textData2 = findViewById(R.id.textData2);
-        String text = "Credito dei giocatori dopo " + db.getSizeSignificantPulls() +  " partite:\n";
+        String text = "Credito dei giocatori dopo " + db.getSizeSignificantPulls() + " partite:\n";
 
-        for(int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
 
             double aproxPerc = Math.round(db.getPlayerNet(i) * 100.0) / 100.0;
-            text+= "Credito del giocatore " + (i + 1) + " --> " + aproxPerc + "$\n";
+            text += "Credito del giocatore " + (i + 1) + " --> " + aproxPerc + "$\n";
 
         }
-
         textData2.setText(text);
-
-
     }
 
-    public void saveText(View view){
+    public void saveText(View view) {
         FileOutputStream fos = null;
         try {
             String text = Database.getInstance().toString();
@@ -442,16 +430,13 @@ public class StartGameActivity extends AppCompatActivity {
             fos = openFileOutput("DataLotto.txt", MODE_PRIVATE);
             fos.write(text.getBytes());
             Toast.makeText(this, "Файл сохранен", Toast.LENGTH_SHORT).show();
-        }
-        catch(IOException ex) {
+        } catch (IOException ex) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-        finally{
-            try{
-                if(fos!=null)
+        } finally {
+            try {
+                if (fos != null)
                     fos.close();
-            }
-            catch(IOException ex){
+            } catch (IOException ex) {
 
                 Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
             }
