@@ -171,7 +171,7 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setSpaceBottom(0);
         yAxis.setSpaceTop(0);
         yAxis.setDrawGridLines(false);
-        yAxis.setLabelCount(10, true);
+        yAxis.setLabelCount(10, false);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
         yAxis.setAxisMaximum(100); //percentuale massima
@@ -190,7 +190,7 @@ public class StartGameActivity extends AppCompatActivity {
 
         XAxis xAxis = firstChart.getXAxis();
         xAxis.setTextColor(Color.GREEN);
-        xAxis.setLabelCount(db.getSizeSignificantPulls() / 10, true);
+        xAxis.setLabelCount(db.getSizeSignificantPulls() / 10, false);
         xAxis.removeAllLimitLines();
         xAxis.setAxisMaximum(db.getSizeSignificantPulls());
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -295,7 +295,7 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setSpaceBottom(0);
         yAxis.setSpaceTop(0);
         yAxis.setDrawGridLines(false);
-        yAxis.setLabelCount(10, true);
+        yAxis.setLabelCount(10, false);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
         yAxis.setAxisMaximum(1000); //soldi massimi guadagnati
@@ -314,7 +314,7 @@ public class StartGameActivity extends AppCompatActivity {
 
         XAxis xAxis = secondChart.getXAxis();
         xAxis.setTextColor(Color.GREEN);
-        xAxis.setLabelCount(db.getSizeSignificantPulls() / 10, true);
+        xAxis.setLabelCount(db.getSizeSignificantPulls() / 10, false);
         xAxis.removeAllLimitLines();
         xAxis.setAxisMaximum(db.getSizeSignificantPulls());
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
