@@ -40,7 +40,7 @@ public class Database {
     }
 
     public static Database getInstance() {
-        if (instance != null)
+        if (!instance.isEmpty())
             return instance.get(instance.size());
         instance.add(new Database());
         return instance.get(instance.size());
@@ -120,7 +120,7 @@ public class Database {
     }
 
     public double getPlayerWinPercentage(int playerN) {
-        return (double)players[playerN].getNWins()/(double)players[playerN].getNOfBets()*100d;
+        return (double) players[playerN].getNWins() / (double) players[playerN].getNOfBets() * 100d;
     }
 
     public ArrayList<Integer> getPlayerWinList(int playerN) {
@@ -160,14 +160,22 @@ public class Database {
 
     @NonNull
     public String toString(String tabulation) {
-        return "Database{" +
-                ",\n" + tabulation + "moneyPerWin=" + settings.getMoneyPerWin() +
-                ",\n" + tabulation + "gameCounter=" + allRounds.size() +
-                ",\n" + tabulation + "pullChronology=" + pullChronologyToString(tabulation + "     ") +//\t non va, idk
-                ",\n" + tabulation + "pullsPerNumber=" + pullsPerNumberToString(tabulation + "     ") +
-                ",\n" + tabulation + "rounds=" + allRoundsToString(tabulation + "     ") +
-                ",\n" + tabulation + "players=\n" + allPlayersToString(tabulation + "     ") +
-                ",\n" + tabulation + '}';
+        String output = "";
+        for (Database current : instance) {
+
+            output += "Database{" +
+                    ",\n" + tabulation + "moneyPerWin=" + settings.getMoneyPerWin() +
+                    ",\n" + tabulation + "gameCounter=" + allRounds.size() +
+                    ",\n" + tabulation + "pullChronology=" + pullChronologyToString(tabulation + "     ") +//\t non va, idk
+                    ",\n" + tabulation + "pullsPerNumber=" + pullsPerNumberToString(tabulation + "     ") +
+                    ",\n" + tabulation + "rounds=" + allRoundsToString(tabulation + "     ") +
+                    ",\n" + tabulation + "players=\n" + allPlayersToString(tabulation + "     ") +
+                    ",\n" + tabulation + '}';
+
+        }
+
+        return "TEMP BUILD, NOT IMPLEMENTED";
+
     }
 
     private String allRoundsToString(String tabulation) {
