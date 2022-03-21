@@ -479,5 +479,4 @@ public class StartGameActivity extends AppCompatActivity {
             Toast.makeText(this, "File saved to /storage/self/primary/Android/data/com.voltdevelopers.lotto", Toast.LENGTH_SHORT).show();
         }
     }
-
 }
