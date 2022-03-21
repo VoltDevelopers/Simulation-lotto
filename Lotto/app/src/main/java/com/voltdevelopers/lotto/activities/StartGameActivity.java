@@ -38,8 +38,11 @@ import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.game.Game;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -447,14 +450,14 @@ public class StartGameActivity extends AppCompatActivity {
         try (FileOutputStream fos = new FileOutputStream(getExternalPath())) {
             String text = Database.getInstance().toString();
             fos.write(text.getBytes());
-            Toast.makeText(this, "File saved to /storage/self/primary/Android/data/com.voltdevelopers.lotto", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "File saved to Downloads folder.", Toast.LENGTH_SHORT).show();
         } catch (IOException ex) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
     private File getExternalPath() {
-        return new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "lotto_output" + sdf.format(new Date()) + (".txt"));
+        return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "lotto_output" + sdf.format(new Date()) + (".txt"));
     }
 
     public void showText(View view) {
