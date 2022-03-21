@@ -72,9 +72,9 @@ giocatori, definendo gli algoritmi per la creazione delle loro
 scommesse ed interfacciandole con il Database. Definisce inoltre buona
 parte della classe Game, la quale si occupa di eseguire le estrazioni 
 preliminari alla simulazione (in modo da predisporre dei dati di
-partenza) e poi di gestire le varie partite che vanno a comporre
-l'esperimento, chiamando i vari giocatori ed inviando i dati al
-Database.
+partenza) nel ciclo preGameLoop e poi di gestire le varie partite che
+vanno a comporre l'esperimento, chiamando i vari giocatori ed inviando
+i dati al Database (ciclo gameLoop).
 
 ### Alessandro Cecchini - Outside Cooperator
 
