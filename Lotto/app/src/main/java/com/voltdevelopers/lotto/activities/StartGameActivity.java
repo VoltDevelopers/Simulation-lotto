@@ -224,7 +224,7 @@ public class StartGameActivity extends AppCompatActivity {
         description.setText("Numero di vittorie");
         description.setTextColor(Color.GREEN);
         description.setTextSize(15);
-        description.setPosition(900, 100);
+        description.setPosition(500, 100);
         firstChart.setDescription(description);
     }
 
@@ -366,7 +366,7 @@ public class StartGameActivity extends AppCompatActivity {
         description.setText("'Guadagno' netto");
         description.setTextColor(Color.GREEN);
         description.setTextSize(15);
-        description.setPosition(900, 100);
+        description.setPosition(500, 100);
         secondChart.setDescription(description);
     }
 
