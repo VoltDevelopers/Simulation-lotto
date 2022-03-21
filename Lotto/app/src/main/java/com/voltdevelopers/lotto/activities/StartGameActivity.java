@@ -1,7 +1,5 @@
 package com.voltdevelopers.lotto.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
@@ -19,6 +17,8 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -295,12 +295,12 @@ public class StartGameActivity extends AppCompatActivity {
     private void addFinalResultsFirstChart() {
 
         textData = findViewById(R.id.textData);
-        String text = "Percentuale di vittorie in " + Database.getInstance().getSizeSignificantPulls() + " partite:\n";
+        String text = "Percentuale di vittorie in " + Database.getInstance().getSizeSignificantPulls() + " partite:\n\n";
 
         for (int i = 0; i < 5; i++) {
 
             double aproxPerc = Math.round(Database.getInstance().getPlayerWinPercentage(i) * 100.0) / 100.0;
-            text += "Giocatore " + (i + 1) + " percentuale --> " + aproxPerc + "%\n";
+            text += "Percentuale vittorie giocatore " + (i + 1) + " --> " + aproxPerc + "%\n\n";
 
         }
         textData.setText(text);
@@ -435,12 +435,12 @@ public class StartGameActivity extends AppCompatActivity {
     private void addFinalResultsSecondChart() {
 
         textData2 = findViewById(R.id.textData2);
-        String text = "Credito dei giocatori dopo " + Database.getInstance().getSizeSignificantPulls() + " partite:\n";
+        String text = "Credito dei giocatori dopo " + Database.getInstance().getSizeSignificantPulls() + " partite:\n\n";
 
         for (int i = 0; i < 5; i++) {
 
             double aproxPerc = Math.round(Database.getInstance().getPlayerNet(i) * 100.0) / 100.0;
-            text += "Credito del giocatore " + (i + 1) + " --> " + aproxPerc + "$\n";
+            text += "Credito del giocatore " + (i + 1) + " --> " + aproxPerc + "$\n\n";
 
         }
         text += "Credito del banco " + (6) + " --> " + Math.round(Database.getInstance().getSystemNetList().get( Database.getInstance().getSystemNetList().size() - 1) * 100.0) / 100.0 + "$\n";

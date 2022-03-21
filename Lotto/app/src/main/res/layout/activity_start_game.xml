@@ -51,7 +51,7 @@
         <TextView
             android:id="@+id/textData"
             android:layout_width="334dp"
-            android:layout_height="155dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/cour"
             android:textAlignment="viewStart"
@@ -64,7 +64,7 @@
         <TextView
             android:id="@+id/textData2"
             android:layout_width="334dp"
-            android:layout_height="155dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/cour"
             android:text=" - il primo gioca un numero della cinquina precedente\n - il secondo gioca il ritardatario, il numero che non esce da più estrazioni\n - il terzo gioca un numero casuale\n - il quarto gioca un numero fisso\n - il quinto gioca il numero uscito più frequentemente"
