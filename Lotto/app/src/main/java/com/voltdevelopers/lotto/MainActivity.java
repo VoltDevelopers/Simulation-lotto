@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRes() {
-        textViewHero.setText(Html.fromHtml("<p>Se consideriamo il gioco del lotto da un punto di vista <span style=\"color:#00ff00;\">matematico</span> e <span style=\"color:#00ff00;\">calcoli</span> la probabilità di vincita di tutte le strategie è assolutamente la stessa e noi lo dimostreremo chiaramente.</p>"));
+        textViewHero.setText(Html.fromHtml("<p>Se consideriamo il gioco del lotto da un punto di vista <span style=\"color:#00ff00;\">matematico</span> e di <span style=\"color:#00ff00;\">calcoli</span>, la probabilità di vincita di ciascuna strategia è la stessa, e questa simulazione lo andrà a dimostrare.</p>"));
         textViewStart.setText(Html.fromHtml("<p>Avviare la <span style=\"color:#00ff00;\">simulazione...</span></p>"));
         textViewRules.setText(Html.fromHtml("<p>O leggere la <span style=\"color:#00ff00;\">teoria ;)</span></p>"));
     }
