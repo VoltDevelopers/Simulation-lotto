@@ -468,7 +468,6 @@ public class StartGameActivity extends AppCompatActivity {
             Log.i("INFO", "Started Activity" + intent.getIdentifier());
         }
     }
-<<<<<<< HEAD
 
     private void fileSavedSuccessfully(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
@@ -477,7 +476,4 @@ public class StartGameActivity extends AppCompatActivity {
             Toast.makeText(this, "File saved to /storage/self/primary/Android/data/com.voltdevelopers.lotto", Toast.LENGTH_SHORT).show();
         }
     }
-
-=======
->>>>>>> aa721a62700e95df426ea5c25b9d361abaa33911
 }

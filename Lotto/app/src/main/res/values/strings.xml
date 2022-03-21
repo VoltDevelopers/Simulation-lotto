@@ -98,7 +98,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
 
-    <string name="info">È una simulazione del gioco del lotto. Consiste nell’estrazione di cinquine, scelte tra 1 e 90. I giocatori che noi osserveremo cominciano a giocare dopo un numero variabile, preferibilmente grande, di estrazioni. Questi giocatori possono giocare da 1 a 5 numeri a seconda delle impostazioni date all’inizio della simulazione.</string>
+    <string name="info">Viene simulato il gioco del lotto. Si estraggono cinquine, scelte tra 1 e 90. I giocatori che noi osserveremo cominciano a giocare dopo un numero variabile, preferibilmente grande, di estrazioni. Questi giocatori possono giocare da 1 a 5 numeri a seconda delle impostazioni date all’inizio della simulazione.</string>
     <string name="giocatori">Giocatori</string>
     <string name="mode">Modalità</string>
     <string name="winnings">Guadagno</string>
