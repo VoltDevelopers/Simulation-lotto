@@ -22,17 +22,17 @@
         <activity
             android:name=".activities.StatActivity"
             android:exported="true"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:label="StatActivity" />
         <activity
             android:name=".activities.RulesActivity"
             android:exported="true"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:label="RulesActivity" />
         <activity
             android:name=".activities.StartGameActivity"
             android:exported="true"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:label="StartGameActivity" />
     </application>
 

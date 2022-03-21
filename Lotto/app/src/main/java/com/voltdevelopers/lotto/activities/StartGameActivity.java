@@ -45,21 +45,20 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 public class StartGameActivity extends AppCompatActivity {
 
     // BUG: если открыть настройки но нажать на кнопку назад то будет ошибка бустой инстанции db
-
-    private static final String LOG_TAG = "StartGameActivity";
     EditText presetGameCount, significantGameCount, startMoney;
     Button buttonStart;
     RadioButton btn1, btn2, btn3;
     ArrayList<RadioButton> arrayBtn;
     TextView textData, textData2;
-
-    private static final String TAG = "PatternGameActivity";
+    SimpleDateFormat sdf;
 
     private Dialog settingsDialog;
     private LineChart firstChart, secondChart;
@@ -84,8 +83,10 @@ public class StartGameActivity extends AppCompatActivity {
 
     private void showSettings() {
         Database.createInstance();
+        sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         db = Database.getInstance();
         settingsDialog = new Dialog(this);
+        settingsDialog.setCancelable(false);
         settingsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         settingsDialog.setContentView(R.layout.settings_modal);
         initRes();
@@ -445,6 +446,8 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
 
+    // TODO: Save for android 10+
+
     public void saveText(View view) {
         try (FileOutputStream fos = new FileOutputStream(getExternalPath())) {
             String text = Database.getInstance().toString();
@@ -456,7 +459,7 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private File getExternalPath() {
-        return new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "LottoData.txt");
+        return new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), buildFileName());
     }
 
     public void showText(View view) {
@@ -465,5 +468,9 @@ public class StartGameActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             Log.i("INFO", "Started Activity" + intent.getIdentifier());
         }
+    }
+
+    private String buildFileName() {
+        return ("lotto_output" + sdf.format(new Date()) + (".txt"));
     }
 }
