@@ -165,7 +165,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="14dp"
             android:fontFamily="@font/cour_bold"
-            android:text="Partite storiche da giocare:"
+            android:text="Partite iniziali da giocare:"
             android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textColor="@color/neon_green"
