@@ -126,6 +126,7 @@ public class Database {
         return players[playerN].getBet(n);
     }
 
+    @Deprecated
     public double getPlayerNetAtRound(int playerN, int roundN) {
         return players[playerN].getNetAtRound(roundN) + settings.getStartMoney();
     }
