@@ -1,7 +1,9 @@
 package com.voltdevelopers.lotto.src.playerpatterns;
 
 import com.voltdevelopers.lotto.data.Database;
-import com.voltdevelopers.lotto.data.Settings;
+import com.voltdevelopers.lotto.layout.Console;
+
+import java.util.Arrays;
 
 public class FifthPlayer extends Player {
 
@@ -18,5 +20,6 @@ public class FifthPlayer extends Player {
     @Override
     public void createBet() {
         this.bet = Database.getInstance().getNMostFrequent(extractions);
+        Console.getInstance().printStr("Pattern " + this.id + " bet: " + Arrays.toString(bet));
     }
 }

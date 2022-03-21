@@ -21,7 +21,6 @@ public class Game {
 
     public Game(int turnsGame) throws InputException {
         this.turnsGame = turnsGame;
-
         playerPatterns = new Player[5];
 
         initPlayers();
@@ -29,7 +28,6 @@ public class Game {
     }
 
     public void gameLoop() {
-
         for (int i = 0; i < turnsGame; i++) {
             playersPlayBets();
             Database.getInstance().addSignificantPull(generateDraw());
