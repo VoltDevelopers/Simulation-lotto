@@ -65,7 +65,7 @@ numero di partite effettuate (asse X). Il secondo grafico, invece,
 mostra il guadagno netto (o perdita) di ciascun giocatore (asse Y) in
 rapporto al numero di partite effettuate.
 
-### Andres Cocever - Player/Game Developer
+### Andrés Cocever - Player/Game Developer
 
 Ha principalmente sviluppato gli schemi di comportamento dei vari
 giocatori, definendo gli algoritmi per la creazione delle loro
