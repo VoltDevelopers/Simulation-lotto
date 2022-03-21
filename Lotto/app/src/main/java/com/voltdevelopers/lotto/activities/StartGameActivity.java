@@ -152,7 +152,6 @@ public class StartGameActivity extends AppCompatActivity {
         initFirstChart();
         initFirstYAxis();
         initFirstXAxis();
-        addFirstDescription();
         addFirstLegend();
         addDataToFirstChart();
         addFinalResultsFirstChart();
@@ -160,7 +159,6 @@ public class StartGameActivity extends AppCompatActivity {
         initSecondChart();
         initSecondYAxis();
         initSecondXAxis();
-        addSecondDescription();
         addSecondLegend();
         addDataToSecondChart();
         addFinalResultsSecondChart();
@@ -217,15 +215,6 @@ public class StartGameActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void addFirstDescription() {
-        Description description = new Description();
-        description.setText("Numero di vittorie");
-        description.setTextColor(Color.GREEN);
-        description.setTextSize(15);
-        description.setPosition(500, 100);
-        firstChart.setDescription(description);
     }
 
     private void addFirstLegend() {
@@ -361,15 +350,6 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void addSecondDescription() {
-        Description description = new Description();
-        description.setText("'Guadagno' netto");
-        description.setTextColor(Color.GREEN);
-        description.setTextSize(15);
-        description.setPosition(500, 100);
-        secondChart.setDescription(description);
-    }
-
     private void addSecondLegend() {
 
         Legend legend;
@@ -408,13 +388,13 @@ public class StartGameActivity extends AppCompatActivity {
 
         for (int i = 0; i < 6; i++) { //ciclo per le 5 linee
             yValues.add(new ArrayList<>());
-                for (int j = 0; j < Database.getInstance().getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
-                    if (yValues.size() == 6){
-                        yValues.get(i).add(new Entry(j, Database.getInstance().getSystemNetList().get(j).floatValue()));
-                    }else{
-                        yValues.get(i).add(new Entry(j, Database.getInstance().getPlayerNetList(i).get(j).floatValue()));
-                    }
+            for (int j = 0; j < Database.getInstance().getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
+                if (yValues.size() == 6) {
+                    yValues.get(i).add(new Entry(j, Database.getInstance().getSystemNetList().get(j).floatValue()));
+                } else {
+                    yValues.get(i).add(new Entry(j, Database.getInstance().getPlayerNetList(i).get(j).floatValue()));
                 }
+            }
 
             lineDataSets.add(new LineDataSet(yValues.get(i), ""));
             lineDataSets.get(i).setFillAlpha(110);
@@ -443,7 +423,7 @@ public class StartGameActivity extends AppCompatActivity {
             text += "Credito del giocatore " + (i + 1) + " --> " + aproxPerc + "$\n\n";
 
         }
-        text += "Credito del banco       --> " + Math.round(Database.getInstance().getSystemNetList().get( Database.getInstance().getSystemNetList().size() - 1) * 100.0) / 100.0 + "$\n";
+        text += "Credito del banco       --> " + Math.round(Database.getInstance().getSystemNetList().get(Database.getInstance().getSystemNetList().size() - 1) * 100.0) / 100.0 + "$\n";
         textData2.setText(text);
     }
 
@@ -458,9 +438,9 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private File getExternalPath() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "lotto_output" + sdf.format(new Date()) + (".txt"));
-        }else{
+        } else {
             return new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "lotto_output" + sdf.format(new Date()) + (".txt"));
         }
     }
@@ -473,10 +453,10 @@ public class StartGameActivity extends AppCompatActivity {
         }
     }
 
-    private void fileSavedSuccessfully(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+    private void fileSavedSuccessfully() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             Toast.makeText(this, "File saved to Downloads folder", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             Toast.makeText(this, "File saved to /storage/self/primary/Android/data/com.voltdevelopers.lotto", Toast.LENGTH_SHORT).show();
         }
     }
