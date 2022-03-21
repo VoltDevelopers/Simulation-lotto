@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class Database {
 
     private final Settings settings;
-    private static final ArrayList<Database> instance = new ArrayList<>();
+    private static ArrayList<Database> instance = new ArrayList<Database>();
+    ;
 
     private Profile[] players;
     private final Analysis analysis;
@@ -89,43 +90,33 @@ public class Database {
         players[playerID].addBet(input);
     }
 
-    /*
     public int[] getPlayerLastBet(int playerN) {
         return players[playerN].getLastBet();
     }
-    */
 
-    /*
     public int getSizeAllPulls() {
         return allRounds.size();
     }
-    */
 
     public int getSizeSignificantPulls() {
         return significantRounds.size();
     }
 
-    /*
     public double getPlayerMoneyWon(int playerN) {
         return players[playerN].getMoneyWon();
     }
-    */
 
-    /*
     public double getPlayerMoneySpent(int playerN) {
         return players[playerN].getMoneySpent();
     }
-    */
 
     public double getPlayerNet(int playerN) {
         return players[playerN].getNet();
     }
 
-    /*
     public int getPlayerWins(int playerN) {
         return players[playerN].getNWins();
     }
-    */
 
     public double getPlayerWinPercentage(int playerN) {
         return (double) players[playerN].getNWins() / (double) players[playerN].getNOfBets() * 100d;
@@ -135,22 +126,17 @@ public class Database {
         return players[playerN].getWinList();
     }
 
-    /*
     public int[] getPlayerBet(int playerN, int n) {
         return players[playerN].getBet(n);
     }
-    */
 
-    @Deprecated
     public double getPlayerNetAtRound(int playerN, int roundN) {
         return players[playerN].getNetAtRound(roundN) + settings.getStartMoney();
     }
 
-    /*
     public ArrayList<Double> getPlayerNetList(int playerN) {
         return players[playerN].getNetList();
     }
-    */
 
     //----------------------analysis methods--------------------------------------------------------
 
@@ -186,7 +172,7 @@ public class Database {
             output += "Database" + i + "{" +
                     ",\n" + tabulation + "moneyPerWin=" + settings.getMoneyPerWin() +
                     ",\n" + tabulation + "gameCounter=" + instance.get(i).allRounds.size() +
-                    ",\n" + tabulation + "pullChronology=" + instance.get(i).pullChronologyToString() +//\t non va, idk
+                    ",\n" + tabulation + "pullChronology=" + instance.get(i).pullChronologyToString(tabulation + "     ") +//\t non va, idk
                     ",\n" + tabulation + "pullsPerNumber=" + instance.get(i).pullsPerNumberToString(tabulation + "     ") +
                     ",\n" + tabulation + "rounds=" + instance.get(i).allRoundsToString(tabulation + "     ") +
                     ",\n" + tabulation + "players=\n" + instance.get(i).allPlayersToString(tabulation + "     ") +
@@ -253,7 +239,7 @@ public class Database {
         return "\n{\n" + output + '}';
     }
 
-    private String pullChronologyToString() {
+    private String pullChronologyToString(String tabulation) {
 
         String output = pullChronology.toString() + "\n";
 
@@ -278,7 +264,7 @@ public class Database {
 
     private class Analysis {
 
-        private final Console console = Console.getInstance();
+        private Console console = Console.getInstance();
 
         public int[] getLatestN(int nRequested) {
             int[] output = new int[nRequested];
@@ -407,11 +393,9 @@ class Profile {
         }
     }
 
-    /*
     public int[] getBet(int n) {
         return betList.get(n);
     }
-    */
 
     public int getNOfBets() {
         return betList.size();
@@ -421,11 +405,9 @@ class Profile {
         return winList.get(n);
     }
 
-    /*
     public int[] getLastBet() {
         return betList.get(betList.size() - 1);
     }
-    */
 
     public int[] getSelectedBet(int n) {
         return betList.get(n);
@@ -523,11 +505,11 @@ class Profile {
                 ",\n" + tabulation + "moneySpent=" + getMoneySpent() +
                 ",\n" + tabulation + "net=" + getNet() +
                 ",\n" + tabulation + "betList=" + betListToString(tabulation + "     ") +
-                ",\n" + tabulation + "winList=" + winListToString() +
+                ",\n" + tabulation + "winList=" + winListToString(tabulation + "     ") +
                 "\n}\n";
     }
 
-    private String winListToString() {
+    private String winListToString(String tabulation) {
         return winList.toString();
     }
 
