@@ -56,7 +56,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     private Dialog settingsDialog;
     private LineChart firstChart, secondChart;
-    private static final int[] COLORS = {Color.RED, Color.YELLOW, Color.WHITE, Color.MAGENTA, Color.BLUE};
+    private static final int[] COLORS = {Color.RED, Color.YELLOW, Color.WHITE, Color.MAGENTA, Color.BLUE, Color.GREEN};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -362,14 +362,12 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private void addSecondDescription() {
-
         Description description = new Description();
         description.setText("'Guadagno' netto");
         description.setTextColor(Color.GREEN);
         description.setTextSize(15);
         description.setPosition(900, 100);
         secondChart.setDescription(description);
-
     }
 
     private void addSecondLegend() {
@@ -383,9 +381,9 @@ public class StartGameActivity extends AppCompatActivity {
         legend.setWordWrapEnabled(true);
         legend.setMaxSizePercent(0.7f);
         legend.setForm(Legend.LegendForm.CIRCLE);
-        LegendEntry[] legendEntries = new LegendEntry[5];
+        LegendEntry[] legendEntries = new LegendEntry[6];
 
-        for (int i = 0; i < legendEntries.length; i++) {
+        for (int i = 0; i < 5; i++) {
 
             LegendEntry entry = new LegendEntry();
             entry.formColor = COLORS[i];
@@ -394,8 +392,12 @@ public class StartGameActivity extends AppCompatActivity {
 
         }
 
-        legend.setCustom(legendEntries);
+        LegendEntry entry = new LegendEntry();
+        entry.formColor = Color.GREEN;
+        entry.label = "Banco " + 6;
+        legendEntries[5] = entry;
 
+        legend.setCustom(legendEntries);
     }
 
     private void addDataToSecondChart() {
@@ -404,11 +406,15 @@ public class StartGameActivity extends AppCompatActivity {
         ArrayList<LineDataSet> lineDataSets = new ArrayList<>();
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
-        for (int i = 0; i < Settings.getInstance().getPlayersToPlay().length; i++) { //ciclo per le 5 linee
+        for (int i = 0; i < 6; i++) { //ciclo per le 5 linee
             yValues.add(new ArrayList<>());
-            for (int j = 0; j < Database.getInstance().getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
-                yValues.get(i).add(new Entry(j, Database.getInstance().getPlayerNetList(i).get(j).floatValue()));
-            }
+                for (int j = 0; j < Database.getInstance().getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
+                    if (yValues.size() == 6){
+                        yValues.get(i).add(new Entry(j, Database.getInstance().getSystemNetList().get(j).floatValue()));
+                    }else{
+                        yValues.get(i).add(new Entry(j, Database.getInstance().getPlayerNetList(i).get(j).floatValue()));
+                    }
+                }
 
             lineDataSets.add(new LineDataSet(yValues.get(i), ""));
             lineDataSets.get(i).setFillAlpha(110);
@@ -418,7 +424,6 @@ public class StartGameActivity extends AppCompatActivity {
             lineDataSets.get(i).setColor(COLORS[i]);
             lineDataSets.get(i).setValueTextColor(COLORS[i]);
             dataSets.add(lineDataSets.get(i));
-
         }
 
         LineData data = new LineData(dataSets);
@@ -440,8 +445,6 @@ public class StartGameActivity extends AppCompatActivity {
         }
         textData2.setText(text);
     }
-
-    // TODO: Save for android 10+
 
     public void saveText(View view) {
         try (FileOutputStream fos = new FileOutputStream(getExternalPath())) {
