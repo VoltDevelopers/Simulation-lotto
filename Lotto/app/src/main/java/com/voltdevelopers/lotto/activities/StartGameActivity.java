@@ -56,7 +56,6 @@ public class StartGameActivity extends AppCompatActivity {
 
     private Dialog settingsDialog;
     private LineChart firstChart, secondChart;
-    private Database db;
     private static final int[] COLORS = {Color.RED, Color.YELLOW, Color.WHITE, Color.MAGENTA, Color.BLUE};
 
     @Override
@@ -79,7 +78,6 @@ public class StartGameActivity extends AppCompatActivity {
     @SuppressLint("SimpleDateFormat")
     private void showSettings() {
         Database.createInstance();
-        db = Database.getInstance();
 
         settingsDialog = new Dialog(this);
         settingsDialog.setCancelable(false);
@@ -208,7 +206,7 @@ public class StartGameActivity extends AppCompatActivity {
         xAxis.setTextColor(Color.GREEN);
         xAxis.setLabelCount(1, false);
         xAxis.removeAllLimitLines();
-        xAxis.setAxisMaximum(db.getSizeSignificantPulls());
+        xAxis.setAxisMaximum(Database.getInstance().getSizeSignificantPulls());
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setAvoidFirstLastClipping(true);
@@ -268,9 +266,9 @@ public class StartGameActivity extends AppCompatActivity {
             yValues.add(new ArrayList<>());
             float y = 0;
 
-            for (int j = 0; j < db.getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
+            for (int j = 0; j < Database.getInstance().getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
 
-                if (db.getPlayerWinList(i).get(j) == Settings.getInstance().getExtractionsPerRound()) {//se quel pattern ha vinto in quella prtita la percentuale aumenta
+                if (Database.getInstance().getPlayerWinList(i).get(j) == Settings.getInstance().getExtractionsPerRound()) {//se quel pattern ha vinto in quella prtita la percentuale aumenta
                     y++;
                 }
                 yValues.get(i).add(new Entry(j, y));
@@ -297,11 +295,11 @@ public class StartGameActivity extends AppCompatActivity {
     private void addFinalResultsFirstChart() {
 
         textData = findViewById(R.id.textData);
-        String text = "Percentuale di vittorie in " + db.getSizeSignificantPulls() + " partite:\n";
+        String text = "Percentuale di vittorie in " + Database.getInstance().getSizeSignificantPulls() + " partite:\n";
 
         for (int i = 0; i < 5; i++) {
 
-            double aproxPerc = Math.round(db.getPlayerWinPercentage(i) * 100.0) / 100.0;
+            double aproxPerc = Math.round(Database.getInstance().getPlayerWinPercentage(i) * 100.0) / 100.0;
             text += "Giocatore " + (i + 1) + " percentuale --> " + aproxPerc + "%\n";
 
         }
@@ -350,7 +348,7 @@ public class StartGameActivity extends AppCompatActivity {
         xAxis.setTextColor(Color.GREEN);
         xAxis.setLabelCount(1, false);
         xAxis.removeAllLimitLines();
-        xAxis.setAxisMaximum(db.getSizeSignificantPulls());
+        xAxis.setAxisMaximum(Database.getInstance().getSizeSignificantPulls());
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setAvoidFirstLastClipping(true);
@@ -407,16 +405,9 @@ public class StartGameActivity extends AppCompatActivity {
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
         for (int i = 0; i < Settings.getInstance().getPlayersToPlay().length; i++) { //ciclo per le 5 linee
-
             yValues.add(new ArrayList<>());
-            float y;
-
-            for (int j = 0; j < db.getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
-
-                y = (float) db.getPlayerNetAtRound(i, j);
-
-                yValues.get(i).add(new Entry(j, y));
-
+            for (int j = 0; j < Database.getInstance().getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
+                yValues.get(i).add(new Entry(j, Database.getInstance().getPlayerNetList(i).get(j).floatValue()));
             }
 
             lineDataSets.add(new LineDataSet(yValues.get(i), ""));
@@ -439,11 +430,11 @@ public class StartGameActivity extends AppCompatActivity {
     private void addFinalResultsSecondChart() {
 
         textData2 = findViewById(R.id.textData2);
-        String text = "Credito dei giocatori dopo " + db.getSizeSignificantPulls() + " partite:\n";
+        String text = "Credito dei giocatori dopo " + Database.getInstance().getSizeSignificantPulls() + " partite:\n";
 
         for (int i = 0; i < 5; i++) {
 
-            double aproxPerc = Math.round(db.getPlayerNet(i) * 100.0) / 100.0;
+            double aproxPerc = Math.round(Database.getInstance().getPlayerNet(i) * 100.0) / 100.0;
             text += "Credito del giocatore " + (i + 1) + " --> " + aproxPerc + "$\n";
 
         }
@@ -477,6 +468,7 @@ public class StartGameActivity extends AppCompatActivity {
             Log.i("INFO", "Started Activity" + intent.getIdentifier());
         }
     }
+<<<<<<< HEAD
 
     private void fileSavedSuccessfully(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
@@ -486,4 +478,6 @@ public class StartGameActivity extends AppCompatActivity {
         }
     }
 
+=======
+>>>>>>> aa721a62700e95df426ea5c25b9d361abaa33911
 }

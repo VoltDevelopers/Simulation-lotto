@@ -140,10 +140,10 @@ public class Database {
         return players[playerN].getNetAtRound(roundN) + settings.getStartMoney();
     }
 
-    /*
+
     public ArrayList<Double> getPlayerNetList(int playerN) {
         return players[playerN].getNetList();
-    }*/
+    }
 
     //----------------------analysis methods--------------------------------------------------------
 
