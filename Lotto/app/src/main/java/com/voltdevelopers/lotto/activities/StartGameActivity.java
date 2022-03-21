@@ -197,6 +197,12 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setAxisMaximum((float) Database.getInstance().getSizeSignificantPulls() / 2); //percentuale massima
         yAxis.setGranularity(1f);
         yAxis.setCenterAxisLabels(false);
+        yAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return super.getFormattedValue(value) + "Wins";
+            }
+        });
 
     }
 
@@ -204,12 +210,18 @@ public class StartGameActivity extends AppCompatActivity {
 
         XAxis xAxis = firstChart.getXAxis();
         xAxis.setTextColor(Color.GREEN);
-        xAxis.setLabelCount(5, false);
+        xAxis.setLabelCount(1, false);
         xAxis.removeAllLimitLines();
         xAxis.setAxisMaximum(db.getSizeSignificantPulls());
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setAvoidFirstLastClipping(true);
+        xAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return super.getFormattedValue(value) + "Games";
+            }
+        });
 
     }
 
@@ -324,8 +336,8 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setLabelCount(10, false);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
-        yAxis.setAxisMaximum((float) (Settings.getInstance().getStartMoney() * 1.5 < 100 ? 100 : Settings.getInstance().getStartMoney() * 1.5));//soldi massimi guadagnati
-        yAxis.setAxisMinimum(-(float) (Settings.getInstance().getStartMoney() * 1.5 < 100 ? 100 : Settings.getInstance().getStartMoney() * 1.5));
+        yAxis.setAxisMaximum((float) (Settings.getInstance().getStartMoney() + Settings.getInstance().getMoneyPerWin() * (Database.getInstance().getSizeSignificantPulls() / 2)));
+        yAxis.setAxisMinimum(-(float) (Settings.getInstance().getStartMoney() + Settings.getInstance().getMoneyPerWin() * (Database.getInstance().getSizeSignificantPulls() / 2)));
         yAxis.setGranularity(1f);
         yAxis.setCenterAxisLabels(false);
         yAxis.setValueFormatter(new ValueFormatter() {
@@ -341,12 +353,18 @@ public class StartGameActivity extends AppCompatActivity {
 
         XAxis xAxis = secondChart.getXAxis();
         xAxis.setTextColor(Color.GREEN);
-        xAxis.setLabelCount(5, false);
+        xAxis.setLabelCount(1, false);
         xAxis.removeAllLimitLines();
         xAxis.setAxisMaximum(db.getSizeSignificantPulls());
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setAvoidFirstLastClipping(true);
+        xAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return super.getFormattedValue(value) + "Games";
+            }
+        });
 
     }
 
