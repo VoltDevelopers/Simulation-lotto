@@ -382,7 +382,8 @@ public class Database {
                 double lastNet = (double) (settings.MAX_PLAYERS * settings.COST_OF_PLAY);
                 for (Profile current : players) {
 
-                    lastNet -= current.getNetList().get(i) - settings.getStartMoney();
+                    if (current.getHitsOnSelectedBet(i) == settings.getExtractionsPerRound())
+                        lastNet -= Settings.getInstance().getMoneyPerWin();
 
                 }
 
