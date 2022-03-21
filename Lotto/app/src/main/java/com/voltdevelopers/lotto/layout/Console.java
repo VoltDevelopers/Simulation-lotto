@@ -29,12 +29,6 @@ public class Console {
         Log.e(TAG, "EXCEPTION", exp);
     }
 
-    public String getStr(){
-        String input = inputSc.next();
-        printStr(input);
-        return input;
-    }
-
     public int getInt(){
         int input = inputSc.nextInt();
         printStr(String.valueOf(input));
