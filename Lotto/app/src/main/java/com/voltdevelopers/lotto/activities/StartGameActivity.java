@@ -56,7 +56,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     private Dialog settingsDialog;
     private LineChart firstChart, secondChart;
-    private static final int[] COLORS = {Color.RED, Color.YELLOW, Color.WHITE, Color.MAGENTA, Color.BLUE};
+    private static final int[] COLORS = {Color.RED, Color.YELLOW, Color.WHITE, Color.MAGENTA, Color.BLUE, Color.GREEN};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -406,11 +406,11 @@ public class StartGameActivity extends AppCompatActivity {
         ArrayList<LineDataSet> lineDataSets = new ArrayList<>();
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
-        for (int i = 0; i < Settings.getInstance().getPlayersToPlay().length; i++) { //ciclo per le 5 linee
+        for (int i = 0; i < 6; i++) { //ciclo per le 5 linee
             yValues.add(new ArrayList<>());
                 for (int j = 0; j < Database.getInstance().getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
                     if (yValues.size() == 6){
-                        // TODO: 21/03/22  
+                        yValues.get(i).add(new Entry(j, Database.getInstance().getSystemNetList().get(j).floatValue()));
                     }else{
                         yValues.get(i).add(new Entry(j, Database.getInstance().getPlayerNetList(i).get(j).floatValue()));
                     }
@@ -424,7 +424,6 @@ public class StartGameActivity extends AppCompatActivity {
             lineDataSets.get(i).setColor(COLORS[i]);
             lineDataSets.get(i).setValueTextColor(COLORS[i]);
             dataSets.add(lineDataSets.get(i));
-
         }
 
         LineData data = new LineData(dataSets);
