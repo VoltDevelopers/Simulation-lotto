@@ -38,11 +38,8 @@ import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.game.Game;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -386,7 +383,7 @@ public class StartGameActivity extends AppCompatActivity {
         legend.setForm(Legend.LegendForm.CIRCLE);
         LegendEntry[] legendEntries = new LegendEntry[6];
 
-        for (int i = 0; i < legendEntries.length; i++) {
+        for (int i = 0; i < 5; i++) {
 
             LegendEntry entry = new LegendEntry();
             entry.formColor = COLORS[i];
@@ -411,15 +408,13 @@ public class StartGameActivity extends AppCompatActivity {
 
         for (int i = 0; i < Settings.getInstance().getPlayersToPlay().length; i++) { //ciclo per le 5 linee
             yValues.add(new ArrayList<>());
-            if (yValues.size() == 5) {
                 for (int j = 0; j < Database.getInstance().getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
-                    yValues.get(i).add(new Entry(j, Database.getInstance().getPlayerNetList(i).get(j).floatValue()));
+                    if (yValues.size() == 6){
+                        // TODO: 21/03/22  
+                    }else{
+                        yValues.get(i).add(new Entry(j, Database.getInstance().getPlayerNetList(i).get(j).floatValue()));
+                    }
                 }
-            } else {
-                for (int j = 0; j < Database.getInstance().getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
-                    yValues.get(i).add(new Entry(j, Database.getInstance().getPlayerNetList(i).get(j).floatValue()));
-                }
-            }
 
             lineDataSets.add(new LineDataSet(yValues.get(i), ""));
             lineDataSets.get(i).setFillAlpha(110);
@@ -456,14 +451,18 @@ public class StartGameActivity extends AppCompatActivity {
         try (FileOutputStream fos = new FileOutputStream(getExternalPath())) {
             String text = Database.getInstance().toString();
             fos.write(text.getBytes());
-            Toast.makeText(this, "File saved to Downloads folder.", Toast.LENGTH_SHORT).show();
         } catch (IOException ex) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
+        fileSavedSuccessfully();
     }
 
     private File getExternalPath() {
-        return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "lotto_output" + sdf.format(new Date()) + (".txt"));
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+            return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "lotto_output" + sdf.format(new Date()) + (".txt"));
+        }else{
+            return new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "lotto_output" + sdf.format(new Date()) + (".txt"));
+        }
     }
 
     public void showText(View view) {
@@ -473,4 +472,13 @@ public class StartGameActivity extends AppCompatActivity {
             Log.i("INFO", "Started Activity" + intent.getIdentifier());
         }
     }
+
+    private void fileSavedSuccessfully(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+            Toast.makeText(this, "File saved to Downloads folder", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "File saved to /storage/self/primary/Android/data/com.voltdevelopers.lotto", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
