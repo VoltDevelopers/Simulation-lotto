@@ -443,7 +443,7 @@ public class StartGameActivity extends AppCompatActivity {
             text += "Credito del giocatore " + (i + 1) + " --> " + aproxPerc + "$\n";
 
         }
-        text += "Credito del banco " + (6) + " --> " + Math.round(Database.getInstance().getSystemNetList().get( Database.getInstance().getSystemNetList().size() - 1) * 100.0) / 100.0 + "$\n";
+        text += "Credito del banco       --> " + Math.round(Database.getInstance().getSystemNetList().get( Database.getInstance().getSystemNetList().size() - 1) * 100.0) / 100.0 + "$\n";
         textData2.setText(text);
     }
 
