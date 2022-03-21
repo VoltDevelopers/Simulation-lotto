@@ -12,7 +12,13 @@ una tattica diversa.
 
 Per lo sviluppo abbiamo utilizzato Android Studio, unito ad un esteso
 utilizzo di GitHub per una massima organizzazione del lavoro in
-collaborazione. Le varie funzionalita\` sono state testate singolarmente
+collaborazione. 
+__Minimum SDK: 24 \(Android 7.0 Nougat\)__
+__Android Studio Version: 2021.1 \(Bumblebee\)__
+![alt text](https://github.com/VoltDevelopers/Simulation-lotto/blob/TestVersion-lotto/proj.svg?raw=true)
+![alt text](https://github.com/VoltDevelopers/Simulation-lotto/blob/TestVersion-lotto/templine.svg?raw=true)
+
+Le varie funzionalita\` sono state testate singolarmente
 su branch temporanei, poi eliminati, in modo da prevenire eventuali
 effetti collaterali e malfunzionamenti.
 Tutti i componenti hanno fornito eventuale supporto nello sviluppo di
@@ -27,7 +33,7 @@ viene dato il compito di supervisionare tutti i campi dello sviluppo del
 software, dall'interfaccia grafica alle parti piu\` profonde del codice,
 e della principale progettazione del programma, definendo in linea
 teorica la sua organizzazione. Contribuisce anche con l'implementazione
-di un innovativo algoritmo di randomizzazione, riadattando un codice
+di un innovativo algoritmo di randomizzazione, utilizzando un codice
 direttamente dal Politecnico di Milano.
 Si rende inoltre disponibile per un'aiuto nell'utilizzo di GitHub.
 
