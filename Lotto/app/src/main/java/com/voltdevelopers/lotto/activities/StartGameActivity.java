@@ -4,11 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.MediaScannerConnection;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -34,7 +31,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.voltdevelopers.lotto.MainActivity;
 import com.voltdevelopers.lotto.R;
 import com.voltdevelopers.lotto.data.Database;
 import com.voltdevelopers.lotto.data.Settings;
@@ -44,8 +40,6 @@ import com.voltdevelopers.lotto.src.game.Game;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -457,7 +451,7 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     public void showData() {
-        Intent intent = new Intent(StartGameActivity.this, StatActivity.class);
+        Intent intent = new Intent(StartGameActivity.this, StatisticActivity.class);
         startActivity(intent);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             Log.i("INFO", "Started Activity" + intent.getIdentifier());
@@ -482,7 +476,7 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     public void showText(View view) {
-        Intent intent = new Intent(StartGameActivity.this, StatActivity.class);
+        Intent intent = new Intent(StartGameActivity.this, StatisticActivity.class);
         startActivity(intent);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             Log.i("INFO", "Started Activity" + intent.getIdentifier());

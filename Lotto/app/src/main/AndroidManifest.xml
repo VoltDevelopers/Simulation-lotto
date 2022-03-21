@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.StatActivity"
+            android:name=".activities.StatisticActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:label="StatActivity" />
