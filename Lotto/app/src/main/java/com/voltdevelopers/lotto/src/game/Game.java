@@ -1,6 +1,5 @@
 package com.voltdevelopers.lotto.src.game;
 
-import android.util.Log;
 
 import com.voltdevelopers.lotto.data.Database;
 import com.voltdevelopers.lotto.data.Settings;
@@ -35,13 +34,14 @@ public class Game {
             playersPlayBets();
             Database.getInstance().addSignificantPull(generateDraw());
             sendPatternsData();
+            Console.getInstance().printStr("New significant pull");
         }
     }
 
     private void preGameLoop(int games) {
         for (int i = 0; i < games; i++) {
             Database.getInstance().addPull(generateDraw());
-            Log.i("LOOP", "Added new game to pregameloop");
+            Console.getInstance().printStr("New historic pull");
         }
     }
 
