@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class Database {
 
     private final Settings settings;
-    private static ArrayList<Database> instance = new ArrayList<Database>();;
+    private static ArrayList<Database> instance = new ArrayList<Database>();
+    ;
 
     private Profile[] players;
     private final Analysis analysis;
@@ -39,9 +40,9 @@ public class Database {
 
     public static Database getInstance() {
         if (!instance.isEmpty())
-            return instance.get(instance.size()-1);
+            return instance.get(instance.size() - 1);
         instance.add(new Database());
-        return instance.get(instance.size()-1);
+        return instance.get(instance.size() - 1);
     }
 
     private void initPlayers() {
@@ -131,6 +132,10 @@ public class Database {
 
     public double getPlayerNetAtRound(int playerN, int roundN) {
         return players[playerN].getNetAtRound(roundN) + settings.getStartMoney();
+    }
+
+    public ArrayList<Double> getPlayerNetList(int playerN) {
+        return players[playerN].getNetList();
     }
 
     //----------------------analysis methods--------------------------------------------------------
@@ -339,6 +344,7 @@ public class Database {
 
                 assignSpendings(current);
                 assignWinMoney(current);
+                current.generateNetList();
             }
 
             console.printStr("Assigned wins and money earned to all players" + "\n"); //<-- versione temp di joel che non sa cosa deve fare, TODO farlo giusto secondo necessità
@@ -363,6 +369,8 @@ class Profile {
     private int nWins;
     private final ArrayList<int[]> betList;
     private final ArrayList<Integer> winList;
+    private final ArrayList<Double> netList;
+
 
     public Profile() {
         moneyWon = 0;
@@ -370,6 +378,7 @@ class Profile {
         nWins = 0;
         betList = new ArrayList<>();
         winList = new ArrayList<>();
+        netList = new ArrayList<>();
     }
 
     public Profile(String name) {
@@ -450,14 +459,41 @@ class Profile {
         return "name not set";
     }
 
-    public double getNetAtRound(int round){ //chiedo perdono per ciò che ho fatto, specialmente alla ram
+    @Deprecated //fortunatamente
+    public double getNetAtRound(int round) { //chiedo perdono per ciò che ho fatto, specialmente alla ram
 
-        if(round < 0)
+        if (round < 0)
             return 0;
-        if(winList.get(round) < Settings.getInstance().getExtractionsPerRound())
-            return getNetAtRound(round -1) -1;
-        return Settings.getInstance().getMoneyPerWin() + getNetAtRound(round -1) -1;
+        if (winList.get(round) < Settings.getInstance().getExtractionsPerRound())
+            return getNetAtRound(round - 1) - 1;
+        return Settings.getInstance().getMoneyPerWin() + getNetAtRound(round - 1) - 1;
 
+    }
+
+    public ArrayList<Double> getNetList() {
+
+        if (netList.isEmpty())
+            return null; //per facilitare la diagnostica
+        return netList;
+
+    }
+
+    public void generateNetList() {
+
+        for (int i = 0; i < getNOfBets(); i++) {
+            if (winList.get(i) < Settings.getInstance().getExtractionsPerRound()) {
+                if (i != 0)
+                    netList.add(netList.get(i - 1) - 1d);
+                else
+                    netList.add(-1d);
+            } else {
+                if (i != 0)
+                    netList.add(netList.get(i - 1) + Settings.getInstance().getMoneyPerWin() - 1d);
+                else
+                    netList.add(Settings.getInstance().getMoneyPerWin() - 1d);
+
+            }
+        }
     }
 
     public String toString(String tabulation) {
