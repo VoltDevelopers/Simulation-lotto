@@ -453,8 +453,6 @@ public class StartGameActivity extends AppCompatActivity {
         textData2.setText(text);
     }
 
-    // TODO: Save for android 10+
-
     public void saveText(View view) {
         try (FileOutputStream fos = new FileOutputStream(getExternalPath())) {
             String text = Database.getInstance().toString();
