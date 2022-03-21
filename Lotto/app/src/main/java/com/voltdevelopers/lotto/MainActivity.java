@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -12,11 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.voltdevelopers.lotto.activities.RulesActivity;
 import com.voltdevelopers.lotto.activities.StartGameActivity;
-import com.voltdevelopers.lotto.activities.StatActivity;
-import com.voltdevelopers.lotto.data.Database;
-import com.voltdevelopers.lotto.data.Settings;
-import com.voltdevelopers.lotto.src.exception.InputException;
-import com.voltdevelopers.lotto.src.game.Game;
+import com.voltdevelopers.lotto.layout.Console;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, StartGameActivity.class);
             startActivity(intent);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                Log.i("INFO", "Started Activity" + intent.getIdentifier());
+                Console.getInstance().printStr("Started Activity" + intent.getIdentifier());
             }
         });
 
@@ -44,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, RulesActivity.class);
             startActivity(intent);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                Log.i("INFO", "Started Activity" + intent.getIdentifier());
+                Console.getInstance().printStr("Started Activity" + intent.getIdentifier());
             }
         });
     }
@@ -57,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         textViewRules = findViewById(R.id.textView6);
     }
 
-    private void initRes(){
+    private void initRes() {
         textViewHero.setText(Html.fromHtml("<p>Se consideriamo il gioco del lotto da un punto di vista <span style=\"color:#00ff00;\">matematico</span> e <span style=\"color:#00ff00;\">calcoli</span> la probabilità di vincita di tutte le strategie è assolutamente la stessa e noi lo dimostreremo chiaramente.</p>"));
         textViewStart.setText(Html.fromHtml("<p>Avviare la <span style=\"color:#00ff00;\">simulazione...</span></p>"));
         textViewRules.setText(Html.fromHtml("<p>O leggere la <span style=\"color:#00ff00;\">teoria ;)</span></p>"));
