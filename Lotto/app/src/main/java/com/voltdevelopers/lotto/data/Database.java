@@ -130,6 +130,10 @@ public class Database {
         return players[playerN].getNetAtRound(roundN) + settings.getStartMoney();
     }
 
+    public ArrayList<Double> getPlayerNetList(int playerN) {
+        return players[playerN].getNetList();
+    }
+
     //----------------------analysis methods--------------------------------------------------------
 
     public int[] getNMostFrequent(int nRequested) {
@@ -328,6 +332,7 @@ public class Database {
 
                 assignSpending(current);
                 assignWinMoney(current);
+                current.generateNetList();
             }
 
         }
@@ -350,6 +355,8 @@ class Profile {
     private int nWins;
     private final ArrayList<int[]> betList;
     private final ArrayList<Integer> winList;
+    private final ArrayList<Double> netList;
+
 
     public Profile() {
         moneyWon = 0;
@@ -357,6 +364,7 @@ class Profile {
         nWins = 0;
         betList = new ArrayList<>();
         winList = new ArrayList<>();
+        netList = new ArrayList<>();
     }
 
     public Profile(String name) {
@@ -437,6 +445,7 @@ class Profile {
         return "name not set";
     }
 
+    @Deprecated //fortunatamente
     public double getNetAtRound(int round) { //chiedo perdono per ciò che ho fatto, specialmente alla ram
 
         if (round < 0)
@@ -445,6 +454,32 @@ class Profile {
             return getNetAtRound(round - 1) - 1;
         return Settings.getInstance().getMoneyPerWin() + getNetAtRound(round - 1) - 1;
 
+    }
+
+    public ArrayList<Double> getNetList() {
+
+        if (netList.isEmpty())
+            return null; //per facilitare la diagnostica
+        return netList;
+
+    }
+
+    public void generateNetList() {
+
+        for (int i = 0; i < getNOfBets(); i++) {
+            if (winList.get(i) < Settings.getInstance().getExtractionsPerRound()) {
+                if (i != 0)
+                    netList.add(netList.get(i - 1) - 1d);
+                else
+                    netList.add(-1d);
+            } else {
+                if (i != 0)
+                    netList.add(netList.get(i - 1) + Settings.getInstance().getMoneyPerWin() - 1d);
+                else
+                    netList.add(Settings.getInstance().getMoneyPerWin() - 1d);
+
+            }
+        }
     }
 
     public String toString(String tabulation) {
