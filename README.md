@@ -13,6 +13,7 @@ una tattica diversa.
 Per lo sviluppo abbiamo utilizzato Android Studio, unito ad un esteso
 utilizzo di GitHub per una massima organizzazione del lavoro in
 collaborazione. 
+
 __Minimum SDK: 24 \(Android 7.0 Nougat\)__
 
 __Android Studio Version: 2021.1 \(Bumblebee\)__
