@@ -194,13 +194,13 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setLabelCount(10, false);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
-        yAxis.setAxisMaximum((float) Database.getInstance().getSizeSignificantPulls() / 2); //percentuale massima
+        yAxis.setAxisMaximum((float) Database.getInstance().getSizeSignificantPulls() / 10); //percentuale massima
         yAxis.setGranularity(1f);
         yAxis.setCenterAxisLabels(false);
         yAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return super.getFormattedValue(value) + "Wins";
+                return super.getFormattedValue(value) + " Wins";
             }
         });
 
@@ -219,7 +219,7 @@ public class StartGameActivity extends AppCompatActivity {
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return super.getFormattedValue(value) + "Games";
+                return super.getFormattedValue(value) + " Games";
             }
         });
 
@@ -336,8 +336,8 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setLabelCount(10, false);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
-        yAxis.setAxisMaximum((float) (Settings.getInstance().getStartMoney() + Settings.getInstance().getMoneyPerWin() * (Database.getInstance().getSizeSignificantPulls() / 2)));
-        yAxis.setAxisMinimum(-(float) (Settings.getInstance().getStartMoney() + Settings.getInstance().getMoneyPerWin() * (Database.getInstance().getSizeSignificantPulls() / 2)));
+        yAxis.setAxisMaximum((float) (Settings.getInstance().getStartMoney() + Settings.getInstance().getMoneyPerWin() * (Database.getInstance().getSizeSignificantPulls() / 5)));
+        yAxis.setAxisMinimum((float) ((Settings.getInstance().getStartMoney() + Settings.getInstance().getMoneyPerWin() * (Database.getInstance().getSizeSignificantPulls() / 5))) * (-1));
         yAxis.setGranularity(1f);
         yAxis.setCenterAxisLabels(false);
         yAxis.setValueFormatter(new ValueFormatter() {
@@ -362,7 +362,7 @@ public class StartGameActivity extends AppCompatActivity {
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return super.getFormattedValue(value) + "Games";
+                return super.getFormattedValue(value) + " Games";
             }
         });
 
