@@ -14,8 +14,12 @@ Per lo sviluppo abbiamo utilizzato Android Studio, unito ad un esteso
 utilizzo di GitHub per una massima organizzazione del lavoro in
 collaborazione. 
 __Minimum SDK: 24 \(Android 7.0 Nougat\)__
+
 __Android Studio Version: 2021.1 \(Bumblebee\)__
+
+Il diagramma teorico proposto inizialmente era il seguente:
 ![alt text](https://github.com/VoltDevelopers/Simulation-lotto/blob/TestVersion-lotto/proj.svg?raw=true)
+Segue il piano di lavoro inizialmente previsto:
 ![alt text](https://github.com/VoltDevelopers/Simulation-lotto/blob/TestVersion-lotto/templine.svg?raw=true)
 
 Le varie funzionalita\` sono state testate singolarmente
