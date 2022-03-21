@@ -18,15 +18,11 @@ public class Game {
 
     private final int turnsGame;
 
-    Database db;
     Player[] playerPatterns;
-    Console console;
 
     public Game(int turnsGame) throws InputException {
         this.turnsGame = turnsGame;
 
-        db = Database.getInstance();
-        console = Console.getInstance();
         playerPatterns = new Player[5];
 
         initPlayers();
@@ -34,20 +30,17 @@ public class Game {
     }
 
     public void gameLoop() {
-        int[] draw;
 
         for (int i = 0; i < turnsGame; i++) {
             playersPlayBets();
-
-            draw = generateDraw();
-            db.addSignificantPull(draw);
+            Database.getInstance().addSignificantPull(generateDraw());
             sendPatternsData();
         }
     }
 
     private void preGameLoop(int games) {
         for (int i = 0; i < games; i++) {
-            db.addPull(generateDraw());
+            Database.getInstance().addPull(generateDraw());
             Log.i("LOOP", "Added new game to pregameloop");
         }
     }
@@ -68,7 +61,7 @@ public class Game {
 
     private void sendPatternsData() {
         for (int i = 0; i < playerPatterns.length; i++) {
-            db.addPlayerBet(playerPatterns[i].getId(), playerPatterns[i].getBet());
+            Database.getInstance().addPlayerBet(playerPatterns[i].getId(), playerPatterns[i].getBet());
         }
     }
 

@@ -70,6 +70,7 @@ public class StartGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_game);
 
+        sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         showSettings();
         initSettingsBtn();
     }
@@ -84,8 +85,8 @@ public class StartGameActivity extends AppCompatActivity {
     @SuppressLint("SimpleDateFormat")
     private void showSettings() {
         Database.createInstance();
-        sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         db = Database.getInstance();
+
         settingsDialog = new Dialog(this);
         settingsDialog.setCancelable(false);
         settingsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
