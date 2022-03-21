@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.StatisticActivity">
+    android:background="@color/main_background"
+    android:backgroundTint="@color/main_background">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/scroll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <HorizontalScrollView
-            android:id="@+id/hscroll"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-            <TextView
-                android:id="@+id/dbStat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24px"
-                android:text="TEXT"
-                android:isScrollContainer="true"/>
-        </HorizontalScrollView>
-    </ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".activities.StatisticActivity">
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/dbStat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/standard_text_color"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+</ScrollView>
