@@ -148,11 +148,11 @@ public class Database {
         return players[playerN].getNetList();
     }
 
-    //----------------------analysis methods--------------------------------------------------------
-
     public ArrayList<Double> getSystemNetList() {
         return systemNetList;
     }
+
+    //----------------------analysis methods--------------------------------------------------------
 
     public int[] getNMostFrequent(int nRequested) {
         return analysis.getNMostFrequent(nRequested);
