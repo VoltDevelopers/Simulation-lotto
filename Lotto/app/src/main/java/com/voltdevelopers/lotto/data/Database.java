@@ -18,6 +18,7 @@ public class Database {
     private final ArrayList<int[]> significantRounds;
     private final int[] pullsPerNumber;                 // Statistica estrazione dei numeri
     private final ArrayList<Integer> pullChronology;    // Ordine estrazioni (ultimo estratto sta all'indice massimo)
+    private final ArrayList<Double> systemNetList;
 
     private Database() {
         settings = Settings.getInstance();
@@ -28,6 +29,8 @@ public class Database {
 
         pullsPerNumber = new int[Settings.MAX_EXIT];
         pullChronology = new ArrayList<>();
+
+        systemNetList = new ArrayList<>();
 
         initPlayers();
     }
@@ -147,6 +150,10 @@ public class Database {
 
     //----------------------analysis methods--------------------------------------------------------
 
+    public ArrayList<Double> getSystemNetList() {
+        return systemNetList;
+    }
+
     public int[] getNMostFrequent(int nRequested) {
         return analysis.getNMostFrequent(nRequested);
     }
@@ -168,10 +175,9 @@ public class Database {
     @NonNull
     @Override
     public String toString() { //per poter essere chiamato da chi non sa
-        return toString("");
+        return toString("     ");
     }
 
-    @NonNull
     public String toString(String tabulation) {
         String output = "";
         for (int i = 0; i < instance.size(); i++) {
@@ -353,6 +359,7 @@ public class Database {
                 assignWinMoney(current);
                 current.generateNetList();
             }
+            generateSystemNetList(); //needs to go after player earning generation since it uses the values
 
             console.printStr("Assigned wins and money earned to all players" + "\n"); //<-- versione temp di joel che non sa cosa deve fare, TODO farlo giusto secondo necessità
         }
@@ -366,6 +373,24 @@ public class Database {
             for (int i = 0; i < p.getNOfBets(); i++)
                 if (p.getHitsOnSelectedBet(i) == settings.getExtractionsPerRound())
                     p.addToMoneyWon(settings.getMoneyPerWin());
+        }
+
+        private void generateSystemNetList() {
+
+            for (int i = 0; i < significantRounds.size(); i++) {
+
+                double lastNet = (double) (settings.MAX_PLAYERS * settings.COST_OF_PLAY);
+                for (Profile current : players) {
+
+                    lastNet -= current.getNetList().get(i) - settings.getStartMoney();
+
+                }
+
+                if (i != 0)
+                    lastNet += systemNetList.get(i - 1);
+
+                systemNetList.add(lastNet);
+            }
         }
     }
 }
@@ -494,12 +519,12 @@ class Profile {
                 if (i != 0)
                     netList.add(netList.get(i - 1) - 1d);
                 else
-                    netList.add(-1d);
+                    netList.add(-1d + Settings.getInstance().getStartMoney());
             } else {
                 if (i != 0)
                     netList.add(netList.get(i - 1) + Settings.getInstance().getMoneyPerWin() - 1d);
                 else
-                    netList.add(Settings.getInstance().getMoneyPerWin() - 1d);
+                    netList.add(Settings.getInstance().getMoneyPerWin() + Settings.getInstance().getStartMoney() - 1d);
 
             }
         }
