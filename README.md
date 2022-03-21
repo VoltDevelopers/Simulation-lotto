@@ -17,6 +17,7 @@ su branch temporanei, poi eliminati, in modo da prevenire eventuali
 effetti collaterali e malfunzionamenti.
 Tutti i componenti hanno fornito eventuale supporto nello sviluppo di
 funzionalita\` nel quale ce ne sia stato il bisogno.
+
 Il lavoro e\` stato diviso nel seguente modo tra i componenti del team:
 
 ### Artur Smirnov - Lead Developer
