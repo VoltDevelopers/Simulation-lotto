@@ -394,7 +394,7 @@ public class StartGameActivity extends AppCompatActivity {
 
         LegendEntry entry = new LegendEntry();
         entry.formColor = Color.GREEN;
-        entry.label = "Banco " + 6;
+        entry.label = "Banco";
         legendEntries[5] = entry;
 
         legend.setCustom(legendEntries);
