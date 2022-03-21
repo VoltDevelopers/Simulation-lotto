@@ -1,172 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
-    android:backgroundTint="#000000"
-    tools:context=".activities.StartGameActivity">
+    android:background="@color/main_background"
+    android:backgroundTint="@color/main_background">
 
-    <!--    Start Header-->
-    <View
-        android:id="@+id/view2"
-        android:layout_width="48dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="204dp"
-        android:layout_marginTop="76dp"
-        android:background="#FFFFFF"
-        android:rotation="-40"
-        android:rotationX="0"
-        android:rotationY="0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="228dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="108dp"
-        android:fontFamily="@font/courier_new"
-        android:text="Misconcetti e la loro confutazione"
-        android:textAlignment="viewEnd"
-        android:textColor="@color/neon_green"
-        android:textFontWeight="700"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/view4"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/view4"
-        android:layout_width="100dp"
-        android:layout_height="2dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="116dp"
-        android:background="#FFFFFF"
-        android:rotation="30"
-        android:rotationX="0"
-        android:rotationY="0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/view6"
-        android:layout_width="40dp"
-        android:layout_height="2dp"
-        android:layout_marginStart="178dp"
-        android:layout_marginTop="151dp"
-        android:background="#FFFFFF"
-        android:rotation="30"
-        android:rotationX="0"
-        android:rotationY="0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="5dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        android:background="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/view3"
-        android:layout_width="200dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="92dp"
-        android:background="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/view8"
-        android:layout_width="60dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="246dp"
-        android:layout_marginTop="60dp"
-        android:background="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/view5"
-        android:layout_width="80dp"
-        android:layout_height="2dp"
-        android:layout_marginStart="101dp"
-        android:layout_marginTop="141dp"
-        android:background="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/view7"
-        android:layout_width="197dp"
-        android:layout_height="2dp"
-        android:layout_marginStart="214dp"
-        android:layout_marginTop="160dp"
-        android:background="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="140dp"
-        android:layout_height="61dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/courier_new"
-        android:lineSpacingExtra="2sp"
-        android:text="Gioco del lotto"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textFontWeight="700"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:typeface="normal"
-        app:layout_constraintStart_toEndOf="@+id/view"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.utils.widget.ImageFilterView
-        android:id="@+id/imageFilterView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="295dp"
-        android:layout_marginTop="35dp"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_logo" />
-
-    <com.github.mikephil.charting.charts.LineChart
-
-        android:id="@+id/graph"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="200dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="40dp"
-        />
-
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="143dp"
-        android:layout_marginTop="579dp"
-        android:text="Get File"
-        app:layout_constraintStart_toEndOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/view7" />
+        tools:context=".activities.StartGameActivity">
 
-    <!--  END  HEADER    -->
+        <!-- _______________________________________________________________________ -->
+        <include layout="@layout/header" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:id="@+id/view"
+            android:layout_width="5dp"
+            android:layout_height="1700dp"
+            android:layout_marginStart="10dp"
+            android:background="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!-- _______________________________________________________________________ -->
+
+        <ImageButton
+            android:id="@+id/settingsImageButton"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:layout_width="52dp"
+            android:layout_height="51dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="144dp"
+            android:background="#00FFFFFF"
+            app:layout_constraintStart_toEndOf="@+id/view"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_settings_btn"
+            android:contentDescription="Setting" />
+
+        <include
+            android:id="@+id/graphic_1"
+            layout="@layout/graphic"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_margin="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/textChart1"
+            tools:layout_editor_absoluteX="20dp" />
+
+
+        <TextView
+            android:id="@+id/textChart1"
+            android:layout_width="334dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/cour_bold"
+            android:text="Numero di vittorie"
+            android:textAlignment="center"
+            android:textColor="@color/neon_green"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/settingsImageButton" />
+
+        <TextView
+            android:id="@+id/textChart"
+            android:layout_width="334dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:fontFamily="@font/cour_bold"
+            android:text="Guadagno netto"
+            android:textAlignment="center"
+            android:textColor="@color/neon_green"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/textData" />
+
+        <TextView
+            android:id="@+id/textData"
+            android:layout_width="334dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/cour"
+            android:textAlignment="viewStart"
+            android:textColor="@color/standard_text_color"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/graphic_1" />
+
+        <TextView
+            android:id="@+id/textData2"
+            android:layout_width="334dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/cour"
+            android:text=" - il primo gioca un numero della cinquina precedente\n - il secondo gioca il ritardatario, il numero che non esce da più estrazioni\n - il terzo gioca un numero casuale\n - il quarto gioca un numero fisso\n - il quinto gioca il numero uscito più frequentemente"
+            android:textAlignment="viewStart"
+            android:textColor="@color/standard_text_color"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/graphic_2" />
+
+        <include
+            android:id="@+id/graphic_2"
+            layout="@layout/graphic"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_margin="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/textChart"
+            tools:layout_editor_absoluteX="24dp" />
+
+        <Button
+            android:id="@+id/buttonFile"
+            style="@style/standard_btn"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="saveText"
+            android:layout_width="160dp"
+            android:text="Save file"
+            app:cornerRadius="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.092"
+            app:layout_constraintStart_toEndOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/textData2"
+            app:strokeColor="@color/neon_green"
+            app:strokeWidth="2dp" />
+
+        <Button
+            android:id="@+id/buttonSee"
+            style="@style/standard_btn"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="showText"
+            android:text="See data"
+            app:cornerRadius="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.907"
+            app:layout_constraintStart_toEndOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/textData2"
+            app:strokeColor="@color/neon_green"
+            app:strokeWidth="2dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

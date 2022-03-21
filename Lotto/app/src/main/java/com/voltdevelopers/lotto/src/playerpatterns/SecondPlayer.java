@@ -1,6 +1,9 @@
 package com.voltdevelopers.lotto.src.playerpatterns;
 
 import com.voltdevelopers.lotto.data.Database;
+import com.voltdevelopers.lotto.layout.Console;
+
+import java.util.Arrays;
 
 public class SecondPlayer extends Player {
 
@@ -10,7 +13,6 @@ public class SecondPlayer extends Player {
    */
 
     public SecondPlayer() {
-        super();
         this.id = 1;
         this.bet = new int[extractions];
     }
@@ -18,5 +20,6 @@ public class SecondPlayer extends Player {
     @Override
     public void createBet() {
         this.bet = Database.getInstance().getOldestN(extractions);
+        Console.getInstance().printStr("Pattern " + this.id + " bet: " + Arrays.toString(bet));
     }
 }

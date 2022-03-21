@@ -1,7 +1,10 @@
 package com.voltdevelopers.lotto.src.playerpatterns;
 
+import com.voltdevelopers.lotto.layout.Console;
 import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.random.StdRandom;
+
+import java.util.Arrays;
 
 public class FourthPlayer extends Player {
 
@@ -11,7 +14,6 @@ public class FourthPlayer extends Player {
    */
 
     public FourthPlayer() {
-        super();
         this.id = 3;
         this.bet = new int[extractions];
         createFinalBet();
@@ -25,8 +27,9 @@ public class FourthPlayer extends Player {
     private void createFinalBet(){
         try {
             this.bet = StdRandom.getRandomArray(extractions, 90);
+            Console.getInstance().printStr("Pattern " + this.id + " bet: " + Arrays.toString(bet));
         } catch (InputException e) {
-            e.printStackTrace();
+            Console.getInstance().printExp(e);
         }
     }
 }

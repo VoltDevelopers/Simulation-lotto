@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class Database {
 
     private final Settings settings;
-    private static Database instance = null;
+    private static final ArrayList<Database> instance = new ArrayList<>();
+
     private Profile[] players;
     private final Analysis analysis;
 
@@ -17,6 +18,7 @@ public class Database {
     private final ArrayList<int[]> significantRounds;
     private final int[] pullsPerNumber;                 // Statistica estrazione dei numeri
     private final ArrayList<Integer> pullChronology;    // Ordine estrazioni (ultimo estratto sta all'indice massimo)
+    private final ArrayList<Double> systemNetList;
 
     private Database() {
         settings = Settings.getInstance();
@@ -28,14 +30,21 @@ public class Database {
         pullsPerNumber = new int[Settings.MAX_EXIT];
         pullChronology = new ArrayList<>();
 
+        systemNetList = new ArrayList<>();
+
         initPlayers();
     }
 
+    public static void createInstance() {
+        instance.add(new Database());
+        instance.size();
+    }
+
     public static Database getInstance() {
-        if (instance != null)
-            return instance;
-        instance = new Database();
-        return instance;
+        if (!instance.isEmpty())
+            return instance.get(instance.size() - 1);
+        instance.add(new Database());
+        return instance.get(instance.size() - 1);
     }
 
     private void initPlayers() {
@@ -78,46 +87,70 @@ public class Database {
     Add player bet
         id {3},input {45,32,56,..}
     */
+
     public void addPlayerBet(int playerID, int[] input) {
         players[playerID].addBet(input);
     }
 
-
+    /*
     public int[] getPlayerLastBet(int playerN) {
         return players[playerN].getLastBet();
-    }
+    }*/
 
+    /*
     public int getSizeAllPulls() {
         return allRounds.size();
-    }
+    }*/
 
     public int getSizeSignificantPulls() {
         return significantRounds.size();
     }
 
+    /*
     public double getPlayerMoneyWon(int playerN) {
         return players[playerN].getMoneyWon();
-    }
+    }*/
 
+    /*
     public double getPlayerMoneySpent(int playerN) {
         return players[playerN].getMoneySpent();
-    }
+    }*/
 
     public double getPlayerNet(int playerN) {
         return players[playerN].getNet();
     }
 
+    /*
     public int getPlayerWins(int playerN) {
         return players[playerN].getNWins();
+    }*/
+
+    public double getPlayerWinPercentage(int playerN) {
+        return (double) players[playerN].getNWins() / (double) players[playerN].getNOfBets() * 100d;
     }
+
     public ArrayList<Integer> getPlayerWinList(int playerN) {
         return players[playerN].getWinList();
     }
 
+    /*
     public int[] getPlayerBet(int playerN, int n) {
         return players[playerN].getBet(n);
+    }*/
+
+    @Deprecated
+    public double getPlayerNetAtRound(int playerN, int roundN) {
+        return players[playerN].getNetAtRound(roundN) + settings.getStartMoney();
     }
 
+
+    public ArrayList<Double> getPlayerNetList(int playerN) {
+        return players[playerN].getNetList();
+    }
+
+    public ArrayList<Double> getSystemNetList() {
+        return systemNetList;
+    }
 
     //----------------------analysis methods--------------------------------------------------------
 
@@ -142,27 +175,34 @@ public class Database {
     @NonNull
     @Override
     public String toString() { //per poter essere chiamato da chi non sa
-        return toString("");
+        return toString("     ");
     }
 
-    @NonNull
     public String toString(String tabulation) {
-        return "Database{" +
-                ",\n" + tabulation + "moneyPerWin=" + settings.getMoneyPerWin() +
-                ",\n" + tabulation + "gameCounter=" + allRounds.size() +
-                ",\n" + tabulation + "pullChronology=" + pullChronologyToString(tabulation + "     ") +//\t non va, idk
-                ",\n" + tabulation + "pullsPerNumber=" + pullsPerNumberToString(tabulation + "     ") +
-                ",\n" + tabulation + "rounds=" + allRoundsToString(tabulation + "     ") +
-                ",\n" + tabulation + "players=\n" + allPlayersToString(tabulation + "     ") +
-                ",\n" + tabulation + '}';
+        String output = "";
+        for (int i = 0; i < instance.size(); i++) {
+
+            output += "Database" + i + "{" +
+                    ",\n" + tabulation + "moneyPerWin=" + settings.getMoneyPerWin() +
+                    ",\n" + tabulation + "gameCounter=" + instance.get(i).allRounds.size() +
+                    ",\n" + tabulation + "pullChronology=" + instance.get(i).pullChronologyToString(tabulation + "     ") +//\t non va, idk
+                    ",\n" + tabulation + "pullsPerNumber=" + instance.get(i).pullsPerNumberToString(tabulation + "     ") +
+                    ",\n" + tabulation + "rounds=" + instance.get(i).allRoundsToString(tabulation + "     ") +
+                    ",\n" + tabulation + "players=" + instance.get(i).allPlayersToString(tabulation + "     ") +
+                    ",\n" + tabulation + '}';
+
+        }
+
+        return output;
+
     }
 
     private String allRoundsToString(String tabulation) {
 
-        return  "\n{" +
+        return "{" +
                 "\n" + tabulation + "preGameRounds=" + preGameRoundsToString(tabulation + "     ") +
                 ",\n" + tabulation + "significantRouds=" + significantRoundsToString(tabulation + "     ") +
-                '}';
+                tabulation + "}";
 
     }
 
@@ -180,7 +220,7 @@ public class Database {
             output += "]\n";
         }
 
-        return "\n{\n" + output + '}';
+        return "{\n" + output + tabulation + "}";
 
     }
 
@@ -198,7 +238,7 @@ public class Database {
             output += "]\n";
         }
 
-        return "\n{\n" + output + '}';
+        return "{\n" + output + tabulation + "}\n";
     }
 
     private String pullsPerNumberToString(String tabulation) {
@@ -209,14 +249,14 @@ public class Database {
             output += tabulation + "[" + (i + 1) + " -> " + pullsPerNumber[i] + "]\n";
         }
 
-        return "\n{\n" + output + '}';
+        return "{\n" + output + tabulation + "}";
     }
 
     private String pullChronologyToString(String tabulation) {
 
         String output = pullChronology.toString() + "\n";
 
-        return "\n{\n" + output + '}';
+        return "\n" + tabulation + "{\n" + tabulation + output + tabulation + "}";
     }
 
     private String allPlayersToString(String tabulation) {
@@ -225,18 +265,19 @@ public class Database {
         for (int i = 0; i < players.length; i++)
             out += tabulation + playerToString(i, tabulation);
 
-        return "{\n" + out + '}';
+        return "{\n" + out + tabulation + "}";
     }
 
     public String playerToString(int n, String tabulation) {
 
-        return players[n].toString(tabulation);
+        return players[n].toString(tabulation + "     ");
+
 
     }
 
     private class Analysis {
 
-        private Console console = Console.getInstance();
+        private final Console console = Console.getInstance();
 
         public int[] getLatestN(int nRequested) {
             int[] output = new int[nRequested];
@@ -308,26 +349,49 @@ public class Database {
 
                     }
 
-                    current.addWin(winsInCurrentRound);
+                    current.addScore(winsInCurrentRound);
+                    if (winsInCurrentRound == settings.getExtractionsPerRound())
+                        current.addWin();
+
                 }
 
                 assignSpendings(current);
                 assignWinMoney(current);
+                current.generateNetList();
             }
+            generateSystemNetList(); //needs to go after player earning generation since it uses the values
 
             console.printStr("Assigned wins and money earned to all players" + "\n"); //<-- versione temp di joel che non sa cosa deve fare, TODO farlo giusto secondo necessità
         }
 
         private void assignSpendings(Profile p) {
-            p.addToMoneySpent(settings.COST_OF_PLAY * p.getNOfBets());
+            p.addToMoneySpent(Settings.COST_OF_PLAY * p.getNOfBets());
 
         }
 
         private void assignWinMoney(Profile p) {
-
             for (int i = 0; i < p.getNOfBets(); i++)
-                p.addToMoneyWon(p.getHitsOnSelectedBet(i) * settings.getMoneyPerWin());
+                if (p.getHitsOnSelectedBet(i) == settings.getExtractionsPerRound())
+                    p.addToMoneyWon(settings.getMoneyPerWin());
+        }
 
+        private void generateSystemNetList() {
+
+            for (int i = 0; i < significantRounds.size(); i++) {
+
+                double lastNet = (double) (settings.MAX_PLAYERS * settings.COST_OF_PLAY);
+                for (Profile current : players) {
+
+                    if (current.getHitsOnSelectedBet(i) == settings.getExtractionsPerRound())
+                        lastNet -= Settings.getInstance().getMoneyPerWin();
+
+                }
+
+                if (i != 0)
+                    lastNet += systemNetList.get(i - 1);
+
+                systemNetList.add(lastNet);
+            }
         }
     }
 }
@@ -338,6 +402,8 @@ class Profile {
     private int nWins;
     private final ArrayList<int[]> betList;
     private final ArrayList<Integer> winList;
+    private final ArrayList<Double> netList;
+
 
     public Profile() {
         moneyWon = 0;
@@ -345,6 +411,7 @@ class Profile {
         nWins = 0;
         betList = new ArrayList<>();
         winList = new ArrayList<>();
+        netList = new ArrayList<>();
     }
 
     public Profile(String name) {
@@ -359,9 +426,10 @@ class Profile {
         }
     }
 
+    /*
     public int[] getBet(int n) {
         return betList.get(n);
-    }
+    }*/
 
     public int getNOfBets() {
         return betList.size();
@@ -371,9 +439,10 @@ class Profile {
         return winList.get(n);
     }
 
+    /*
     public int[] getLastBet() {
         return betList.get(betList.size() - 1);
-    }
+    }*/
 
     public int[] getSelectedBet(int n) {
         return betList.get(n);
@@ -396,7 +465,7 @@ class Profile {
     }
 
     public double getNet() {
-        return moneyWon - moneySpent;
+        return moneyWon - moneySpent + Settings.getInstance().getStartMoney();
     }
 
     public int getNWins() {
@@ -407,9 +476,12 @@ class Profile {
         return winList;
     }
 
-    public void addWin(int n) {
-        nWins++;
+    public void addScore(int n) {
         winList.add(n);
+    }
+
+    public void addWin() {
+        nWins++;
     }
 
     public void setName(String name) {
@@ -422,22 +494,58 @@ class Profile {
         return "name not set";
     }
 
+    @Deprecated //fortunatamente
+    public double getNetAtRound(int round) { //chiedo perdono per ciò che ho fatto, specialmente alla ram
+
+        if (round < 0)
+            return 0;
+        if (winList.get(round) < Settings.getInstance().getExtractionsPerRound())
+            return getNetAtRound(round - 1) - 1;
+        return Settings.getInstance().getMoneyPerWin() + getNetAtRound(round - 1) - 1;
+
+    }
+
+    public ArrayList<Double> getNetList() {
+
+        if (netList.isEmpty())
+            return null; //per facilitare la diagnostica
+        return netList;
+
+    }
+
+    public void generateNetList() {
+
+        for (int i = 0; i < getNOfBets(); i++) {
+            if (winList.get(i) < Settings.getInstance().getExtractionsPerRound()) {
+                if (i != 0)
+                    netList.add(netList.get(i - 1) - 1d);
+                else
+                    netList.add(-1d + Settings.getInstance().getStartMoney());
+            } else {
+                if (i != 0)
+                    netList.add(netList.get(i - 1) + Settings.getInstance().getMoneyPerWin() - 1d);
+                else
+                    netList.add(Settings.getInstance().getMoneyPerWin() + Settings.getInstance().getStartMoney() - 1d);
+
+            }
+        }
+    }
+
     public String toString(String tabulation) {
         return "Profile{" +
-                ",\n" + tabulation + "name=" + name +
-                ",\n" + tabulation + "nWins=" + nWins +
-                ",\n" + tabulation + "moneyWon=" + moneyWon +
-                ",\n" + tabulation + "moneySpent=" + moneySpent +
-                ",\n" + tabulation + "net=" + (moneyWon - moneySpent) +
+                ",\n" + tabulation + "name=" + getName() +
+                ",\n" + tabulation + "StartMoney=" + Settings.getInstance().getStartMoney() +
+                ",\n" + tabulation + "nWins=" + getNWins() +
+                ",\n" + tabulation + "moneyWon=" + getMoneyWon() +
+                ",\n" + tabulation + "moneySpent=" + getMoneySpent() +
+                ",\n" + tabulation + "net=" + getNet() +
                 ",\n" + tabulation + "betList=" + betListToString(tabulation + "     ") +
-                ",\n" + tabulation + "winList=" + winListToString(tabulation + "     ") +
-                "\n}\n";
+                tabulation + "winList={\n" + winListToString(tabulation + "     ") +
+                tabulation + "}\n";
     }
 
     private String winListToString(String tabulation) {
-
-        return winList.toString();
-
+        return tabulation + winList.toString() + "\n" + tabulation + "}\n";
     }
 
     private String betListToString(String tabulation) {
@@ -454,6 +562,6 @@ class Profile {
             output += "]\n";
         }
 
-        return "{\n" + output + tabulation + "}";
+        return "{\n" + output + tabulation + "}\n";
     }
 }
