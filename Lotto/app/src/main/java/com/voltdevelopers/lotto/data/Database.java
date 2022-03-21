@@ -185,10 +185,10 @@ public class Database {
             output += "Database" + i + "{" +
                     ",\n" + tabulation + "moneyPerWin=" + settings.getMoneyPerWin() +
                     ",\n" + tabulation + "gameCounter=" + instance.get(i).allRounds.size() +
-                    ",\n" + tabulation + "pullChronology=" + instance.get(i).pullChronologyToString() +//\t non va, idk
+                    ",\n" + tabulation + "pullChronology=" + instance.get(i).pullChronologyToString(tabulation + "     ") +//\t non va, idk
                     ",\n" + tabulation + "pullsPerNumber=" + instance.get(i).pullsPerNumberToString(tabulation + "     ") +
                     ",\n" + tabulation + "rounds=" + instance.get(i).allRoundsToString(tabulation + "     ") +
-                    ",\n" + tabulation + "players=\n" + instance.get(i).allPlayersToString(tabulation + "     ") +
+                    ",\n" + tabulation + "players=" + instance.get(i).allPlayersToString(tabulation + "     ") +
                     ",\n" + tabulation + '}';
 
         }
@@ -199,10 +199,10 @@ public class Database {
 
     private String allRoundsToString(String tabulation) {
 
-        return "\n{" +
+        return "{" +
                 "\n" + tabulation + "preGameRounds=" + preGameRoundsToString(tabulation + "     ") +
                 ",\n" + tabulation + "significantRouds=" + significantRoundsToString(tabulation + "     ") +
-                '}';
+                tabulation + "}";
 
     }
 
@@ -220,7 +220,7 @@ public class Database {
             output += "]\n";
         }
 
-        return "\n{\n" + output + '}';
+        return "{\n" + output + tabulation + "}";
 
     }
 
@@ -238,7 +238,7 @@ public class Database {
             output += "]\n";
         }
 
-        return "\n{\n" + output + '}';
+        return "{\n" + output + tabulation + "}\n";
     }
 
     private String pullsPerNumberToString(String tabulation) {
@@ -249,14 +249,14 @@ public class Database {
             output += tabulation + "[" + (i + 1) + " -> " + pullsPerNumber[i] + "]\n";
         }
 
-        return "\n{\n" + output + '}';
+        return "{\n" + output + tabulation + "}";
     }
 
-    private String pullChronologyToString() {
+    private String pullChronologyToString(String tabulation) {
 
         String output = pullChronology.toString() + "\n";
 
-        return "\n{\n" + output + '}';
+        return "\n" + tabulation + "{\n" + tabulation + output + tabulation + "}";
     }
 
     private String allPlayersToString(String tabulation) {
@@ -265,12 +265,12 @@ public class Database {
         for (int i = 0; i < players.length; i++)
             out += tabulation + playerToString(i, tabulation);
 
-        return "{\n" + out + '}';
+        return "{\n" + out + tabulation + "}";
     }
 
     public String playerToString(int n, String tabulation) {
 
-        return players[n].toString(tabulation);
+        return players[n].toString(tabulation + "     ");
 
 
     }
@@ -540,12 +540,12 @@ class Profile {
                 ",\n" + tabulation + "moneySpent=" + getMoneySpent() +
                 ",\n" + tabulation + "net=" + getNet() +
                 ",\n" + tabulation + "betList=" + betListToString(tabulation + "     ") +
-                ",\n" + tabulation + "winList=" + winListToString() +
-                "\n}\n";
+                tabulation + "winList={\n" + winListToString(tabulation + "     ") +
+                tabulation + "}\n";
     }
 
-    private String winListToString() {
-        return winList.toString();
+    private String winListToString(String tabulation) {
+        return tabulation + winList.toString() + "\n" + tabulation + "}\n";
     }
 
     private String betListToString(String tabulation) {
@@ -562,6 +562,6 @@ class Profile {
             output += "]\n";
         }
 
-        return "{\n" + output + tabulation + "}";
+        return "{\n" + output + tabulation + "}\n";
     }
 }
