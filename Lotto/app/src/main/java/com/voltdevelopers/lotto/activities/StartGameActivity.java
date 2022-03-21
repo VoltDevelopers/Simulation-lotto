@@ -38,11 +38,8 @@ import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.game.Game;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -453,18 +450,24 @@ public class StartGameActivity extends AppCompatActivity {
         textData2.setText(text);
     }
 
+    // TODO: Save for android 10+
+
     public void saveText(View view) {
         try (FileOutputStream fos = new FileOutputStream(getExternalPath())) {
             String text = Database.getInstance().toString();
             fos.write(text.getBytes());
-            Toast.makeText(this, "File saved to Downloads folder.", Toast.LENGTH_SHORT).show();
         } catch (IOException ex) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
         }
+        fileSavedSuccessfully();
     }
 
     private File getExternalPath() {
-        return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "lotto_output" + sdf.format(new Date()) + (".txt"));
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+            return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "lotto_output" + sdf.format(new Date()) + (".txt"));
+        }else{
+            return new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "lotto_output" + sdf.format(new Date()) + (".txt"));
+        }
     }
 
     public void showText(View view) {
@@ -472,6 +475,14 @@ public class StartGameActivity extends AppCompatActivity {
         startActivity(intent);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             Log.i("INFO", "Started Activity" + intent.getIdentifier());
+        }
+    }
+
+    private void fileSavedSuccessfully(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+            Toast.makeText(this, "File saved to Downloads folder", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "File saved to /storage/self/primary/Android/data/com.voltdevelopers.lotto", Toast.LENGTH_SHORT).show();
         }
     }
 
