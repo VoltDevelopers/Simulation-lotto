@@ -2,6 +2,7 @@ package com.voltdevelopers.lotto.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -52,7 +53,6 @@ import java.util.Optional;
 
 public class StartGameActivity extends AppCompatActivity {
 
-    // BUG: если открыть настройки но нажать на кнопку назад то будет ошибка бустой инстанции db
     EditText presetGameCount, significantGameCount, startMoney;
     Button buttonStart;
     RadioButton btn1, btn2, btn3;
@@ -81,6 +81,7 @@ public class StartGameActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SimpleDateFormat")
     private void showSettings() {
         Database.createInstance();
         sdf = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -115,7 +116,7 @@ public class StartGameActivity extends AppCompatActivity {
                     .map(Editable::toString)
                     .filter(s -> s.matches("\\d+"))
                     .map(Integer::valueOf)
-                    .orElse(100);
+                    .orElse(1000);
 
             int money = Optional.ofNullable(startMoney.getText())
                     .map(Editable::toString)
@@ -179,6 +180,7 @@ public class StartGameActivity extends AppCompatActivity {
         firstChart.setScaleEnabled(false);
         firstChart.setDrawBorders(true);
         firstChart.setPinchZoom(false);
+        firstChart.setAutoScaleMinMaxEnabled(true);
         firstChart.setDrawGridBackground(false);
         firstChart.getAxisRight().setEnabled(false);
         firstChart.setBorderColor(Color.GREEN);
@@ -194,7 +196,6 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setLabelCount(10, false);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
-        yAxis.setAxisMaximum((float) Database.getInstance().getSizeSignificantPulls() / 10); //percentuale massima
         yAxis.setGranularity(1f);
         yAxis.setCenterAxisLabels(false);
         yAxis.setValueFormatter(new ValueFormatter() {
@@ -319,6 +320,7 @@ public class StartGameActivity extends AppCompatActivity {
         secondChart.setDragEnabled(true);
         secondChart.setScaleEnabled(false);
         secondChart.setDrawBorders(true);
+        secondChart.setAutoScaleMinMaxEnabled(true);
         secondChart.setPinchZoom(false);
         secondChart.setDrawGridBackground(false);
         secondChart.getAxisRight().setEnabled(false);
@@ -336,8 +338,6 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setLabelCount(10, false);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
-        yAxis.setAxisMaximum((float) (Settings.getInstance().getStartMoney() + Settings.getInstance().getMoneyPerWin() * (Database.getInstance().getSizeSignificantPulls() / 5)));
-        yAxis.setAxisMinimum((float) ((Settings.getInstance().getStartMoney() + Settings.getInstance().getMoneyPerWin() * (Database.getInstance().getSizeSignificantPulls() / 5))) * (-1));
         yAxis.setGranularity(1f);
         yAxis.setCenterAxisLabels(false);
         yAxis.setValueFormatter(new ValueFormatter() {
