@@ -11,7 +11,6 @@ public class Console {
 
     private Console() {
         inputSc = new Scanner(System.in);
-        // add file for logs
     }
 
     public static Console getInstance () {
