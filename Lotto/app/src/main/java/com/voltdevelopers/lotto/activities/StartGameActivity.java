@@ -2,10 +2,15 @@ package com.voltdevelopers.lotto.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -32,9 +37,12 @@ import com.voltdevelopers.lotto.data.Settings;
 import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.game.Game;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 public class StartGameActivity extends AppCompatActivity {
@@ -44,8 +52,7 @@ public class StartGameActivity extends AppCompatActivity {
     RadioButton btn1, btn2, btn3;
     ArrayList<RadioButton> arrayBtn;
     TextView textData, textData2;
-
-    private static final String TAG = "PatternGameActivity";
+    SimpleDateFormat sdf;
 
     private Dialog settingsDialog;
     private LineChart firstChart, secondChart;
@@ -57,6 +64,7 @@ public class StartGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_game);
 
+        sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         showSettings();
         initSettingsBtn();
     }
@@ -68,10 +76,13 @@ public class StartGameActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SimpleDateFormat")
     private void showSettings() {
         Database.createInstance();
         db = Database.getInstance();
+
         settingsDialog = new Dialog(this);
+        settingsDialog.setCancelable(false);
         settingsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         settingsDialog.setContentView(R.layout.settings_modal);
         initRes();
@@ -100,7 +111,7 @@ public class StartGameActivity extends AppCompatActivity {
                     .map(Editable::toString)
                     .filter(s -> s.matches("\\d+"))
                     .map(Integer::valueOf)
-                    .orElse(100);
+                    .orElse(1000);
 
             int money = Optional.ofNullable(startMoney.getText())
                     .map(Editable::toString)
@@ -164,6 +175,7 @@ public class StartGameActivity extends AppCompatActivity {
         firstChart.setScaleEnabled(false);
         firstChart.setDrawBorders(true);
         firstChart.setPinchZoom(false);
+        firstChart.setAutoScaleMinMaxEnabled(true);
         firstChart.setDrawGridBackground(false);
         firstChart.getAxisRight().setEnabled(false);
         firstChart.setBorderColor(Color.GREEN);
@@ -179,9 +191,14 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setLabelCount(10, false);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
-        yAxis.setAxisMaximum((float) Database.getInstance().getSizeSignificantPulls() / 2); //percentuale massima
         yAxis.setGranularity(1f);
         yAxis.setCenterAxisLabels(false);
+        yAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return super.getFormattedValue(value) + " Wins";
+            }
+        });
 
     }
 
@@ -189,12 +206,18 @@ public class StartGameActivity extends AppCompatActivity {
 
         XAxis xAxis = firstChart.getXAxis();
         xAxis.setTextColor(Color.GREEN);
-        xAxis.setLabelCount(5, false);
+        xAxis.setLabelCount(1, false);
         xAxis.removeAllLimitLines();
         xAxis.setAxisMaximum(db.getSizeSignificantPulls());
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setAvoidFirstLastClipping(true);
+        xAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return super.getFormattedValue(value) + " Games";
+            }
+        });
 
     }
 
@@ -292,6 +315,7 @@ public class StartGameActivity extends AppCompatActivity {
         secondChart.setDragEnabled(true);
         secondChart.setScaleEnabled(false);
         secondChart.setDrawBorders(true);
+        secondChart.setAutoScaleMinMaxEnabled(true);
         secondChart.setPinchZoom(false);
         secondChart.setDrawGridBackground(false);
         secondChart.getAxisRight().setEnabled(false);
@@ -309,8 +333,6 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setLabelCount(10, false);
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
-        yAxis.setAxisMaximum((float) (Settings.getInstance().getStartMoney() * 1.5 < 100 ? 100 : Settings.getInstance().getStartMoney() * 1.5));//soldi massimi guadagnati
-        yAxis.setAxisMinimum(-(float) (Settings.getInstance().getStartMoney() * 1.5 < 100 ? 100 : Settings.getInstance().getStartMoney() * 1.5));
         yAxis.setGranularity(1f);
         yAxis.setCenterAxisLabels(false);
         yAxis.setValueFormatter(new ValueFormatter() {
@@ -326,12 +348,18 @@ public class StartGameActivity extends AppCompatActivity {
 
         XAxis xAxis = secondChart.getXAxis();
         xAxis.setTextColor(Color.GREEN);
-        xAxis.setLabelCount(5, false);
+        xAxis.setLabelCount(1, false);
         xAxis.removeAllLimitLines();
         xAxis.setAxisMaximum(db.getSizeSignificantPulls());
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setAvoidFirstLastClipping(true);
+        xAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return super.getFormattedValue(value) + " Games";
+            }
+        });
 
     }
 
@@ -422,24 +450,29 @@ public class StartGameActivity extends AppCompatActivity {
         textData2.setText(text);
     }
 
-    public void saveText(View view) {
-        FileOutputStream fos = null;
-        try {
-            String text = Database.getInstance().toString();
+    // TODO: Save for android 10+
 
-            fos = openFileOutput("DataLotto.txt", MODE_PRIVATE);
+    public void saveText(View view) {
+        try (FileOutputStream fos = new FileOutputStream(getExternalPath())) {
+            String text = Database.getInstance().toString();
             fos.write(text.getBytes());
-            Toast.makeText(this, "Файл сохранен", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "File saved to /storage/self/primary/Android/data/com.voltdevelopers.lotto", Toast.LENGTH_SHORT).show();
         } catch (IOException ex) {
             Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
-        } finally {
-            try {
-                if (fos != null)
-                    fos.close();
-            } catch (IOException ex) {
-
-                Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
-            }
         }
     }
+
+    private File getExternalPath() {
+        return new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "lotto_output" + sdf.format(new Date()) + (".txt"));
+    }
+
+    public void showText(View view) {
+        Intent intent = new Intent(StartGameActivity.this, StatisticActivity.class);
+        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            Log.i("INFO", "Started Activity" + intent.getIdentifier());
+        }
+    }
+
+
 }

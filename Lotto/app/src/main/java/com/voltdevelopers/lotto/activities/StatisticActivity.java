@@ -8,18 +8,14 @@ import android.widget.TextView;
 import com.voltdevelopers.lotto.R;
 import com.voltdevelopers.lotto.data.Database;
 
-public class StatActivity extends AppCompatActivity {
-
-    Database db;
-
+public class StatisticActivity extends AppCompatActivity {
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stat);
 
-        db = Database.getInstance();
-
         TextView text = findViewById(R.id.dbStat);
-        text.setText(db.toString());
+        text.setText(Database.getInstance().toString());
     }
 }

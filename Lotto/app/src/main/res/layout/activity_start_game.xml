@@ -88,15 +88,32 @@
             android:id="@+id/buttonFile"
             style="@style/standard_btn"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:text="Get File"
+            android:layout_marginTop="20dp"
+            android:onClick="saveText"
+            android:layout_width="160dp"
+            android:text="Save file"
             app:cornerRadius="40dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.092"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintTop_toBottomOf="@+id/textData2"
             app:strokeColor="@color/neon_green"
             app:strokeWidth="2dp" />
 
+        <Button
+            android:id="@+id/buttonSee"
+            style="@style/standard_btn"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:onClick="showText"
+            android:text="See data"
+            app:cornerRadius="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.907"
+            app:layout_constraintStart_toEndOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/textData2"
+            app:strokeColor="@color/neon_green"
+            app:strokeWidth="2dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,6 @@ public class Console {
 
     private Console() {
         inputSc = new Scanner(System.in);
-        // add file for logs
     }
 
     public static Console getInstance () {
@@ -28,12 +27,6 @@ public class Console {
     public void printExp(Exception exp) {
         exp.printStackTrace();
         Log.e(TAG, "EXCEPTION", exp);
-    }
-
-    public String getStr(){
-        String input = inputSc.next();
-        printStr(input);
-        return input;
     }
 
     public int getInt(){

@@ -8,12 +8,14 @@ import it.unimi.dsi.util.XoRoShiRo128PlusRandom;
 
 public class StdRandom {
 
+    // https://dsiutils.di.unimi.it/docs/it/unimi/dsi/util/XoRoShiRo128PlusRandom.html
+
     public static int[] getRandomArray(int num, int maxRandom) throws InputException {
         if (num < 1) {
             throw new InputException("The number is less than 1");
         }
         int[] array = new int[num];
-        int val = 0;
+        int val;
         for (int i = 0; i < num; i++) {
             val = (int) ( new XoRoShiRo128PlusRandom().nextInt(maxRandom - 1) + 1);
             if (isAlreadyDrawn(array, val)) {
@@ -35,5 +37,3 @@ public class StdRandom {
         return false;
     }
 }
-
-// https://dsiutils.di.unimi.it/docs/it/unimi/dsi/util/XoRoShiRo128PlusRandom.html

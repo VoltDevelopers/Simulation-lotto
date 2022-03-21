@@ -2,14 +2,12 @@ package com.voltdevelopers.lotto.data;
 
 import androidx.annotation.NonNull;
 
-import com.voltdevelopers.lotto.layout.Console;
-
 import java.util.ArrayList;
 
 public class Database {
 
     private final Settings settings;
-    private static ArrayList<Database> instance = new ArrayList<Database>();;
+    private static final ArrayList<Database> instance = new ArrayList<>();
 
     private Profile[] players;
     private final Analysis analysis;
@@ -34,14 +32,13 @@ public class Database {
 
     public static void createInstance() {
         instance.add(new Database());
-        instance.size();
     }
 
     public static Database getInstance() {
         if (!instance.isEmpty())
-            return instance.get(instance.size()-1);
+            return instance.get(instance.size() - 1);
         instance.add(new Database());
-        return instance.get(instance.size()-1);
+        return instance.get(instance.size() - 1);
     }
 
     private void initPlayers() {
@@ -133,6 +130,10 @@ public class Database {
         return players[playerN].getNetAtRound(roundN) + settings.getStartMoney();
     }
 
+    public ArrayList<Double> getPlayerNetList(int playerN) {
+        return players[playerN].getNetList();
+    }
+
     //----------------------analysis methods--------------------------------------------------------
 
     public int[] getNMostFrequent(int nRequested) {
@@ -183,7 +184,7 @@ public class Database {
 
         return "\n{" +
                 "\n" + tabulation + "preGameRounds=" + preGameRoundsToString(tabulation + "     ") +
-                ",\n" + tabulation + "significantRouds=" + significantRoundsToString(tabulation + "     ") +
+                ",\n" + tabulation + "significantRounds=" + significantRoundsToString(tabulation + "     ") +
                 '}';
 
     }
@@ -259,7 +260,6 @@ public class Database {
 
     private class Analysis {
 
-        private Console console = Console.getInstance();
 
         public int[] getLatestN(int nRequested) {
             int[] output = new int[nRequested];
@@ -268,8 +268,6 @@ public class Database {
                 output[i] = pullChronology.get(chronoSize);
                 chronoSize--;
             }
-
-            console.printStr("Took an array of length " + nRequested + " containing the last numbers -> " + output.toString() + "\n");
             return output;
         }
 
@@ -278,7 +276,6 @@ public class Database {
                 pullChronology.remove(pullChronology.lastIndexOf(n));
 
             pullChronology.add(n);
-            console.printStr("Modified pullChronology " + pullChronology.toString() + "\n");
         }
 
         public int[] getOldestN(int nRequested) {
@@ -287,7 +284,6 @@ public class Database {
                 output[i] = pullChronology.get(i);
             }
 
-            console.printStr("Took an array of length " + nRequested + " containing the oldest numbers -> " + output.toString() + "\n");
             return output;
         }
 
@@ -302,18 +298,15 @@ public class Database {
                     }
                 }
             }
-            console.printStr("Took an array of length " + nRequested + " containing the most frequent numbers -> " + output.toString() + "\n");
             return output;
         }
 
         private boolean intArrayContains(int[] arr, int n) {
             for (int i = 0; i < arr.length; i++) {
                 if (arr[i] == n) {
-                    console.printStr("The array " + arr.toString() + " contains " + n + "\n");
                     return true;
                 }
             }
-            console.printStr("The array " + arr.toString() + " does not contains " + n + "\n");
             return false;
         }
 
@@ -337,16 +330,15 @@ public class Database {
 
                 }
 
-                assignSpendings(current);
+                assignSpending(current);
                 assignWinMoney(current);
+                current.generateNetList();
             }
 
-            console.printStr("Assigned wins and money earned to all players" + "\n"); //<-- versione temp di joel che non sa cosa deve fare, TODO farlo giusto secondo necessità
         }
 
-        private void assignSpendings(Profile p) {
+        private void assignSpending(Profile p) {
             p.addToMoneySpent(Settings.COST_OF_PLAY * p.getNOfBets());
-
         }
 
         private void assignWinMoney(Profile p) {
@@ -363,6 +355,8 @@ class Profile {
     private int nWins;
     private final ArrayList<int[]> betList;
     private final ArrayList<Integer> winList;
+    private final ArrayList<Double> netList;
+
 
     public Profile() {
         moneyWon = 0;
@@ -370,6 +364,7 @@ class Profile {
         nWins = 0;
         betList = new ArrayList<>();
         winList = new ArrayList<>();
+        netList = new ArrayList<>();
     }
 
     public Profile(String name) {
@@ -450,14 +445,41 @@ class Profile {
         return "name not set";
     }
 
-    public double getNetAtRound(int round){ //chiedo perdono per ciò che ho fatto, specialmente alla ram
+    @Deprecated //fortunatamente
+    public double getNetAtRound(int round) { //chiedo perdono per ciò che ho fatto, specialmente alla ram
 
-        if(round < 0)
+        if (round < 0)
             return 0;
-        if(winList.get(round) < Settings.getInstance().getExtractionsPerRound())
-            return getNetAtRound(round -1) -1;
-        return Settings.getInstance().getMoneyPerWin() + getNetAtRound(round -1) -1;
+        if (winList.get(round) < Settings.getInstance().getExtractionsPerRound())
+            return getNetAtRound(round - 1) - 1;
+        return Settings.getInstance().getMoneyPerWin() + getNetAtRound(round - 1) - 1;
 
+    }
+
+    public ArrayList<Double> getNetList() {
+
+        if (netList.isEmpty())
+            return null; //per facilitare la diagnostica
+        return netList;
+
+    }
+
+    public void generateNetList() {
+
+        for (int i = 0; i < getNOfBets(); i++) {
+            if (winList.get(i) < Settings.getInstance().getExtractionsPerRound()) {
+                if (i != 0)
+                    netList.add(netList.get(i - 1) - 1d);
+                else
+                    netList.add(-1d);
+            } else {
+                if (i != 0)
+                    netList.add(netList.get(i - 1) + Settings.getInstance().getMoneyPerWin() - 1d);
+                else
+                    netList.add(Settings.getInstance().getMoneyPerWin() - 1d);
+
+            }
+        }
     }
 
     public String toString(String tabulation) {
