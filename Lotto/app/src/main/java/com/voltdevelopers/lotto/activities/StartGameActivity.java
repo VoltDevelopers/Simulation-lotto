@@ -450,15 +450,6 @@ public class StartGameActivity extends AppCompatActivity {
         textData2.setText(text);
     }
 
-    public void showData() {
-        Intent intent = new Intent(StartGameActivity.this, StatisticActivity.class);
-        startActivity(intent);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            Log.i("INFO", "Started Activity" + intent.getIdentifier());
-        }
-    }
-
-
     // TODO: Save for android 10+
 
     public void saveText(View view) {
@@ -472,7 +463,7 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private File getExternalPath() {
-        return new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), buildFileName());
+        return new File(getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "lotto_output" + sdf.format(new Date()) + (".txt"));
     }
 
     public void showText(View view) {
@@ -483,7 +474,5 @@ public class StartGameActivity extends AppCompatActivity {
         }
     }
 
-    private String buildFileName() {
-        return ("lotto_output" + sdf.format(new Date()) + (".txt"));
-    }
+
 }
