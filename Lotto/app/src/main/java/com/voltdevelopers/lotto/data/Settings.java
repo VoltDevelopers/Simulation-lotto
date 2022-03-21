@@ -8,7 +8,7 @@ public class Settings {
     public static final int EXTRACTIONS = 5;
 
     private int startMoney;
-    private boolean[] playersToPlay;
+    private final boolean[] playersToPlay;
     private double moneyPerWin;
     private int presetGameCount;
     private int extractionsPerRound;
@@ -42,10 +42,6 @@ public class Settings {
 
     public boolean[] getPlayersToPlay() {
         return playersToPlay;
-    }
-
-    public void setPlayersToPlay(boolean[] playersToPlay) {
-        this.playersToPlay = playersToPlay;
     }
 
     public double getMoneyPerWin() {
