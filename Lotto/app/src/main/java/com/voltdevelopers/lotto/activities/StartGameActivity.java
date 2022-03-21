@@ -362,14 +362,12 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private void addSecondDescription() {
-
         Description description = new Description();
         description.setText("'Guadagno' netto");
         description.setTextColor(Color.GREEN);
         description.setTextSize(15);
         description.setPosition(900, 100);
         secondChart.setDescription(description);
-
     }
 
     private void addSecondLegend() {
@@ -383,9 +381,9 @@ public class StartGameActivity extends AppCompatActivity {
         legend.setWordWrapEnabled(true);
         legend.setMaxSizePercent(0.7f);
         legend.setForm(Legend.LegendForm.CIRCLE);
-        LegendEntry[] legendEntries = new LegendEntry[5];
+        LegendEntry[] legendEntries = new LegendEntry[6];
 
-        for (int i = 0; i < legendEntries.length; i++) {
+        for (int i = 0; i < 5; i++) {
 
             LegendEntry entry = new LegendEntry();
             entry.formColor = COLORS[i];
@@ -394,8 +392,12 @@ public class StartGameActivity extends AppCompatActivity {
 
         }
 
-        legend.setCustom(legendEntries);
+        LegendEntry entry = new LegendEntry();
+        entry.formColor = Color.GREEN;
+        entry.label = "Banco " + 6;
+        legendEntries[5] = entry;
 
+        legend.setCustom(legendEntries);
     }
 
     private void addDataToSecondChart() {
@@ -406,9 +408,13 @@ public class StartGameActivity extends AppCompatActivity {
 
         for (int i = 0; i < Settings.getInstance().getPlayersToPlay().length; i++) { //ciclo per le 5 linee
             yValues.add(new ArrayList<>());
-            for (int j = 0; j < Database.getInstance().getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
-                yValues.get(i).add(new Entry(j, Database.getInstance().getPlayerNetList(i).get(j).floatValue()));
-            }
+                for (int j = 0; j < Database.getInstance().getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
+                    if (yValues.size() == 6){
+                        // TODO: 21/03/22  
+                    }else{
+                        yValues.get(i).add(new Entry(j, Database.getInstance().getPlayerNetList(i).get(j).floatValue()));
+                    }
+                }
 
             lineDataSets.add(new LineDataSet(yValues.get(i), ""));
             lineDataSets.get(i).setFillAlpha(110);
@@ -441,8 +447,6 @@ public class StartGameActivity extends AppCompatActivity {
         textData2.setText(text);
     }
 
-    // TODO: Save for android 10+
-
     public void saveText(View view) {
         try (FileOutputStream fos = new FileOutputStream(getExternalPath())) {
             String text = Database.getInstance().toString();
@@ -468,7 +472,6 @@ public class StartGameActivity extends AppCompatActivity {
             Log.i("INFO", "Started Activity" + intent.getIdentifier());
         }
     }
-<<<<<<< HEAD
 
     private void fileSavedSuccessfully(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
@@ -478,6 +481,4 @@ public class StartGameActivity extends AppCompatActivity {
         }
     }
 
-=======
->>>>>>> aa721a62700e95df426ea5c25b9d361abaa33911
 }
