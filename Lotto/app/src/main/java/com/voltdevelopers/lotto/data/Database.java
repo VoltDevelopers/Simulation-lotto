@@ -384,12 +384,13 @@ public class Database {
 
             for (int i = 0; i < significantRounds.size(); i++) {
 
-                double lastNet = (double) (settings.MAX_PLAYERS * settings.COST_OF_PLAY);
+                double lastNet = (Settings.MAX_PLAYERS * Settings.COST_OF_PLAY);
                 for (Profile current : players) {
 
                     if (current.getHitsOnSelectedBet(i) == settings.getExtractionsPerRound())
                         lastNet -= Settings.getInstance().getMoneyPerWin();
-
+                    if (current.getHitsOnSelectedBet(i) == 1 && settings.getExtractionsPerRound() == 2)
+                        lastNet -= 5.62;
                 }
 
                 if (i != 0)
