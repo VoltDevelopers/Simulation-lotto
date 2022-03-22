@@ -102,12 +102,14 @@ public class StartGameActivity extends AppCompatActivity {
             int preGames = Optional.ofNullable(presetGameCount.getText())
                     .map(Editable::toString)
                     .filter(s -> s.matches("\\d+"))
+                    .filter(s -> s.matches("^[1-9][0-9]*$"))
                     .map(Integer::valueOf)
                     .orElse(1000);
 
             int significantGames = Optional.ofNullable(significantGameCount.getText())
                     .map(Editable::toString)
                     .filter(s -> s.matches("\\d+"))
+                    .filter(s -> s.matches("^[1-9][0-9]*$"))
                     .map(Integer::valueOf)
                     .orElse(1000);
 
@@ -242,6 +244,11 @@ public class StartGameActivity extends AppCompatActivity {
         legend.setCustom(legendEntries);
 
     }
+
+    private void setNames(){
+
+    }
+
 
     private void addDataToFirstChart() {
 
