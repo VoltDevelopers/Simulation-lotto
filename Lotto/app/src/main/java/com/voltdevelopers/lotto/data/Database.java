@@ -126,7 +126,7 @@ public class Database {
     }*/
 
     public double getPlayerWinPercentage(int playerN) {
-        return (double) players[playerN].getNWins() / (double) players[playerN].getNOfBets() * 100d;
+        return (double) (players[playerN].getNWins(0) + (players[playerN].getNWins(1))/2) / (double) players[playerN].getNOfBets() * 100d;
     }
 
     public ArrayList<Integer> getPlayerWinList(int playerN) {
@@ -352,6 +352,8 @@ public class Database {
                     current.addScore(winsInCurrentRound);
                     if (winsInCurrentRound == settings.getExtractionsPerRound())
                         current.addWin();
+                    if (winsInCurrentRound == 1 && settings.getExtractionsPerRound() == 2)
+                        current.addSecondaryWin();
 
                 }
 
@@ -370,21 +372,26 @@ public class Database {
         }
 
         private void assignWinMoney(Profile p) {
-            for (int i = 0; i < p.getNOfBets(); i++)
+            for (int i = 0; i < p.getNOfBets(); i++){
                 if (p.getHitsOnSelectedBet(i) == settings.getExtractionsPerRound())
                     p.addToMoneyWon(settings.getMoneyPerWin());
+                if (settings.getExtractionsPerRound() == 2 && p.getHitsOnSelectedBet(i) == 1){
+                    p.addToMoneyWon(5.62);
+                }
+            }
         }
 
         private void generateSystemNetList() {
 
             for (int i = 0; i < significantRounds.size(); i++) {
 
-                double lastNet = (double) (settings.MAX_PLAYERS * settings.COST_OF_PLAY);
+                double lastNet = (Settings.MAX_PLAYERS * Settings.COST_OF_PLAY);
                 for (Profile current : players) {
 
                     if (current.getHitsOnSelectedBet(i) == settings.getExtractionsPerRound())
                         lastNet -= Settings.getInstance().getMoneyPerWin();
-
+                    if (current.getHitsOnSelectedBet(i) == 1 && settings.getExtractionsPerRound() == 2)
+                        lastNet -= 5.62;
                 }
 
                 if (i != 0)
@@ -399,7 +406,7 @@ public class Database {
 class Profile {
     private String name;
     private double moneyWon, moneySpent;
-    private int nWins;
+    private int[] nWins;
     private final ArrayList<int[]> betList;
     private final ArrayList<Integer> winList;
     private final ArrayList<Double> netList;
@@ -408,7 +415,7 @@ class Profile {
     public Profile() {
         moneyWon = 0;
         moneySpent = 0;
-        nWins = 0;
+        nWins = new int[2];
         betList = new ArrayList<>();
         winList = new ArrayList<>();
         netList = new ArrayList<>();
@@ -468,8 +475,8 @@ class Profile {
         return moneyWon - moneySpent + Settings.getInstance().getStartMoney();
     }
 
-    public int getNWins() {
-        return nWins;
+    public int getNWins(int type) {
+        return nWins[type];
     }
 
     public ArrayList<Integer> getWinList() {
@@ -481,7 +488,11 @@ class Profile {
     }
 
     public void addWin() {
-        nWins++;
+        nWins[0]++;
+    }
+
+    public void addSecondaryWin() {
+        nWins[1]++;
     }
 
     public void setName(String name) {
@@ -535,7 +546,7 @@ class Profile {
         return "Profile{" +
                 ",\n" + tabulation + "name=" + getName() +
                 ",\n" + tabulation + "StartMoney=" + Settings.getInstance().getStartMoney() +
-                ",\n" + tabulation + "nWins=" + getNWins() +
+                ",\n" + tabulation + "nWins=" + getNWins(0) + "; nSecondaryWins=" + getNWins(1) +
                 ",\n" + tabulation + "moneyWon=" + getMoneyWon() +
                 ",\n" + tabulation + "moneySpent=" + getMoneySpent() +
                 ",\n" + tabulation + "net=" + getNet() +

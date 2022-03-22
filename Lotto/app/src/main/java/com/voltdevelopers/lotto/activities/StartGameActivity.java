@@ -57,6 +57,7 @@ public class StartGameActivity extends AppCompatActivity {
     private Dialog settingsDialog;
     private LineChart firstChart, secondChart;
     private static final int[] COLORS = {Color.RED, Color.YELLOW, Color.WHITE, Color.MAGENTA, Color.BLUE, Color.GREEN};
+    private static final String[] NAMES = {"Il Copione", "Il Ritardatario", "L'Azzardoso", "Il Testardo", "L'Ingenuo"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -236,7 +237,7 @@ public class StartGameActivity extends AppCompatActivity {
 
             LegendEntry entry = new LegendEntry();
             entry.formColor = COLORS[i];
-            entry.label = "giocatore " + (i + 1);
+            entry.label = NAMES[i];
             legendEntries[i] = entry;
 
         }
@@ -291,7 +292,7 @@ public class StartGameActivity extends AppCompatActivity {
         for (int i = 0; i < 5; i++) {
 
             double aproxPerc = Math.round(Database.getInstance().getPlayerWinPercentage(i) * 100.0) / 100.0;
-            text += "Percentuale vittorie giocatore " + (i + 1) + " --> " + aproxPerc + "%\n\n";
+            text += "Percentuale vittorie de " + NAMES[i] + "\n--> " + aproxPerc + "%\n\n";
 
         }
         textData.setText(text);
@@ -369,9 +370,8 @@ public class StartGameActivity extends AppCompatActivity {
 
             LegendEntry entry = new LegendEntry();
             entry.formColor = COLORS[i];
-            entry.label = "giocatore " + (i + 1);
+            entry.label = NAMES[i];
             legendEntries[i] = entry;
-
         }
 
         LegendEntry entry = new LegendEntry();
@@ -422,10 +422,10 @@ public class StartGameActivity extends AppCompatActivity {
         for (int i = 0; i < 5; i++) {
 
             double aproxPerc = Math.round(Database.getInstance().getPlayerNet(i) * 100.0) / 100.0;
-            text += "Credito del giocatore " + (i + 1) + " --> " + aproxPerc + "$\n\n";
+            text += "Credito de " + NAMES[i] + "\n--> " + aproxPerc + "$\n\n";
 
         }
-        text += "Credito del banco       --> " + Math.round(Database.getInstance().getSystemNetList().get(Database.getInstance().getSystemNetList().size() - 1) * 100.0) / 100.0 + "$\n";
+        text += "Credito del banco"+"\n--> " + Math.round(Database.getInstance().getSystemNetList().get(Database.getInstance().getSystemNetList().size() - 1) * 100.0) / 100.0 + "$\n";
         textData2.setText(text);
     }
 
