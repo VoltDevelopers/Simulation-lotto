@@ -25,7 +25,8 @@
             android:hint="0$"
             android:inputType="number"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            app:layout_constraintTop_toBottomOf="@+id/textView7"
+            />
 
         <EditText
             android:id="@+id/significantGameCount"
