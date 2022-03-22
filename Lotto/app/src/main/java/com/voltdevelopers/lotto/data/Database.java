@@ -372,12 +372,13 @@ public class Database {
         }
 
         private void assignWinMoney(Profile p) {
-            for (int i = 0; i < p.getNOfBets(); i++)
+            for (int i = 0; i < p.getNOfBets(); i++){
                 if (p.getHitsOnSelectedBet(i) == settings.getExtractionsPerRound())
                     p.addToMoneyWon(settings.getMoneyPerWin());
-                else if (settings.getExtractionsPerRound() == 2 && p.getHitsOnSelectedBet(i) == 1){
+                if (settings.getExtractionsPerRound() == 2 && p.getHitsOnSelectedBet(i) == 1){
                     p.addToMoneyWon(5.62);
                 }
+            }
         }
 
         private void generateSystemNetList() {
