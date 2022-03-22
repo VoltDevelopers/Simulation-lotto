@@ -246,11 +246,6 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void setNames(){
-
-    }
-
-
     private void addDataToFirstChart() {
 
         ArrayList<ArrayList<Entry>> yValues = new ArrayList<>();
@@ -377,7 +372,6 @@ public class StartGameActivity extends AppCompatActivity {
             entry.formColor = COLORS[i];
             entry.label = NAMES[i];
             legendEntries[i] = entry;
-
         }
 
         LegendEntry entry = new LegendEntry();
