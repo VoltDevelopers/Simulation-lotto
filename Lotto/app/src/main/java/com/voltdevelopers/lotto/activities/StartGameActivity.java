@@ -122,6 +122,7 @@ public class StartGameActivity extends AppCompatActivity {
 
             Settings.getInstance().setStartMoney(money);
             Settings.getInstance().setPresetGameCount(preGames);
+            settingsDialog.dismiss();
 
             try {
                 Game game = new Game(significantGames);
@@ -132,7 +133,6 @@ public class StartGameActivity extends AppCompatActivity {
             Database.getInstance().assignWins();
 
             initAll();
-            settingsDialog.dismiss();
         });
         settingsDialog.show();
     }
@@ -275,12 +275,13 @@ public class StartGameActivity extends AppCompatActivity {
             lineDataSets.get(i).setColor(COLORS[i]);
             lineDataSets.get(i).setValueTextColor(COLORS[i]);
             dataSets.add(lineDataSets.get(i));
+            firstChart.notifyDataSetChanged();
+            firstChart.invalidate();
 
         }
 
         LineData data = new LineData(dataSets);
         firstChart.setData(data);
-        firstChart.invalidate();
 
     }
 
@@ -406,11 +407,13 @@ public class StartGameActivity extends AppCompatActivity {
             lineDataSets.get(i).setColor(COLORS[i]);
             lineDataSets.get(i).setValueTextColor(COLORS[i]);
             dataSets.add(lineDataSets.get(i));
+            secondChart.notifyDataSetChanged();
+            secondChart.invalidate();
         }
 
         LineData data = new LineData(dataSets);
         secondChart.setData(data);
-        secondChart.invalidate();
+
 
     }
 
