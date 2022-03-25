@@ -37,6 +37,8 @@ import com.voltdevelopers.lotto.data.Settings;
 import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.game.Game;
 
+import org.apache.commons.math3.geometry.euclidean.twod.Line;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -119,7 +121,6 @@ public class StartGameActivity extends AppCompatActivity {
 
             Settings.getInstance().setStartMoney(money);
             Settings.getInstance().setPresetGameCount(preGames);
-            settingsDialog.dismiss();
 
             try {
                 Game game = new Game(significantGames);
@@ -128,9 +129,9 @@ public class StartGameActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             Database.getInstance().assignWins();
-
             initAll();
         });
+        settingsDialog.dismiss();
         settingsDialog.show();
     }
 
@@ -149,11 +150,11 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private void initAll() {
-        initFirstChart();
+        /*initFirstChart();
         initFirstYAxis();
         initFirstXAxis();
         addFirstDescription();
-        addFirstLegend();
+        addFirstLegend();*/
         addDataToFirstChart();
         addFinalResultsFirstChart();
 
@@ -256,41 +257,77 @@ public class StartGameActivity extends AppCompatActivity {
 
     private void addDataToFirstChart() {
 
-        ArrayList<ArrayList<Entry>> yValues = new ArrayList<>();
-        ArrayList<LineDataSet> lineDataSets = new ArrayList<>();
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        firstChart = new LineChart(this);
+        firstChart = findViewById(R.id.graphic_1);
+        firstChart.setDragEnabled(true);
+        firstChart.setScaleEnabled(true);
+        firstChart.setDrawGridBackground(false);
+        firstChart.setPinchZoom(true);
 
+       LineData lineData = new LineData();
+       firstChart.setData(lineData);
 
-        for (int i = 0; i < Settings.getInstance().getPlayersToPlay().length; i++) { //ciclo per le 5 linee
+    }
 
-            yValues.add(new ArrayList<>());
-            float y = 0;
+    private void addEntryToFirstChart(){
 
-            for (int j = 0; j < Database.getInstance().getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
+        LineData lineData = firstChart.getData();
 
-                if (Database.getInstance().getPlayerWinList(i).get(j) == Settings.getInstance().getExtractionsPerRound()) {//se quel pattern ha vinto in quella prtita la percentuale aumenta
-                    y++;
-                }
-                yValues.get(i).add(new Entry(j, y));
+        if(lineData != null){
+
+            LineDataSet lineDataSet = (LineDataSet) lineData.getDataSetByIndex(0);
+
+            if(lineDataSet == null){
+
+                lineDataSet = createSet();
+                lineData.addDataSet(lineDataSet);
 
             }
 
-            lineDataSets.add(new LineDataSet(yValues.get(i), ""));
-            lineDataSets.get(i).setFillAlpha(110);
-            lineDataSets.get(i).setLineWidth(1f);
-            lineDataSets.get(i).setDrawCircles(false);
-            lineDataSets.get(i).setValueTextSize(4);
-            lineDataSets.get(i).setColor(COLORS[i]);
-            lineDataSets.get(i).setValueTextColor(COLORS[i]);
-            dataSets.add(lineDataSets.get(i));
+            lineData.addEntry(new Entry((float) (Math.random() * 75) + 60f, lineDataSet.getEntryCount()), 0);
+
             firstChart.notifyDataSetChanged();
-            firstChart.invalidate();
+            firstChart.setVisibleXRange(0, Database.getInstance().getSizeSignificantPulls());
+            firstChart.moveViewToX(lineData.getXMax() - 7);
+
 
         }
 
-        LineData data = new LineData(dataSets);
-        firstChart.setData(data);
+    }
 
+    private LineDataSet createSet(){
+
+        LineDataSet lineDataSet = new LineDataSet(null, null);
+
+        return lineDataSet;
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                for(int i = 0; i < 100; i++){
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            addEntryToFirstChart();
+
+                        }
+                    });
+
+                    try {
+                        Thread.sleep(600);
+                    } catch (InterruptedException e) { e.printStackTrace(); }
+                }
+            }
+        }).start();
     }
 
     private void addFinalResultsFirstChart() {
