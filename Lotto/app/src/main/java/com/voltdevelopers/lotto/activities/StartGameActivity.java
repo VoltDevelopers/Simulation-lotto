@@ -37,8 +37,6 @@ import com.voltdevelopers.lotto.data.Settings;
 import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.game.Game;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Line;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -59,6 +57,8 @@ public class StartGameActivity extends AppCompatActivity {
     private Dialog settingsDialog;
     private LineChart firstChart, secondChart;
     private static final int[] COLORS = {Color.RED, Color.YELLOW, Color.WHITE, Color.MAGENTA, Color.BLUE, Color.GREEN};
+    private int y;
+    private int current;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,8 +130,9 @@ public class StartGameActivity extends AppCompatActivity {
             }
             Database.getInstance().assignWins();
             initAll();
+            settingsDialog.dismiss();
         });
-        settingsDialog.dismiss();
+
         settingsDialog.show();
     }
 
@@ -150,12 +151,12 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private void initAll() {
-        /*initFirstChart();
+        initFirstChart();
         initFirstYAxis();
         initFirstXAxis();
         addFirstDescription();
-        addFirstLegend();*/
-        addDataToFirstChart();
+        addFirstLegend();
+        startThread();
         addFinalResultsFirstChart();
 
         initSecondChart();
@@ -171,14 +172,17 @@ public class StartGameActivity extends AppCompatActivity {
         firstChart = findViewById(R.id.graphic_1);
 
         firstChart.setDragEnabled(true);
-        firstChart.setScaleEnabled(false);
+        firstChart.setScaleEnabled(true);
         firstChart.setDrawBorders(true);
-        firstChart.setPinchZoom(false);
+        firstChart.setPinchZoom(true);
         firstChart.setAutoScaleMinMaxEnabled(true);
         firstChart.setDrawGridBackground(false);
         firstChart.getAxisRight().setEnabled(false);
         firstChart.setBorderColor(Color.GREEN);
         firstChart.setExtraOffsets(0, 5f, 0, 5f);
+        firstChart.setTouchEnabled(true);
+        LineData lineData = new LineData();
+        firstChart.setData(lineData);
     }
 
     private void initFirstYAxis() {
@@ -191,6 +195,7 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
         yAxis.setGranularity(1f);
+        yAxis.setAxisMaximum(120f);
         yAxis.setCenterAxisLabels(false);
         yAxis.setValueFormatter(new ValueFormatter() {
             @Override
@@ -255,23 +260,30 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void addDataToFirstChart() {
+    private void startThread() {
 
-        firstChart = new LineChart(this);
-        firstChart = findViewById(R.id.graphic_1);
-        firstChart.setDragEnabled(true);
-        firstChart.setScaleEnabled(true);
-        firstChart.setDrawGridBackground(false);
-        firstChart.setPinchZoom(true);
+        new Thread(() -> {
 
-       LineData lineData = new LineData();
-       firstChart.setData(lineData);
+            for(int i = 0; i < Database.getInstance().getSizeSignificantPulls(); i++){
+
+                int finalI = i;
+                runOnUiThread(() -> {
+                    addEntryToFirstChart(Database.getInstance().getPlayerWinList(0).get(finalI));
+                });
+
+                try {
+                    Thread.sleep(600);
+                } catch (InterruptedException e) { e.printStackTrace(); }
+            }
+        }).start();
 
     }
 
-    private void addEntryToFirstChart(){
+    private void addEntryToFirstChart(int wins){
 
+        y+=wins;
         LineData lineData = firstChart.getData();
+        current++;
 
         if(lineData != null){
 
@@ -284,12 +296,11 @@ public class StartGameActivity extends AppCompatActivity {
 
             }
 
-            lineData.addEntry(new Entry((float) (Math.random() * 75) + 60f, lineDataSet.getEntryCount()), 0);
+            lineData.addEntry(new Entry((float) wins, current), 0);
 
             firstChart.notifyDataSetChanged();
-            firstChart.setVisibleXRange(0, Database.getInstance().getSizeSignificantPulls());
+            //firstChart.setVisibleXRange( Database.getInstance().getSizeSignificantPulls());
             firstChart.moveViewToX(lineData.getXMax() - 7);
-
 
         }
 
@@ -298,37 +309,16 @@ public class StartGameActivity extends AppCompatActivity {
     private LineDataSet createSet(){
 
         LineDataSet lineDataSet = new LineDataSet(null, null);
+        lineDataSet.setFillAlpha(110);
+        lineDataSet.setLineWidth(1f);
+        lineDataSet.setDrawCircles(false);
+        lineDataSet.setValueTextSize(4);
+        lineDataSet.setColor(COLORS[0]);
+        lineDataSet.setValueTextColor(COLORS[0]);
 
         return lineDataSet;
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                for(int i = 0; i < 100; i++){
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            addEntryToFirstChart();
-
-                        }
-                    });
-
-                    try {
-                        Thread.sleep(600);
-                    } catch (InterruptedException e) { e.printStackTrace(); }
-                }
-            }
-        }).start();
-    }
 
     private void addFinalResultsFirstChart() {
 
