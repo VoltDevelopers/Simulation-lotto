@@ -37,6 +37,8 @@ import com.voltdevelopers.lotto.data.Settings;
 import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.game.Game;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -57,8 +59,7 @@ public class StartGameActivity extends AppCompatActivity {
     private Dialog settingsDialog;
     private LineChart firstChart, secondChart;
     private static final int[] COLORS = {Color.RED, Color.YELLOW, Color.WHITE, Color.MAGENTA, Color.BLUE, Color.GREEN};
-    private int y;
-    private int current;
+    private int yAxisValuePlayer1,yAxisValuePlayer2,yAxisValuePlayer3,yAxisValuePlayer4,yAxisValuePlayer5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +122,7 @@ public class StartGameActivity extends AppCompatActivity {
 
             Settings.getInstance().setStartMoney(money);
             Settings.getInstance().setPresetGameCount(preGames);
+            settingsDialog.dismiss();
 
             try {
                 Game game = new Game(significantGames);
@@ -130,7 +132,7 @@ public class StartGameActivity extends AppCompatActivity {
             }
             Database.getInstance().assignWins();
             initAll();
-            settingsDialog.dismiss();
+
         });
 
         settingsDialog.show();
@@ -174,7 +176,7 @@ public class StartGameActivity extends AppCompatActivity {
         firstChart.setDragEnabled(true);
         firstChart.setScaleEnabled(true);
         firstChart.setDrawBorders(true);
-        firstChart.setPinchZoom(true);
+        firstChart.setPinchZoom(false);
         firstChart.setAutoScaleMinMaxEnabled(true);
         firstChart.setDrawGridBackground(false);
         firstChart.getAxisRight().setEnabled(false);
@@ -195,7 +197,6 @@ public class StartGameActivity extends AppCompatActivity {
         yAxis.setTextColor(Color.GREEN);
         yAxis.removeAllLimitLines();
         yAxis.setGranularity(1f);
-        yAxis.setAxisMaximum(120f);
         yAxis.setCenterAxisLabels(false);
         yAxis.setValueFormatter(new ValueFormatter() {
             @Override
@@ -268,53 +269,68 @@ public class StartGameActivity extends AppCompatActivity {
 
                 int finalI = i;
                 runOnUiThread(() -> {
-                    addEntryToFirstChart(Database.getInstance().getPlayerWinList(0).get(finalI));
+                    addEntriesToFirstChart( finalI,Database.getInstance().getPlayerWinList(0).get(finalI),Database.getInstance().getPlayerWinList(1).get(finalI),Database.getInstance().getPlayerWinList(2).get(finalI),Database.getInstance().getPlayerWinList(3).get(finalI),Database.getInstance().getPlayerWinList(4).get(finalI));
                 });
 
                 try {
-                    Thread.sleep(600);
+                    Thread.sleep(5);
                 } catch (InterruptedException e) { e.printStackTrace(); }
             }
         }).start();
 
     }
 
-    private void addEntryToFirstChart(int wins){
+    private void addEntriesToFirstChart(int x, int currentWinPlayer1, int currentWinPlayer2, int currentWinPlayer3, int currentWinPlayer4, int currentWinPlayer5){
 
-        y+=wins;
-        LineData lineData = firstChart.getData();
-        current++;
+        yAxisValuePlayer1 +=currentWinPlayer1;
+        yAxisValuePlayer2 +=currentWinPlayer2;
+        yAxisValuePlayer3 +=currentWinPlayer3;
+        yAxisValuePlayer4 +=currentWinPlayer4;
+        yAxisValuePlayer5 +=currentWinPlayer5;
+        ArrayList <LineData> lineDataArrayList = new ArrayList<>();
+        ArrayList <LineDataSet> lineDataSets = new ArrayList<>();
+        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
-        if(lineData != null){
+        for(int i = 0; i < 5; i++){ lineDataArrayList.add(firstChart.getData());}
 
-            LineDataSet lineDataSet = (LineDataSet) lineData.getDataSetByIndex(0);
+        for(int i = 0; i < 5; i++){
 
-            if(lineDataSet == null){
+            if(lineDataArrayList.get(i) != null){
 
-                lineDataSet = createSet();
-                lineData.addDataSet(lineDataSet);
+                 lineDataSets.add((LineDataSet) lineDataArrayList.get(i).getDataSetByIndex(0));
+
+                if(lineDataSets.get(i) == null){
+
+                    lineDataSets.set(i,createSet(i));
+                    lineDataArrayList.get(i).addDataSet(lineDataSets.get(i));
+
+                }
+                lineDataArrayList.get(0).addEntry(new Entry((float) x, yAxisValuePlayer1), 0);
+                //lineDataArrayList.get(1).addEntry(new Entry((float) x, yAxisValuePlayer2), 0);
+                //lineDataArrayList.get(2).addEntry(new Entry((float) x, yAxisValuePlayer3), 0);
+                //lineDataArrayList.get(3).addEntry(new Entry((float) x, yAxisValuePlayer4), 0);
+                //lineDataArrayList.get(4).addEntry(new Entry((float) x, yAxisValuePlayer5), 0);
+
+
+                firstChart.notifyDataSetChanged();
+                //firstChart.setVisibleXRange( Database.getInstance().getSizeSignificantPulls());
+                firstChart.moveViewToX(lineDataArrayList.get(i).getXMax() - 7);
 
             }
-
-            lineData.addEntry(new Entry((float) wins, current), 0);
-
-            firstChart.notifyDataSetChanged();
-            //firstChart.setVisibleXRange( Database.getInstance().getSizeSignificantPulls());
-            firstChart.moveViewToX(lineData.getXMax() - 7);
 
         }
 
     }
 
-    private LineDataSet createSet(){
+    private LineDataSet createSet(int i){
 
         LineDataSet lineDataSet = new LineDataSet(null, null);
         lineDataSet.setFillAlpha(110);
         lineDataSet.setLineWidth(1f);
         lineDataSet.setDrawCircles(false);
+        lineDataSet.setColor(COLORS[i]);
         lineDataSet.setValueTextSize(4);
-        lineDataSet.setColor(COLORS[0]);
-        lineDataSet.setValueTextColor(COLORS[0]);
+        lineDataSet.setValueTextColor(COLORS[i]);
 
         return lineDataSet;
     }
