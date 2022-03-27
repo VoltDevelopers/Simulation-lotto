@@ -59,7 +59,7 @@ public class StartGameActivity extends AppCompatActivity {
     private Dialog settingsDialog;
     private LineChart firstChart, secondChart;
     private static final int[] COLORS = {Color.RED, Color.YELLOW, Color.WHITE, Color.MAGENTA, Color.BLUE, Color.GREEN};
-    private int yAxisValuePlayer1,yAxisValuePlayer2,yAxisValuePlayer3,yAxisValuePlayer4,yAxisValuePlayer5;
+    private int yAxisValuePlayers[] = new int[5];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -269,7 +269,8 @@ public class StartGameActivity extends AppCompatActivity {
 
                 int finalI = i;
                 runOnUiThread(() -> {
-                    addEntriesToFirstChart( finalI,Database.getInstance().getPlayerWinList(0).get(finalI),Database.getInstance().getPlayerWinList(1).get(finalI),Database.getInstance().getPlayerWinList(2).get(finalI),Database.getInstance().getPlayerWinList(3).get(finalI),Database.getInstance().getPlayerWinList(4).get(finalI));
+                    int currentWins[] = { Database.getInstance().getPlayerWinList(0).get(finalI),Database.getInstance().getPlayerWinList(1).get(finalI),Database.getInstance().getPlayerWinList(2).get(finalI),Database.getInstance().getPlayerWinList(3).get(finalI),Database.getInstance().getPlayerWinList(4).get(finalI) };
+                    addEntriesToFirstChart( finalI,currentWins);
                 });
 
                 try {
@@ -280,13 +281,9 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void addEntriesToFirstChart(int x, int currentWinPlayer1, int currentWinPlayer2, int currentWinPlayer3, int currentWinPlayer4, int currentWinPlayer5){
+    private void addEntriesToFirstChart(int x, int[] currentWins){
 
-        yAxisValuePlayer1 +=currentWinPlayer1;
-        yAxisValuePlayer2 +=currentWinPlayer2;
-        yAxisValuePlayer3 +=currentWinPlayer3;
-        yAxisValuePlayer4 +=currentWinPlayer4;
-        yAxisValuePlayer5 +=currentWinPlayer5;
+        for(int i = 0; i < 5; i++) yAxisValuePlayers[i] += currentWins[i];
         LineData lineData = firstChart.getData();
         LineDataSet[] lineDataSets = new LineDataSet[5];
 
@@ -302,11 +299,7 @@ public class StartGameActivity extends AppCompatActivity {
                     lineData.addDataSet(lineDataSets[i]);
 
                 }
-                lineData.addEntry(new Entry((float) x, yAxisValuePlayer1), 0);
-                lineData.addEntry(new Entry((float) x, yAxisValuePlayer2), 1);
-                lineData.addEntry(new Entry((float) x, yAxisValuePlayer3), 2);
-                lineData.addEntry(new Entry((float) x, yAxisValuePlayer4), 3);
-                lineData.addEntry(new Entry((float) x, yAxisValuePlayer5), 4);
+                lineData.addEntry(new Entry((float) x, yAxisValuePlayers[i]), i);
 
 
                 firstChart.notifyDataSetChanged();
