@@ -156,23 +156,23 @@ public class StartGameActivity extends AppCompatActivity {
         initFirstXAxis();
         addFirstDescription();
         addFirstLegend();
-        startThreadFirstGraph();
-        addFinalResultsFirstChart();
 
         initSecondChart();
         initSecondYAxis();
         initSecondXAxis();
         addSecondDescription();
         addSecondLegend();
-        startThreadSecondGraph();
+
+        startThread();
         addFinalResultsSecondChart();
+        addFinalResultsFirstChart();
     }
 
     private void initFirstChart() {
         firstChart = findViewById(R.id.graphic_1);
 
         firstChart.setDragEnabled(true);
-        firstChart.setScaleEnabled(true);
+        firstChart.setScaleEnabled(false);
         firstChart.setDrawBorders(true);
         firstChart.setPinchZoom(false);
         firstChart.setAutoScaleMinMaxEnabled(true);
@@ -259,86 +259,11 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void startThreadFirstGraph() {
-
-        new Thread(() -> {
-
-            for(int i = 0; i < Database.getInstance().getSizeSignificantPulls(); i++){
-
-                int finalI = i;
-                runOnUiThread(() -> {
-                    int currentWins[] = { Database.getInstance().getPlayerWinList(0).get(finalI),Database.getInstance().getPlayerWinList(1).get(finalI),Database.getInstance().getPlayerWinList(2).get(finalI),Database.getInstance().getPlayerWinList(3).get(finalI),Database.getInstance().getPlayerWinList(4).get(finalI) };
-                    addEntriesToFirstChart( finalI,currentWins);
-                });
-
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException e) { e.printStackTrace(); }
-            }
-        }).start();
-
-    }
-
-    private void addEntriesToFirstChart(int x, int[] currentWins){
-
-        for(int i = 0; i < 5; i++) yAxisValuePlayersFirstGraph[i] += currentWins[i];
-        LineData lineData = firstChart.getData();
-        LineDataSet[] lineDataSets = new LineDataSet[5];
-
-        for(int i = 0; i < 5; i++){
-
-            if(lineData != null){
-
-                 lineDataSets[i] = ((LineDataSet) lineData.getDataSetByIndex(i));
-
-                if(lineDataSets[i] == null){
-
-                    lineDataSets[i] = createSetFirstGraph(i);
-                    lineData.addDataSet(lineDataSets[i]);
-
-                }
-                lineData.addEntry(new Entry((float) x, yAxisValuePlayersFirstGraph[i]), i);
-
-
-                firstChart.notifyDataSetChanged();
-                firstChart.moveViewToX(lineData.getXMax() - 7);
-
-            }
-        }
-    }
-
-    private LineDataSet createSetFirstGraph(int i){
-
-        LineDataSet lineDataSet = new LineDataSet(null, null);
-        lineDataSet.setFillAlpha(110);
-        lineDataSet.setLineWidth(1f);
-        lineDataSet.setDrawCircles(false);
-        lineDataSet.setColor(COLORS[i]);
-        lineDataSet.setValueTextSize(4);
-        lineDataSet.setValueTextColor(COLORS[i]);
-
-        return lineDataSet;
-    }
-
-    private void addFinalResultsFirstChart() {
-
-        textData = findViewById(R.id.textData);
-        String text = "Percentuale di vittorie in " + Database.getInstance().getSizeSignificantPulls() + " partite:\n";
-
-        for (int i = 0; i < 5; i++) {
-
-            double aproxPerc = Math.round(Database.getInstance().getPlayerWinPercentage(i) * 100.0) / 100.0;
-            text += "Giocatore " + (i + 1) + " percentuale --> " + aproxPerc + "%\n";
-
-        }
-        textData.setText(text);
-    }
-
     private void initSecondChart() {
         secondChart = findViewById(R.id.graphic_2);
 
         secondChart.setDragEnabled(true);
-        secondChart.setScaleEnabled(true);
+        secondChart.setScaleEnabled(false);
         secondChart.setDrawBorders(true);
         secondChart.setAutoScaleMinMaxEnabled(true);
         secondChart.setPinchZoom(false);
@@ -430,7 +355,7 @@ public class StartGameActivity extends AppCompatActivity {
         legend.setCustom(legendEntries);
     }
 
-    private void startThreadSecondGraph() {
+    private void startThread() {
 
         new Thread(() -> {
 
@@ -439,6 +364,8 @@ public class StartGameActivity extends AppCompatActivity {
                 int finalI = i;
                 runOnUiThread(() -> {
                     double currentNets[] = {Database.getInstance().getPlayerNetList(0).get(finalI),Database.getInstance().getPlayerNetList(1).get(finalI),Database.getInstance().getPlayerNetList(2).get(finalI),Database.getInstance().getPlayerNetList(3).get(finalI),Database.getInstance().getPlayerNetList(4).get(finalI),Database.getInstance().getSystemNetList().get(finalI)};
+                    int currentWins[] = { Database.getInstance().getPlayerWinList(0).get(finalI),Database.getInstance().getPlayerWinList(1).get(finalI),Database.getInstance().getPlayerWinList(2).get(finalI),Database.getInstance().getPlayerWinList(3).get(finalI),Database.getInstance().getPlayerWinList(4).get(finalI) };
+                    addEntriesToFirstChart( finalI,currentWins);
                     addEntriesToSecondChart( finalI,currentNets);
                 });
 
@@ -448,6 +375,47 @@ public class StartGameActivity extends AppCompatActivity {
             }
         }).start();
 
+    }
+
+    private void addEntriesToFirstChart(int x, int[] currentWins){
+
+        for(int i = 0; i < 5; i++) yAxisValuePlayersFirstGraph[i] += currentWins[i];
+        LineData lineData = firstChart.getData();
+        LineDataSet[] lineDataSets = new LineDataSet[5];
+
+        for(int i = 0; i < 5; i++){
+
+            if(lineData != null){
+
+                lineDataSets[i] = ((LineDataSet) lineData.getDataSetByIndex(i));
+
+                if(lineDataSets[i] == null){
+
+                    lineDataSets[i] = createSetFirstGraph(i);
+                    lineData.addDataSet(lineDataSets[i]);
+
+                }
+                lineData.addEntry(new Entry((float) x, yAxisValuePlayersFirstGraph[i]), i);
+
+
+                firstChart.notifyDataSetChanged();
+                firstChart.moveViewToX(lineData.getXMax() - 7);
+
+            }
+        }
+    }
+
+    private LineDataSet createSetFirstGraph(int i){
+
+        LineDataSet lineDataSet = new LineDataSet(null, null);
+        lineDataSet.setFillAlpha(110);
+        lineDataSet.setLineWidth(1f);
+        lineDataSet.setDrawCircles(false);
+        lineDataSet.setColor(COLORS[i]);
+        lineDataSet.setValueTextSize(4);
+        lineDataSet.setValueTextColor(COLORS[i]);
+
+        return lineDataSet;
     }
 
     private void addEntriesToSecondChart(int x, double[] currentNets){
@@ -489,6 +457,20 @@ public class StartGameActivity extends AppCompatActivity {
 
         return lineDataSet;
 
+    }
+
+    private void addFinalResultsFirstChart() {
+
+        textData = findViewById(R.id.textData);
+        String text = "Percentuale di vittorie in " + Database.getInstance().getSizeSignificantPulls() + " partite:\n";
+
+        for (int i = 0; i < 5; i++) {
+
+            double aproxPerc = Math.round(Database.getInstance().getPlayerWinPercentage(i) * 100.0) / 100.0;
+            text += "Giocatore " + (i + 1) + " percentuale --> " + aproxPerc + "%\n";
+
+        }
+        textData.setText(text);
     }
 
     private void addFinalResultsSecondChart() {
