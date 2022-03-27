@@ -452,7 +452,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     private void addEntriesToSecondChart(int x, double[] currentNets){
 
-        for(int i = 0; i < 6; i++) yAxisValuesPlayersSecondGraph[i] += currentNets[i];
+        for(int i = 0; i < 6; i++) yAxisValuesPlayersSecondGraph[i] = currentNets[i];
         LineData lineData = secondChart.getData();
         LineDataSet[] lineDataSets = new LineDataSet[6];
 
