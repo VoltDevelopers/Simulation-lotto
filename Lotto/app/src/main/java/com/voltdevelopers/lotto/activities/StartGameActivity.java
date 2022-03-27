@@ -273,7 +273,7 @@ public class StartGameActivity extends AppCompatActivity {
                 });
 
                 try {
-                    Thread.sleep(7);
+                    Thread.sleep(2);
                 } catch (InterruptedException e) { e.printStackTrace(); }
             }
         }).start();
@@ -287,32 +287,30 @@ public class StartGameActivity extends AppCompatActivity {
         yAxisValuePlayer3 +=currentWinPlayer3;
         yAxisValuePlayer4 +=currentWinPlayer4;
         yAxisValuePlayer5 +=currentWinPlayer5;
-        LineData[] lineData = new LineData[5];
+        LineData lineData = firstChart.getData();
         LineDataSet[] lineDataSets = new LineDataSet[5];
-
-        for(int i = 0; i < 5; i++){ lineData[i] = firstChart.getData();}
 
         for(int i = 0; i < 5; i++){
 
-            if(lineData[i] != null){
+            if(lineData != null){
 
-                 lineDataSets[i] = ((LineDataSet) lineData[i].getDataSetByIndex(i));
+                 lineDataSets[i] = ((LineDataSet) lineData.getDataSetByIndex(i));
 
                 if(lineDataSets[i] == null){
 
                     lineDataSets[i] = createSet(i);
-                    lineData[i].addDataSet(lineDataSets[i]);
+                    lineData.addDataSet(lineDataSets[i]);
 
                 }
-                lineData[i].addEntry(new Entry((float) x, yAxisValuePlayer1), 0);
-                lineData[i].addEntry(new Entry((float) x, yAxisValuePlayer2), 1);
-                lineData[i].addEntry(new Entry((float) x, yAxisValuePlayer3), 2);
-                lineData[i].addEntry(new Entry((float) x, yAxisValuePlayer4), 3);
-                lineData[i].addEntry(new Entry((float) x, yAxisValuePlayer5), 4);
+                lineData.addEntry(new Entry((float) x, yAxisValuePlayer1), 0);
+                lineData.addEntry(new Entry((float) x, yAxisValuePlayer2), 1);
+                lineData.addEntry(new Entry((float) x, yAxisValuePlayer3), 2);
+                lineData.addEntry(new Entry((float) x, yAxisValuePlayer4), 3);
+                lineData.addEntry(new Entry((float) x, yAxisValuePlayer5), 4);
 
 
                 firstChart.notifyDataSetChanged();
-                firstChart.moveViewToX(lineData[i].getXMax() - 7);
+                firstChart.moveViewToX(lineData.getXMax() - 7);
 
             }
 
