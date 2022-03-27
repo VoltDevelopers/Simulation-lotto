@@ -273,7 +273,7 @@ public class StartGameActivity extends AppCompatActivity {
                 });
 
                 try {
-                    Thread.sleep(5);
+                    Thread.sleep(7);
                 } catch (InterruptedException e) { e.printStackTrace(); }
             }
         }).start();
@@ -287,34 +287,32 @@ public class StartGameActivity extends AppCompatActivity {
         yAxisValuePlayer3 +=currentWinPlayer3;
         yAxisValuePlayer4 +=currentWinPlayer4;
         yAxisValuePlayer5 +=currentWinPlayer5;
-        ArrayList <LineData> lineDataArrayList = new ArrayList<>();
-        ArrayList <LineDataSet> lineDataSets = new ArrayList<>();
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        LineData[] lineData = new LineData[5];
+        LineDataSet[] lineDataSets = new LineDataSet[5];
 
-        for(int i = 0; i < 5; i++){ lineDataArrayList.add(firstChart.getData());}
+        for(int i = 0; i < 5; i++){ lineData[i] = firstChart.getData();}
 
         for(int i = 0; i < 5; i++){
 
-            if(lineDataArrayList.get(i) != null){
+            if(lineData[i] != null){
 
-                 lineDataSets.add((LineDataSet) lineDataArrayList.get(i).getDataSetByIndex(0));
+                 lineDataSets[i] = ((LineDataSet) lineData[i].getDataSetByIndex(i));
 
-                if(lineDataSets.get(i) == null){
+                if(lineDataSets[i] == null){
 
-                    lineDataSets.set(i,createSet(i));
-                    lineDataArrayList.get(i).addDataSet(lineDataSets.get(i));
+                    lineDataSets[i] = createSet(i);
+                    lineData[i].addDataSet(lineDataSets[i]);
 
                 }
-                lineDataArrayList.get(0).addEntry(new Entry((float) x, yAxisValuePlayer1), 0);
-                //lineDataArrayList.get(1).addEntry(new Entry((float) x, yAxisValuePlayer2), 0);
-                //lineDataArrayList.get(2).addEntry(new Entry((float) x, yAxisValuePlayer3), 0);
-                //lineDataArrayList.get(3).addEntry(new Entry((float) x, yAxisValuePlayer4), 0);
-                //lineDataArrayList.get(4).addEntry(new Entry((float) x, yAxisValuePlayer5), 0);
+                lineData[i].addEntry(new Entry((float) x, yAxisValuePlayer1), 0);
+                lineData[i].addEntry(new Entry((float) x, yAxisValuePlayer2), 1);
+                lineData[i].addEntry(new Entry((float) x, yAxisValuePlayer3), 2);
+                lineData[i].addEntry(new Entry((float) x, yAxisValuePlayer4), 3);
+                lineData[i].addEntry(new Entry((float) x, yAxisValuePlayer5), 4);
 
 
                 firstChart.notifyDataSetChanged();
-                //firstChart.setVisibleXRange( Database.getInstance().getSizeSignificantPulls());
-                firstChart.moveViewToX(lineDataArrayList.get(i).getXMax() - 7);
+                firstChart.moveViewToX(lineData[i].getXMax() - 7);
 
             }
 
