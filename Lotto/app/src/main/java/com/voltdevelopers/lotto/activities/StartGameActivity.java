@@ -48,7 +48,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     EditText presetGameCount, significantGameCount, startMoney;
     Button buttonStart;
-    RadioButton btn1, btn2, btn3;
+    RadioButton btn1, btn2, btn3, btn4;
     ArrayList<RadioButton> arrayBtn;
     TextView textData, textData2;
     SimpleDateFormat sdf;
@@ -99,6 +99,11 @@ public class StartGameActivity extends AppCompatActivity {
                 Settings.getInstance().setMoneyPerWin(250);
                 Settings.getInstance().setExtractionsPerRound(2);
             }
+            if(btn4.isChecked()){
+                Settings.getInstance().setMoneyPerWin(4500);
+                Settings.getInstance().setExtractionsPerRound(3);
+            }
+
 
             int preGames = Optional.ofNullable(presetGameCount.getText())
                     .map(Editable::toString)
@@ -145,6 +150,8 @@ public class StartGameActivity extends AppCompatActivity {
         arrayBtn.add(btn2);
         btn3 = settingsDialog.findViewById(R.id.radioButton3);
         arrayBtn.add(btn3);
+        btn4 = settingsDialog.findViewById(R.id.radioButton4);
+        arrayBtn.add(btn4);
         presetGameCount = settingsDialog.findViewById(R.id.presetGameCount);
         significantGameCount = settingsDialog.findViewById(R.id.significantGameCount);
         startMoney = settingsDialog.findViewById(R.id.startMoney);
@@ -405,19 +412,6 @@ public class StartGameActivity extends AppCompatActivity {
         }
     }
 
-    private LineDataSet createSet(int i){
-
-        LineDataSet lineDataSet = new LineDataSet(null, null);
-        lineDataSet.setFillAlpha(110);
-        lineDataSet.setLineWidth(1f);
-        lineDataSet.setDrawCircles(false);
-        lineDataSet.setColor(COLORS[i]);
-        lineDataSet.setValueTextSize(4);
-        lineDataSet.setValueTextColor(COLORS[i]);
-
-        return lineDataSet;
-    }
-
     private void addEntriesToSecondChart(int x, double[] currentNets){
 
         for(int i = 0; i < 6; i++) yAxisValuesPlayersSecondGraph[i] = currentNets[i];
@@ -443,6 +437,19 @@ public class StartGameActivity extends AppCompatActivity {
 
             }
         }
+    }
+
+    private LineDataSet createSet(int i){
+
+        LineDataSet lineDataSet = new LineDataSet(null, null);
+        lineDataSet.setFillAlpha(110);
+        lineDataSet.setLineWidth(1f);
+        lineDataSet.setDrawCircles(false);
+        lineDataSet.setColor(COLORS[i]);
+        lineDataSet.setValueTextSize(4);
+        lineDataSet.setValueTextColor(COLORS[i]);
+
+        return lineDataSet;
     }
 
     private void addFinalResultsFirstChart() {
