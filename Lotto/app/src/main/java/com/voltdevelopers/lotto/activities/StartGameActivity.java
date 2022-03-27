@@ -30,14 +30,11 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.voltdevelopers.lotto.R;
 import com.voltdevelopers.lotto.data.Database;
 import com.voltdevelopers.lotto.data.Settings;
 import com.voltdevelopers.lotto.src.exception.InputException;
 import com.voltdevelopers.lotto.src.game.Game;
-
-import org.checkerframework.checker.units.qual.A;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -59,7 +56,8 @@ public class StartGameActivity extends AppCompatActivity {
     private Dialog settingsDialog;
     private LineChart firstChart, secondChart;
     private static final int[] COLORS = {Color.RED, Color.YELLOW, Color.WHITE, Color.MAGENTA, Color.BLUE, Color.GREEN};
-    private int yAxisValuePlayers[] = new int[5];
+    private int yAxisValuePlayersFirstGraph[] = new int[5];
+    private double yAxisValuesPlayersSecondGraph[] = new double[6];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +156,7 @@ public class StartGameActivity extends AppCompatActivity {
         initFirstXAxis();
         addFirstDescription();
         addFirstLegend();
-        startThread();
+        startThreadFirstGraph();
         addFinalResultsFirstChart();
 
         initSecondChart();
@@ -166,7 +164,7 @@ public class StartGameActivity extends AppCompatActivity {
         initSecondXAxis();
         addSecondDescription();
         addSecondLegend();
-        addDataToSecondChart();
+        startThreadSecondGraph();
         addFinalResultsSecondChart();
     }
 
@@ -261,7 +259,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
-    private void startThread() {
+    private void startThreadFirstGraph() {
 
         new Thread(() -> {
 
@@ -274,7 +272,7 @@ public class StartGameActivity extends AppCompatActivity {
                 });
 
                 try {
-                    Thread.sleep(2);
+                    Thread.sleep(1);
                 } catch (InterruptedException e) { e.printStackTrace(); }
             }
         }).start();
@@ -283,7 +281,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     private void addEntriesToFirstChart(int x, int[] currentWins){
 
-        for(int i = 0; i < 5; i++) yAxisValuePlayers[i] += currentWins[i];
+        for(int i = 0; i < 5; i++) yAxisValuePlayersFirstGraph[i] += currentWins[i];
         LineData lineData = firstChart.getData();
         LineDataSet[] lineDataSets = new LineDataSet[5];
 
@@ -295,23 +293,21 @@ public class StartGameActivity extends AppCompatActivity {
 
                 if(lineDataSets[i] == null){
 
-                    lineDataSets[i] = createSet(i);
+                    lineDataSets[i] = createSetFirstGraph(i);
                     lineData.addDataSet(lineDataSets[i]);
 
                 }
-                lineData.addEntry(new Entry((float) x, yAxisValuePlayers[i]), i);
+                lineData.addEntry(new Entry((float) x, yAxisValuePlayersFirstGraph[i]), i);
 
 
                 firstChart.notifyDataSetChanged();
                 firstChart.moveViewToX(lineData.getXMax() - 7);
 
             }
-
         }
-
     }
 
-    private LineDataSet createSet(int i){
+    private LineDataSet createSetFirstGraph(int i){
 
         LineDataSet lineDataSet = new LineDataSet(null, null);
         lineDataSet.setFillAlpha(110);
@@ -323,7 +319,6 @@ public class StartGameActivity extends AppCompatActivity {
 
         return lineDataSet;
     }
-
 
     private void addFinalResultsFirstChart() {
 
@@ -340,11 +335,10 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private void initSecondChart() {
-
         secondChart = findViewById(R.id.graphic_2);
 
         secondChart.setDragEnabled(true);
-        secondChart.setScaleEnabled(false);
+        secondChart.setScaleEnabled(true);
         secondChart.setDrawBorders(true);
         secondChart.setAutoScaleMinMaxEnabled(true);
         secondChart.setPinchZoom(false);
@@ -352,6 +346,9 @@ public class StartGameActivity extends AppCompatActivity {
         secondChart.getAxisRight().setEnabled(false);
         secondChart.setBorderColor(Color.GREEN);
         secondChart.setExtraOffsets(0, 5f, 0, 5f);
+        secondChart.setTouchEnabled(true);
+        LineData lineData = new LineData();
+        secondChart.setData((lineData));
 
     }
 
@@ -433,37 +430,64 @@ public class StartGameActivity extends AppCompatActivity {
         legend.setCustom(legendEntries);
     }
 
-    private void addDataToSecondChart() {
+    private void startThreadSecondGraph() {
 
-        ArrayList<ArrayList<Entry>> yValues = new ArrayList<>();
-        ArrayList<LineDataSet> lineDataSets = new ArrayList<>();
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        new Thread(() -> {
 
-        for (int i = 0; i < 6; i++) { //ciclo per le 5 linee
-            yValues.add(new ArrayList<>());
-                for (int j = 0; j < Database.getInstance().getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
-                    if (yValues.size() == 6){
-                        yValues.get(i).add(new Entry(j, Database.getInstance().getSystemNetList().get(j).floatValue()));
-                    }else{
-                        yValues.get(i).add(new Entry(j, Database.getInstance().getPlayerNetList(i).get(j).floatValue()));
-                    }
+            for(int i = 0; i < Database.getInstance().getSizeSignificantPulls(); i++){
+
+                int finalI = i;
+                runOnUiThread(() -> {
+                    double currentNets[] = {Database.getInstance().getPlayerNetList(0).get(finalI),Database.getInstance().getPlayerNetList(1).get(finalI),Database.getInstance().getPlayerNetList(2).get(finalI),Database.getInstance().getPlayerNetList(3).get(finalI),Database.getInstance().getPlayerNetList(4).get(finalI),Database.getInstance().getSystemNetList().get(finalI)};
+                    addEntriesToSecondChart( finalI,currentNets);
+                });
+
+                try {
+                    Thread.sleep(2);
+                } catch (InterruptedException e) { e.printStackTrace(); }
+            }
+        }).start();
+
+    }
+
+    private void addEntriesToSecondChart(int x, double[] currentNets){
+
+        for(int i = 0; i < 6; i++) yAxisValuesPlayersSecondGraph[i] += currentNets[i];
+        LineData lineData = secondChart.getData();
+        LineDataSet[] lineDataSets = new LineDataSet[6];
+
+        for(int i = 0; i < 6; i++){
+
+            if(lineData != null){
+
+                lineDataSets[i] = ((LineDataSet) lineData.getDataSetByIndex(i));
+
+                if(lineDataSets[i] == null){
+
+                    lineDataSets[i] = createSetSecondGraph(i);
+                    lineData.addDataSet(lineDataSets[i]);
+
                 }
+                lineData.addEntry(new Entry((float) x, (float) yAxisValuesPlayersSecondGraph[i]), i);
 
-            lineDataSets.add(new LineDataSet(yValues.get(i), ""));
-            lineDataSets.get(i).setFillAlpha(110);
-            lineDataSets.get(i).setLineWidth(1f);
-            lineDataSets.get(i).setDrawCircles(false);
-            lineDataSets.get(i).setValueTextSize(4);
-            lineDataSets.get(i).setColor(COLORS[i]);
-            lineDataSets.get(i).setValueTextColor(COLORS[i]);
-            dataSets.add(lineDataSets.get(i));
-            secondChart.notifyDataSetChanged();
-            secondChart.invalidate();
+                secondChart.notifyDataSetChanged();
+                secondChart.moveViewToX(lineData.getXMax() - 7);
+
+            }
         }
+    }
 
-        LineData data = new LineData(dataSets);
-        secondChart.setData(data);
+    private LineDataSet createSetSecondGraph(int i){
 
+        LineDataSet lineDataSet = new LineDataSet(null, null);
+        lineDataSet.setFillAlpha(110);
+        lineDataSet.setLineWidth(1f);
+        lineDataSet.setDrawCircles(false);
+        lineDataSet.setColor(COLORS[i]);
+        lineDataSet.setValueTextSize(4);
+        lineDataSet.setValueTextColor(COLORS[i]);
+
+        return lineDataSet;
 
     }
 
