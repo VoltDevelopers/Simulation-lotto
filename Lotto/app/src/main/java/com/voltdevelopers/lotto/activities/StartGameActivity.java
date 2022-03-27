@@ -391,7 +391,7 @@ public class StartGameActivity extends AppCompatActivity {
 
                 if(lineDataSets[i] == null){
 
-                    lineDataSets[i] = createSetFirstGraph(i);
+                    lineDataSets[i] = createSet(i);
                     lineData.addDataSet(lineDataSets[i]);
 
                 }
@@ -405,7 +405,7 @@ public class StartGameActivity extends AppCompatActivity {
         }
     }
 
-    private LineDataSet createSetFirstGraph(int i){
+    private LineDataSet createSet(int i){
 
         LineDataSet lineDataSet = new LineDataSet(null, null);
         lineDataSet.setFillAlpha(110);
@@ -432,7 +432,7 @@ public class StartGameActivity extends AppCompatActivity {
 
                 if(lineDataSets[i] == null){
 
-                    lineDataSets[i] = createSetSecondGraph(i);
+                    lineDataSets[i] = createSet(i);
                     lineData.addDataSet(lineDataSets[i]);
 
                 }
@@ -443,20 +443,6 @@ public class StartGameActivity extends AppCompatActivity {
 
             }
         }
-    }
-
-    private LineDataSet createSetSecondGraph(int i){
-
-        LineDataSet lineDataSet = new LineDataSet(null, null);
-        lineDataSet.setFillAlpha(110);
-        lineDataSet.setLineWidth(1f);
-        lineDataSet.setDrawCircles(false);
-        lineDataSet.setColor(COLORS[i]);
-        lineDataSet.setValueTextSize(4);
-        lineDataSet.setValueTextColor(COLORS[i]);
-
-        return lineDataSet;
-
     }
 
     private void addFinalResultsFirstChart() {
