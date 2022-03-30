@@ -11,8 +11,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.voltdevelopers.lotto.data.Database;
 
-import java.util.ArrayList;
-
 public class StdChart implements Runnable{
 
     private static final int[] COLORS = {Color.RED, Color.YELLOW, Color.WHITE, Color.MAGENTA, Color.BLUE, Color.GREEN};
@@ -106,7 +104,6 @@ public class StdChart implements Runnable{
 
     private void addDataToLineChart(int lineQuantity, int[] wins) {
         for (int line = 0; line < lineQuantity; line++) {
-            yValues.add(new ArrayList<>());
             for (int game = 0; game < Database.getInstance().getPlayerWinList(line).size(); game++) {
             }
         }
