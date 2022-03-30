@@ -7,18 +7,16 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.voltdevelopers.lotto.data.Database;
-import com.voltdevelopers.lotto.data.Settings;
 
 import java.util.ArrayList;
 
-public class StdChart {
+public class StdChart implements Runnable{
 
     private static final int[] COLORS = {Color.RED, Color.YELLOW, Color.WHITE, Color.MAGENTA, Color.BLUE, Color.GREEN};
-    private static final String[] NAMES = {"Il Copione", "Il Ritardatario", "L'Azzardoso", "Il Testardo", "L'Ingenuo"};
+    private static final String[] NAMES = {"Il Copione", "Il Ritardatario", "L'Azzardoso", "Il Testardo", "L'Ingenuo", "Banco"};
 
     private LineChart lineChart;
     private YAxis yAxis;
@@ -114,4 +112,8 @@ public class StdChart {
         }
     }
 
+    @Override
+    public void run() {
+        // TODO: 30/03/22
+    }
 }
