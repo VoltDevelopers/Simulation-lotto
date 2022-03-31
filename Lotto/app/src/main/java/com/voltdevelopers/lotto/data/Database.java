@@ -170,6 +170,8 @@ public class Database {
         analysis.assignWins();
     }
 
+    public void assignWinsInCurrentGame(int currentGame){  analysis.assignWinsInCurrentGame(currentGame); }
+
     //-----------------------log managment----------------------------------------------------------
 
     @NonNull
@@ -333,6 +335,73 @@ public class Database {
             }
             console.printStr("The array " + arr.toString() + " does not contains " + n + "\n");
             return false;
+        }
+
+        public void assignWinsInCurrentGame(int currentGame){
+
+            for(Profile current : players){
+
+                int winsInCurrentRound = 0;
+                for(int currentBetN : current.getSelectedBet(currentGame)){
+
+                    if(intArrayContains(significantRounds.get(currentGame),currentBetN)){
+
+                        winsInCurrentRound++;
+
+                    }
+
+                }
+
+                current.addScore(winsInCurrentRound);
+
+                if(winsInCurrentRound == settings.getExtractionsPerRound()){
+
+                    current.addWin();
+
+                }
+
+                assignSpendingsInCurrentGame(currentGame,current);
+                assignWinMoneyIncurrentGame(currentGame,current);
+                current.refreshNetInCurrentGame(currentGame);
+
+            }
+
+            addSystemNetInCurrentGame(currentGame);
+
+
+        }
+
+        public void assignSpendingsInCurrentGame(int currentGame,Profile current){
+
+            current.addToMoneySpent(Settings.COST_OF_PLAY * current.getNOfBets());
+
+        }
+
+        public void assignWinMoneyIncurrentGame(int currentGame, Profile current){
+
+            if(current.getHitsOnSelectedBet(currentGame) == settings.getExtractionsPerRound()){
+
+                current.addToMoneyWon(settings.getMoneyPerWin());
+
+            }
+
+        }
+
+        public void addSystemNetInCurrentGame(int currentGame){
+
+            double lastNet = (double) (settings.MAX_PLAYERS * settings.COST_OF_PLAY);
+            for (Profile current : players) {
+
+                if (current.getHitsOnSelectedBet(currentGame) == settings.getExtractionsPerRound())
+                    lastNet -= Settings.getInstance().getMoneyPerWin();
+
+            }
+
+            if (currentGame != 0)
+                lastNet += systemNetList.get(currentGame - 1);
+
+            systemNetList.add(lastNet);
+
         }
 
         public void assignWins() {
@@ -530,6 +599,24 @@ class Profile {
             }
         }
     }
+
+    public void refreshNetInCurrentGame(int currentGame){
+
+        if (winList.get(currentGame) < Settings.getInstance().getExtractionsPerRound()) {
+            if (currentGame != 0)
+                netList.add(netList.get(currentGame - 1) - 1d);
+            else
+                netList.add(-1d + Settings.getInstance().getStartMoney());
+        } else {
+            if (currentGame != 0)
+                netList.add(netList.get(currentGame - 1) + Settings.getInstance().getMoneyPerWin() - 1d);
+            else
+                netList.add(Settings.getInstance().getMoneyPerWin() + Settings.getInstance().getStartMoney() - 1d);
+
+        }
+
+    }
+
 
     public String toString(String tabulation) {
         return "Profile{" +

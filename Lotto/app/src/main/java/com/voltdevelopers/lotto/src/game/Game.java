@@ -1,6 +1,8 @@
 package com.voltdevelopers.lotto.src.game;
 
 
+import android.app.Activity;
+
 import com.voltdevelopers.lotto.data.Database;
 import com.voltdevelopers.lotto.data.Settings;
 import com.voltdevelopers.lotto.layout.Console;
@@ -13,27 +15,50 @@ import com.voltdevelopers.lotto.src.playerpatterns.SecondPlayer;
 import com.voltdevelopers.lotto.src.playerpatterns.ThirdPlayer;
 import com.voltdevelopers.lotto.src.random.StdRandom;
 
-public class Game {
+public class Game{
 
     private final int turnsGame;
 
     Player[] playerPatterns;
+    OnData onData;
+    Activity activity;
 
-    public Game(int turnsGame) throws InputException {
+    public Game(int turnsGame, OnData onData,Activity activity) throws InputException {
         this.turnsGame = turnsGame;
         playerPatterns = new Player[5];
-
+        this.onData = onData;
+        this.activity = activity;
         initPlayers();
         preGameLoop(Settings.getInstance().getPresetGameCount());
     }
 
     public void gameLoop() {
-        for (int i = 0; i < turnsGame; i++) {
-            playersPlayBets();
-            Database.getInstance().addSignificantPull(generateDraw());
-            sendPatternsData();
-            Console.getInstance().printStr("New significant pull");
-        }
+
+
+
+            for (int i = 0; i < turnsGame; i++) {
+
+                playersPlayBets();
+                Database.getInstance().addSignificantPull(generateDraw());
+                sendPatternsData();
+                Console.getInstance().printStr("New significant pull");
+                Database.getInstance().assignWinsInCurrentGame(i);
+                int finalI = i;
+                activity.runOnUiThread(() ->{
+
+                    int[] currentWins = {Database.getInstance().getPlayerWinList(0).get(finalI), Database.getInstance().getPlayerWinList(1).get(finalI), Database.getInstance().getPlayerWinList(2).get(finalI), Database.getInstance().getPlayerWinList(3).get(finalI), Database.getInstance().getPlayerWinList(4).get(finalI)};
+                    onData.addDataToFirstChart(finalI,currentWins);
+
+                });
+
+                try {
+                    Thread.sleep(2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
     }
 
     private void preGameLoop(int games) {
@@ -71,4 +96,12 @@ public class Game {
         }
         return null;
     }
+
+    public interface OnData{
+
+        public void addDataToFirstChart(int x, int[]currentWins);
+        public void addDataToSecondChart(int x, double[]currentNets);
+
+    }
+
 }

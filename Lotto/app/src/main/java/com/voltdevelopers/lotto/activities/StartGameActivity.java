@@ -125,16 +125,16 @@ public class StartGameActivity extends AppCompatActivity {
 
             Settings.getInstance().setStartMoney(money);
             Settings.getInstance().setPresetGameCount(preGames);
+            initAll();
             settingsDialog.dismiss();
 
             try {
-                Game game = new Game(significantGames);
+                Game game = new Game(significantGames,onData,this);
                 game.gameLoop();
             } catch (InputException e) {
                 e.printStackTrace();
             }
-            Database.getInstance().assignWins();
-            initAll();
+            //Database.getInstance().assignWins();
 
         });
 
@@ -167,13 +167,29 @@ public class StartGameActivity extends AppCompatActivity {
         initSecondChart();
         initSecondYAxis();
         initSecondXAxis();
-        addSecondDescription();
-        addSecondLegend();
+        //addSecondDescription();
+        //addSecondLegend();
 
-        startThread();
-        addFinalResultsSecondChart();
-        addFinalResultsFirstChart();
+       // startThread();
+        //addFinalResultsSecondChart();
+        //addFinalResultsFirstChart();
     }
+
+    Game.OnData onData = new Game.OnData() {
+        @Override
+        public void addDataToFirstChart(int x, int[] currentWins) {
+
+            addEntriesToFirstChart(x,currentWins);
+
+        }
+
+        @Override
+        public void addDataToSecondChart(int x, double[] currentNets) {
+
+            addEntriesToSecondChart(x,currentNets);
+
+        }
+    };
 
     private void initFirstChart() {
         firstChart = findViewById(R.id.graphic_1);
@@ -390,13 +406,13 @@ public class StartGameActivity extends AppCompatActivity {
         LineData lineData = firstChart.getData();
         LineDataSet[] lineDataSets = new LineDataSet[5];
 
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 5; i++) {
 
-            if(lineData != null){
+            if (lineData != null) {
 
                 lineDataSets[i] = ((LineDataSet) lineData.getDataSetByIndex(i));
 
-                if(lineDataSets[i] == null){
+                if (lineDataSets[i] == null) {
 
                     lineDataSets[i] = createSet(i);
                     lineData.addDataSet(lineDataSets[i]);
