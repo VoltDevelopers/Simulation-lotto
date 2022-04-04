@@ -1,4 +1,4 @@
-# Progetto Lotto - Studenti in Cattedra
+# Progetto Lotto - Studenti in Cattedra V1.2
 
 In questo progetto, abbiamo sviluppato un software il quale obiettivo è
 di confutare i diversi misconcetti che spesso possono influire in
