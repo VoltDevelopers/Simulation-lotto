@@ -54,11 +54,16 @@ public class StartGameActivity extends AppCompatActivity {
     TextView textData, textData2;
     SimpleDateFormat sdf;
 
+    ArrayList<ArrayList<Entry>> yValues_firstChart, yValues_secondChart;
+    ArrayList<LineDataSet> lineDataSets_firstChart, lineDataSets_secondChart;
+    ArrayList<ILineDataSet> dataSets_firstChart, dataSets_secondChart;
+
     private Dialog settingsDialog;
     private LineChart firstChart, secondChart;
     private static final int[] COLORS = {Color.RED, Color.YELLOW, Color.WHITE, Color.MAGENTA, Color.BLUE, Color.GREEN};
     private static final String[] NAMES = {"Il Copione", "Il Ritardatario", "L'Azzardoso", "Il Testardo", "L'Ingenuo"};
 
+    @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,6 +157,8 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private void initAll() {
+        initLineData();
+
         initFirstChart();
         initFirstYAxis();
         initFirstXAxis();
@@ -170,6 +177,7 @@ public class StartGameActivity extends AppCompatActivity {
     private void initFirstChart() {
         firstChart = findViewById(R.id.graphic_1);
 
+        firstChart.setTouchEnabled(false);
         firstChart.setDragEnabled(true);
         firstChart.setScaleEnabled(false);
         firstChart.setDrawBorders(true);
@@ -220,6 +228,16 @@ public class StartGameActivity extends AppCompatActivity {
 
     }
 
+    private void initLineData() {
+        yValues_firstChart = new ArrayList<>();
+        lineDataSets_firstChart = new ArrayList<>();
+        dataSets_firstChart = new ArrayList<>();
+
+        yValues_secondChart = new ArrayList<>();
+        lineDataSets_secondChart = new ArrayList<>();
+        dataSets_secondChart = new ArrayList<>();
+    }
+
     private void addFirstLegend() {
 
         Legend legend;
@@ -247,15 +265,9 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private void addDataToFirstChart() {
-
-        ArrayList<ArrayList<Entry>> yValues = new ArrayList<>();
-        ArrayList<LineDataSet> lineDataSets = new ArrayList<>();
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-
-
         for (int i = 0; i < Settings.getInstance().getPlayersToPlay().length; i++) { //ciclo per le 5 linee
 
-            yValues.add(new ArrayList<>());
+            yValues_firstChart.add(new ArrayList<>());
             float y = 0;
 
             for (int j = 0; j < Database.getInstance().getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
@@ -263,25 +275,26 @@ public class StartGameActivity extends AppCompatActivity {
                 if (Database.getInstance().getPlayerWinList(i).get(j) == Settings.getInstance().getExtractionsPerRound()) {//se quel pattern ha vinto in quella prtita la percentuale aumenta
                     y++;
                 }
-                yValues.get(i).add(new Entry(j, y));
+                yValues_firstChart.get(i).add(new Entry(j, y));
+                lineDataSets_firstChart.add(new LineDataSet(yValues_firstChart.get(i), ""));
+                lineDataSets_firstChart.get(i).setFillAlpha(110);
+                lineDataSets_firstChart.get(i).setLineWidth(1f);
+                lineDataSets_firstChart.get(i).setDrawCircles(false);
+                lineDataSets_firstChart.get(i).setValueTextSize(4);
+                lineDataSets_firstChart.get(i).setColor(COLORS[i]);
+                lineDataSets_firstChart.get(i).setValueTextColor(COLORS[i]);
+                dataSets_firstChart.add(lineDataSets_firstChart.get(i));
+                firstChart.notifyDataSetChanged();
 
+
+                LineData data = new LineData(dataSets_firstChart);
+                firstChart.setData(data);
+                firstChart.invalidate();
             }
 
-            lineDataSets.add(new LineDataSet(yValues.get(i), ""));
-            lineDataSets.get(i).setFillAlpha(110);
-            lineDataSets.get(i).setLineWidth(1f);
-            lineDataSets.get(i).setDrawCircles(false);
-            lineDataSets.get(i).setValueTextSize(4);
-            lineDataSets.get(i).setColor(COLORS[i]);
-            lineDataSets.get(i).setValueTextColor(COLORS[i]);
-            dataSets.add(lineDataSets.get(i));
-            firstChart.notifyDataSetChanged();
-            firstChart.invalidate();
 
         }
 
-        LineData data = new LineData(dataSets);
-        firstChart.setData(data);
 
     }
 
@@ -303,6 +316,7 @@ public class StartGameActivity extends AppCompatActivity {
 
         secondChart = findViewById(R.id.graphic_2);
 
+        secondChart.setTouchEnabled(false);
         secondChart.setDragEnabled(true);
         secondChart.setScaleEnabled(false);
         secondChart.setDrawBorders(true);
@@ -384,35 +398,33 @@ public class StartGameActivity extends AppCompatActivity {
     }
 
     private void addDataToSecondChart() {
-
-        ArrayList<ArrayList<Entry>> yValues = new ArrayList<>();
-        ArrayList<LineDataSet> lineDataSets = new ArrayList<>();
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-
         for (int i = 0; i < 6; i++) { //ciclo per le 5 linee
-            yValues.add(new ArrayList<>());
+            yValues_secondChart.add(new ArrayList<>());
             for (int j = 0; j < Database.getInstance().getSizeSignificantPulls(); j++) { //ciclo per scorrere tutte le vincite del singolo giocatore
-                if (yValues.size() == 6) {
-                    yValues.get(i).add(new Entry(j, Database.getInstance().getSystemNetList().get(j).floatValue()));
+                if (yValues_secondChart.size() == 6) {
+                    yValues_secondChart.get(i).add(new Entry(j, Database.getInstance().getSystemNetList().get(j).floatValue()));
                 } else {
-                    yValues.get(i).add(new Entry(j, Database.getInstance().getPlayerNetList(i).get(j).floatValue()));
+                    yValues_secondChart.get(i).add(new Entry(j, Database.getInstance().getPlayerNetList(i).get(j).floatValue()));
                 }
+
+                lineDataSets_secondChart.add(new LineDataSet(yValues_secondChart.get(i), ""));
+                lineDataSets_secondChart.get(i).setFillAlpha(110);
+                lineDataSets_secondChart.get(i).setLineWidth(1f);
+                lineDataSets_secondChart.get(i).setDrawCircles(false);
+                lineDataSets_secondChart.get(i).setValueTextSize(4);
+                lineDataSets_secondChart.get(i).setColor(COLORS[i]);
+                lineDataSets_secondChart.get(i).setValueTextColor(COLORS[i]);
+                dataSets_secondChart.add(lineDataSets_secondChart.get(i));
+                secondChart.notifyDataSetChanged();
+                secondChart.invalidate();
+                LineData data = new LineData(dataSets_secondChart);
+                secondChart.setData(data);
             }
 
-            lineDataSets.add(new LineDataSet(yValues.get(i), ""));
-            lineDataSets.get(i).setFillAlpha(110);
-            lineDataSets.get(i).setLineWidth(1f);
-            lineDataSets.get(i).setDrawCircles(false);
-            lineDataSets.get(i).setValueTextSize(4);
-            lineDataSets.get(i).setColor(COLORS[i]);
-            lineDataSets.get(i).setValueTextColor(COLORS[i]);
-            dataSets.add(lineDataSets.get(i));
-            secondChart.notifyDataSetChanged();
-            secondChart.invalidate();
+
         }
 
-        LineData data = new LineData(dataSets);
-        secondChart.setData(data);
+
 
 
     }
@@ -428,7 +440,7 @@ public class StartGameActivity extends AppCompatActivity {
             text += "Credito de " + NAMES[i] + "\n--> " + aproxPerc + "$\n\n";
 
         }
-        text += "Credito del banco"+"\n--> " + Math.round(Database.getInstance().getSystemNetList().get(Database.getInstance().getSystemNetList().size() - 1) * 100.0) / 100.0 + "$\n";
+        text += "Credito del banco" + "\n--> " + Math.round(Database.getInstance().getSystemNetList().get(Database.getInstance().getSystemNetList().size() - 1) * 100.0) / 100.0 + "$\n";
         textData2.setText(text);
     }
 
