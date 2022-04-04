@@ -19,9 +19,9 @@ __Minimum SDK: 24 \(Android 7.0 Nougat\)__
 __Android Studio Version: 2021.1 \(Bumblebee\)__
 
 Il diagramma teorico proposto inizialmente era il seguente:
-![alt text](https://github.com/VoltDevelopers/Simulation-lotto/blob/main/proj.svg?raw=true)
+![alt text](https://github.com/VoltDevelopers/Simulation-lotto/blob/main/opt/proj.svg?raw=true)
 Segue il piano di lavoro inizialmente previsto:
-![alt text](https://github.com/VoltDevelopers/Simulation-lotto/blob/main/templine.svg?raw=true)
+![alt text](https://github.com/VoltDevelopers/Simulation-lotto/blob/main/opt/templine.svg?raw=true)
 
 Le varie funzionalità sono state testate singolarmente
 su branch temporanei, poi eliminati, in modo da prevenire eventuali
