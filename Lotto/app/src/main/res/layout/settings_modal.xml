@@ -141,20 +141,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-            <RadioButton
-                android:id="@+id/radioButton3"
-                android:textColor="@color/standard_text_color"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="3dp"
-                android:buttonTint="@color/neon_green"
-                android:checked="false"
-                android:fontFamily="@font/cour"
-                android:text="Ambo"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+<!--            <RadioButton-->
+<!--                android:id="@+id/radioButton3"-->
+<!--                android:textColor="@color/standard_text_color"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="15dp"-->
+<!--                android:layout_marginTop="3dp"-->
+<!--                android:buttonTint="@color/neon_green"-->
+<!--                android:checked="false"-->
+<!--                android:fontFamily="@font/cour"-->
+<!--                android:text="Ambo"-->
+<!--                android:textSize="14sp"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/textView5" />-->
         </RadioGroup>
 
         <TextView

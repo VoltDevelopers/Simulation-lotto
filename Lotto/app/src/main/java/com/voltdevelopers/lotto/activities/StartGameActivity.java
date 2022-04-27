@@ -49,7 +49,7 @@ public class StartGameActivity extends AppCompatActivity {
 
     EditText presetGameCount, significantGameCount, startMoney;
     Button buttonStart;
-    RadioButton btn1, btn2, btn3;
+    RadioButton btn1, btn2;
     ArrayList<RadioButton> arrayBtn;
     TextView textData, textData2;
     SimpleDateFormat sdf;
@@ -94,10 +94,6 @@ public class StartGameActivity extends AppCompatActivity {
             if (btn2.isChecked()) {
                 Settings.getInstance().setMoneyPerWin(18);
                 Settings.getInstance().setExtractionsPerRound(1);
-            }
-            if (btn3.isChecked()) {
-                Settings.getInstance().setMoneyPerWin(250);
-                Settings.getInstance().setExtractionsPerRound(2);
             }
 
             int preGames = Optional.ofNullable(presetGameCount.getText())
@@ -144,8 +140,6 @@ public class StartGameActivity extends AppCompatActivity {
         arrayBtn.add(btn1);
         btn2 = settingsDialog.findViewById(R.id.radioButton2);
         arrayBtn.add(btn2);
-        btn3 = settingsDialog.findViewById(R.id.radioButton3);
-        arrayBtn.add(btn3);
         presetGameCount = settingsDialog.findViewById(R.id.presetGameCount);
         significantGameCount = settingsDialog.findViewById(R.id.significantGameCount);
         startMoney = settingsDialog.findViewById(R.id.startMoney);
