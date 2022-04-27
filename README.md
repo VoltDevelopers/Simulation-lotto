@@ -102,14 +102,3 @@ realistico, alcuni giocatori potrebbero eccezionalmente subire spiccati
 guadagni o perdite rispetto al resto, ma questo evento è da considerare
 come puramente imprevedibile e non condizionato dai metodi utilizzati dai
 vari player.
-
-### Modalità Ambo
-
-Questa particolare modalità fa giocare ai singoli giocatori una coppia
-di numeri. Essi vinceranno una somma pari a 250$ nel caso **entrambi** i
-numeri giocati venissero estratti, oppure 5,62$ nel caso in cui solo uno
-dei due numeri giocati dovesse risultare vincente. In questo caso si ha
-una decrescita costante nel denaro di ciascun giocatore, con alcune rare
-crescite improvvise delle loro entrate. Ancora di più rispetto alle altre
-simulazioni, la quantità estremamente ridotta di vincite rimane 
-costante tra i vari giocatori.
